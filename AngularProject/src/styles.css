@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@import './app/restaurant-listing/restaurant-listing.component.scss';
+
+.text-gray {
+  color: #a2a2a2;
+}
+
+ul {
+  margin-bottom: 0 !important;
+}

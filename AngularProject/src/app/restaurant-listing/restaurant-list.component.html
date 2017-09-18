@@ -1,5 +1,24 @@
-<div class="listing">
-  <div style="height: 40px; width: 50px; background-color: red">
-
+<div class="restaurant-listing row">
+  <div class="col col-12 restaurant-wrapper" *ngFor="let restaurant of restaurantList">
+    <div class="row">
+      <div class="col col-3 image-container">
+        <img class="image" [src]="restaurant.image" alt="">
+      </div>
+      <div class="col col-9">
+        <div class="title">{{restaurant.name}}</div>
+        <div class="address text-gray">{{restaurant.address}}</div>
+        <div class="stat-wrapper">
+          <div class="raiting-container">
+            <span class="text-gray stats">Рейтинг:</span>
+            <span class="raiting">{{restaurant.raiting}}</span>
+          </div>
+          <ul class="raiting-container">
+            <li class="text-gray stats"><span>Храна:</span><span> {{restaurant.raitingStats.food}}</span></li>
+            <li class="text-gray stats"><span>Обстановка:</span><span> {{restaurant.raitingStats.place}}</span></li>
+            <li class="text-gray stats"><span>Обслужване:</span><span> {{restaurant.raitingStats.staff}}</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

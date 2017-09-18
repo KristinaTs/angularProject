@@ -1,0 +1,45 @@
+.restaurant-wrapper {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-bottom: 1px solid gray;
+}
+
+.restaurant-listing .image {
+  display: inline-block;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+}
+
+.restaurant-listing .title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.restaurant-listing .address {
+  font-size: 14px;
+}
+.restaurant-listing .stats {
+  font-size: 11px;
+}
+
+.restaurant-listing .raiting-container {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.restaurant-listing .raiting {
+  height: 10px;
+  width: 10px;
+  line-height: 10px;
+  padding: 8px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: #69e090;
+  border-radius: 50%;
+  font-weight: 600;
+  color: white;
+}
+
