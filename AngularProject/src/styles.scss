@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import './app/restaurant-listing/restaurant-listing.component.scss';
 @import './app/restaurant-information/restaurant-information.component.scss';
+@import './app/bill-information/bill-infromation.component';
 
 .text-gray {
   color: #a2a2a2;
@@ -50,4 +51,11 @@ ul {
   border-radius: 50%;
   font-weight: 600;
   color: white;
+}
+.tx-center {
+  text-align: center;
+}
+
+.button {
+  height: 50px;
 }

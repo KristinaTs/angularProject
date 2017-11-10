@@ -14,6 +14,7 @@ import { routes } from './app.routes';
 import { RestaurantListComponent } from './restaurant-listing/restaurant-listing.component';
 import { RestaurantInformationComponent } from './restaurant-information/restaurant-information.component';
 import { RestaurantListingService } from "./services/restaurant-listing.service";
+import { BillInformationComponent } from "./bill-information/bill-information.component";
 import { HttpService } from "./services/http.service";
 import { CookieService } from "./services/cookie.service";
 
@@ -22,7 +23,8 @@ import { CookieService } from "./services/cookie.service";
   declarations: [
     AppComponent,
     RestaurantListComponent,
-    RestaurantInformationComponent
+    RestaurantInformationComponent,
+    BillInformationComponent
   ],
   imports: [
     BrowserModule,

@@ -9,11 +9,8 @@ import {
   RequestOptions
 } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 import { CookieService } from './cookie.service';
-
-declare var Zone: any;
 
 @Injectable()
 export class HttpService {
@@ -31,16 +28,10 @@ export class HttpService {
 
   private pendingRequestsArray: Function[] = [];
   private isRefreshRequestSend: boolean = false;
-  private isTokenPending: boolean = false;
-
-  public static HTTP_STATUS_OK: number = 200;
-  public static HTTP_STATUS_UNAUTHORISED: number = 401;
-  public static HTTP_STATUS_NOT_FOUND: number = 404;
 
   constructor(
     private http: Http,
-    private cookie: CookieService,
-    @Inject(PLATFORM_ID) private platform_id
+    private cookie: CookieService
   ) { }
 
 
@@ -53,11 +44,8 @@ export class HttpService {
       postUrl = this.baseUrl + '/' + url;
 
     return new Promise((resolve, reject) => {
-      if ((!this.isRefreshRequestSend && this.pendingRequestsArray.length == 0) || !this.isTokenPending) {
-        if (this.isTokenPending) {
+      if ((!this.isRefreshRequestSend && this.pendingRequestsArray.length == 0)) {
           this.isRefreshRequestSend = true;
-        }
-
         this.http.post(postUrl, params, headers)
           .toPromise()
           .then(data => {
@@ -103,10 +91,9 @@ export class HttpService {
     }
 
     return new Promise((resolve, reject) => {
-      if ((!this.isRefreshRequestSend && this.pendingRequestsArray.length == 0) || !this.isTokenPending) {
-        if (this.isTokenPending) {
-          this.isRefreshRequestSend = true;
-        }
+      if ((!this.isRefreshRequestSend && this.pendingRequestsArray.length == 0)) {
+        this.isRefreshRequestSend = true;
+
 
         this.http.get(getUrl, headers)
           .toPromise()
@@ -141,16 +128,14 @@ export class HttpService {
 
 
     return new Promise((resolve, reject) => {
-      if ((!this.isRefreshRequestSend && this.pendingRequestsArray.length == 0) || !this.isTokenPending) {
-        if (this.isTokenPending) {
-          this.isRefreshRequestSend = true;
-        }
+      if ((!this.isRefreshRequestSend && this.pendingRequestsArray.length == 0)) {
+        this.isRefreshRequestSend = true;
+
 
         this.http.delete(this.baseUrl + '/' + url, headers)
           .toPromise()
           .then(data => {
             let response = data.json();
-            //this.checkForNewToken(response);
             this.callInterceptorFunctions(response, url);
             resolve(response);
           })
@@ -180,16 +165,13 @@ export class HttpService {
 
 
     return new Promise((resolve, reject) => {
-      if ((!this.isRefreshRequestSend && this.pendingRequestsArray.length == 0) || !this.isTokenPending) {
-        if (this.isTokenPending) {
-          this.isRefreshRequestSend = true;
-        }
+      if ((!this.isRefreshRequestSend && this.pendingRequestsArray.length == 0)) {
+        this.isRefreshRequestSend = true;
 
         this.http.put(this.baseUrl + '/' + url, params, headers)
           .toPromise()
           .then(data => {
             let response = data.json();
-           // this.checkForNewToken(response);
             this.callInterceptorFunctions(response, url);
             resolve(response);
           })
@@ -297,29 +279,10 @@ export class HttpService {
     if (errorJson.messages) {
       console.error(errorJson.messages);
     }
-   // this.checkForNewToken(errorJson);
 
     return parsedError;
   }
 
-  /**
-   * Checks the response data for a token
-   * and executes any pending requests if a new token has arrived
-   */
-  // private checkForNewToken(data: any): void {
-  //   if (typeof data.token == 'string' && data.token != '') {
-  //
-  //     if (this.isTokenRefreshPending) {
-  //       this.isTokenRefreshPending = false;
-  //       this.executePendingRequests();
-  //     }
-  //
-  //     if (this.cookie.get('name') === '') {
-  //       // let tokenObj = this.tokenService.decodeToken();
-  //       // this.cookie.set('name', tokenObj.payload.name, 365);
-  //     }
-  //   }
-  // }
 
   /**
    * Adds a given interceptor function,
