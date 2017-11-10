@@ -1,0 +1,46 @@
+<div class="restaurant-information-wrapper">
+  <div class="row">
+    <div class="col col-12 image-container">
+      <img class="image" [src]="restaurant.image" alt="">
+    </div>
+    <div class="col col-12">
+      <div class="title">{{restaurant.name}}</div>
+    </div>
+    <div class="col col-12">
+      <div class="address text-gray">{{restaurant.address}}</div>
+    </div>
+    <div class="col col-12">
+      <div class="stat-wrapper row">
+        <div class="rating-container col col-4">
+          <div class="text-gray stats">Храна:</div>
+          <div class="rating">{{restaurant.ratingStats.food}}</div>
+        </div>
+        <div class="rating-container col col-4">
+          <div class="text-gray stats">Обстановка:</div>
+          <div class="rating">{{restaurant.ratingStats.place}}</div>
+        </div>
+        <div class="rating-container col col-4">
+          <div class="text-gray stats">Обслужване:</div>
+          <div class="rating">{{restaurant.ratingStats.staff}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col col-12 description-container">
+      <div class="restaurant-description-box" *ngIf="!isRequestSendForBill">
+          {{restaurant.welcome}}
+          {{restaurant.description}}
+      </div>
+      <div class="restaurant-description-box" *ngIf="isRequestSendForBill">
+        {{billCode}}
+      </div>
+    </div>
+    <div class="col col-12">
+      <div *ngIf="!isRequestSendForBill" class="green-button" (click)="sendRequestForBill()">
+      + Нова сметка
+      </div>
+      <div *ngIf="isRequestSendForBill" class="green-button" (click)="goToBillInformation()">
+        Сметката се създава ...
+      </div>
+    </div>
+  </div>
+</div>
