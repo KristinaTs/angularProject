@@ -1,24 +1,28 @@
-<div class="restaurant-listing row">
-  <div class="col col-12 restaurant-wrapper pointer" *ngFor="let restaurant of restaurantList" (click)="navigateToRestaurant(restaurant)">
-    <div class="row">
-      <div class="col col-3 image-container">
-        <img class="image" [src]="restaurant.image" alt="">
-      </div>
-      <div class="col col-9">
-        <div class="title">{{restaurant.name}}</div>
-        <div class="address text-gray">{{restaurant.address}}</div>
-        <div class="stat-wrapper">
-          <div class="rating-container">
-            <span class="text-gray stats">Рейтинг:</span>
-            <span class="rating">{{restaurant.rating}}</span>
+<ng-template [ngIf]="restaurantList">
+  <div class="restaurant-listing row">
+    <div class="col col-12 restaurant-wrapper pointer" *ngFor="let restaurant of restaurantList"
+         (click)="navigateToRestaurant(restaurant)">
+      <div class="row">
+        <div class="col col-3 image-container">
+          <img class="image" [src]="restaurant.logoUrl" alt="">
+        </div>
+        <div class="col col-9">
+          <div class="title">{{restaurant.name}}</div>
+          <div class="address text-gray">{{restaurant.address}}</div>
+          <div class="stat-wrapper">
+            <div class="rating-container">
+              <span class="text-gray stats">Рейтинг:</span>
+              <!-- <span class="rating">{{restaurant.rating}}</span>-->
+            </div>
+            <ul class="rating-container description-list">
+              <li class="text-gray stats"><span>Храна:</span><span> {{restaurant.rating.foodQuality}}</span></li>
+              <li class="text-gray stats"><span>Обстановка:</span><span> {{restaurant.rating.atmosphere}}</span></li>
+              <li class="text-gray stats"><span>Обслужване:</span><span> {{restaurant.rating.serviceQuality}}</span>
+              </li>
+            </ul>
           </div>
-          <ul class="rating-container description-list">
-            <li class="text-gray stats"><span>Храна:</span><span> {{restaurant.ratingStats.food}}</span></li>
-            <li class="text-gray stats"><span>Обстановка:</span><span> {{restaurant.ratingStats.place}}</span></li>
-            <li class="text-gray stats"><span>Обслужване:</span><span> {{restaurant.ratingStats.staff}}</span></li>
-          </ul>
         </div>
       </div>
     </div>
   </div>
-</div>
+</ng-template>

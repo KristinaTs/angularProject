@@ -1,7 +1,7 @@
 import {
   Injectable
 } from '@angular/core';
-import {HttpService} from "./http.service";
+import {HttpService} from './http.service';
 
 @Injectable()
 export class RestaurantListingService {
@@ -10,7 +10,7 @@ export class RestaurantListingService {
     private httpService: HttpService
   ) {}
 
-  public baseUrl: string = 'restaurant-listing';
+  public baseUrl = 'poses';
 
 
   /**
@@ -24,15 +24,16 @@ export class RestaurantListingService {
    * @returns {Promise<any>}
    */
   public getAllRestaurants(): Promise<any> {
-    return new Promise<any>((resolve, reject)=> {
-      this.httpService.get(this.baseUrl)
+    // return new Promise<any>((resolve, reject) => {
+       return this.httpService.get(this.baseUrl)
         .then((response: any) => {
-            resolve(response);
+            console.log(response);
+            return response;
         })
         .catch((error) => {
-            reject(error)
+           // reject(error);
         });
-    });
+   //  });
   }
 
 
@@ -42,7 +43,17 @@ export class RestaurantListingService {
    * @returns {Promise<any>}
    */
   public getRestaurantInformation(restaurantId: number): Promise<any> {
-   return this.httpService.get(this.baseUrl, restaurantId);
+   return this.httpService.get(this.baseUrl + '/' + restaurantId);
+  }
+
+  /**
+   * Create new bill for the restaurant
+   * @param restaurantId
+   * @returns {Promise<any>}
+   */
+  public createNewBill(restaurantId: number): Promise<any> {
+    console.log('BILL');
+    return this.httpService.get('ticket/request-ticket');
   }
 
 }

@@ -18,10 +18,31 @@
     </tr>
     </tbody>
   </table>
-  <div class="button-wrapper">
-    <div class="button confirm-pay pink-button float-left"></div>
-    <div class="button blue-button float-left price-image"></div>
-    <div class="button confirm-pay pink-button float-left"></div>
-    <div class="button pay-button"></div>
+  <div class="button-wrapper" [ngClass]="isPayMode ? 'payment-screen' : ''">
+    <ng-template [ngIf]="!isPayMode">
+      <div class="button confirm-pay pink-button float-left"></div>
+      <div class="button blue-button float-left price-image">
+      </div>
+      <div class="button confirm-pay pink-button float-left"></div>
+      <div class="button pay-button">
+        <div class="margin-left-10 float-left">Мoята сметка: {{billValue}}</div>
+        <div (click)="goToPayScreen()" class="float-right margin-right-10">ПЛАТИ</div>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="isPayMode">
+        <div class="clearfix bill-information-pay-screen">
+          <div class="float-left">
+            <label for="tip">Бакшиш:</label>
+            <input type="text" id="tip">
+          </div>
+          <div class="float-right">
+            Общо: {{billValue}}
+          </div>
+        </div>
+      <div class="clearfix">
+        <div class="button green-button payment-method-button float-left">В БРОЙ</div>
+        <div class="button blue-button payment-method-button float-left">С КАРТА</div>
+      </div>
+    </ng-template>
   </div>
 </div>

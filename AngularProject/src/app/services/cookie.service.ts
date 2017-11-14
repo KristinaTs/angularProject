@@ -15,29 +15,29 @@ declare var Zone: any;
 @Injectable()
 export class CookieService {
   public setCookies: {[key: string]: Cookie} = {};
-  public cookies: string = '';
+  public cookies = '';
 
-  public PREFIX: string = 'SM_';
+  public PREFIX = 'SM_';
 
   constructor(
     @Inject(PLATFORM_ID) public platform_id,
     public injector: Injector
   ) {
-    //this.getRightCookie();
+    // this.getRightCookie();
   }
 
   /**
    * Sets the cookie
    */
   public set(key: string, value: string, expiryDays: number, useSeconds: boolean = false): void {
-    let date: Date = new Date();
-    let prefix: string = this.PREFIX + key;
-    let validation: number = useSeconds ? expiryDays * 1000 : date.getTime() + (expiryDays*24*60*60*1000);
+    const date: Date = new Date();
+    const prefix: string = this.PREFIX + key;
+    const validation: number = useSeconds ? expiryDays * 1000 : date.getTime() + (expiryDays * 24 * 60 * 60 * 1000);
 
     date.setTime(validation);
 
-    if(isPlatformServer(this.platform_id)) {
-      //Server
+    if (isPlatformServer(this.platform_id)) {
+      // Server
       this.setCookies[prefix] = {
         value: value,
         options: {
@@ -46,12 +46,12 @@ export class CookieService {
         }
       };
 
-      if(this.injector.get<any>(<any>'NODE_REQUEST').cookies[prefix] !== this.setCookies[prefix].value) {
+      if (this.injector.get<any>(<any>'NODE_REQUEST').cookies[prefix] !== this.setCookies[prefix].value) {
         this.injector.get<any>(<any>'NODE_RESPONSE').cookie(prefix, this.setCookies[prefix].value, this.setCookies[prefix].options);
       }
     } else {
-      //Browser
-      let expires: string = 'expires='+ date.toUTCString();
+      // Browser
+      const expires: string = 'expires=' + date.toUTCString();
 
       document.cookie = prefix + '=' + value + ';' + expires + ';path=/';
     }
@@ -62,23 +62,23 @@ export class CookieService {
    */
   public get(key: string, shouldPrefix: boolean = true): string {
     this.getRightCookie();
-    let prefixedKey: string = shouldPrefix ? this.PREFIX + key : key;
-    let found: string = '';
+    const prefixedKey = shouldPrefix ? this.PREFIX + key : key;
+    let found = '';
 
     if (isPlatformServer(this.platform_id) && typeof this.setCookies[prefixedKey] != 'undefined') {
       found = this.setCookies[prefixedKey].value;
 
     } else {
-      let name = prefixedKey + '=';
+      const name = prefixedKey + '=';
 
-      let ca = this.cookies.split(';');
+      const ca = this.cookies.split(';');
 
-      for(let i = 0; i < ca.length; i++) {
+      for (let i = 0; i < ca.length; i++) {
         let c = ca[i];
 
         c = c.trim();
 
-        if(c.indexOf(name) == 0) {
+        if (c.indexOf(name) === 0) {
           found = c.substring(name.length, c.length);
         }
       }
@@ -88,7 +88,7 @@ export class CookieService {
   }
 
   public getRightCookie(): void {
-    if(isPlatformServer(this.platform_id)) {
+    if (isPlatformServer(this.platform_id)) {
       this.cookies = this.injector.get<any>(<any>'NODE_REQ').get('Cookie') || '';
     } else {
       this.cookies = document.cookie;
@@ -99,7 +99,7 @@ export class CookieService {
    * Remove cookie with this key.
    */
   public remove(key: string): void {
-    let prefix: string = this.PREFIX + key;
+    const prefix: string = this.PREFIX + key;
     this.set(prefix, '', -1);
   }
 }
