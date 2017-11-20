@@ -17,8 +17,6 @@ $buttonBlue: #6bc7f0;
 }
 
 .pay-button {
-  position: fixed;
-  bottom: 0;
   width: 100%;
   background-color: $buttonGreen;
 }
@@ -45,7 +43,7 @@ $buttonBlue: #6bc7f0;
 
 .button-wrapper {
   position: fixed;
-  bottom: 50px;
+  bottom: 0px;
   width: 100%;
 }
 
@@ -58,6 +56,7 @@ $buttonBlue: #6bc7f0;
 }
 
 .price-image {
+  padding: 0 10px;
   width: 70%;
 }
 
@@ -81,4 +80,8 @@ $buttonBlue: #6bc7f0;
 .payment-method-button {
   width: 50%;
   text-align: center;
+}
+
+.bill-information-wrapper {
+
 }

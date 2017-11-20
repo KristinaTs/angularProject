@@ -9,8 +9,8 @@ import {RestaurantListingService} from '../services/restaurant-listing.service';
   templateUrl: 'bill-information.component.html'
 })
 export class BillInformationComponent {
-
-  public billValue: string = '145лв';
+  public myBill: string = '24,5лв';
+  public totalBill: string = '145лв';
   public isPayMode: boolean = false;
   public restaurant = {
     id: 1,

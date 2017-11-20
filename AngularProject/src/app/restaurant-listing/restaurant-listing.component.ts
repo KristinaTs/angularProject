@@ -99,5 +99,7 @@ export class RestaurantListComponent implements OnInit {
     this.restaurantListingService.getAllRestaurants().then((data) => {
       this.restaurantList = data;
     });
+
+    this.restaurantList = this.forTesting;
   }
 }
