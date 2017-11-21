@@ -22,6 +22,7 @@
           <div class="remove-button" (click)="removeEntry(i)">Премахни</div>
         </td>
         <td class="entry-total-price">{{item.quantity*item.pricePerPiece | number: '1.2'}}  лв.</td>
+        <td class="info-icon-container"><span *ngIf="isPayMode" class="info-icon"></span></td>
       </tr>
       </tbody>
     </table>

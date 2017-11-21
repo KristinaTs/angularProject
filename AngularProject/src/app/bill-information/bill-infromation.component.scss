@@ -112,6 +112,23 @@ $buttonBlue: #6bc7f0;
 }
 
 .entry-total-price {
+    vertical-align: bottom !important;
     font-weight: bold;
     text-align: right;
+}
+
+.info-icon {
+    display: inline-block;
+    width: 23px;
+    height: 23px;
+    background-image: url("./assets/images/info-icon.png");
+    background-size: cover;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.info-icon-container{
+    width: 23px;
+    text-align: center;
+    vertical-align: middle !important;
 }
