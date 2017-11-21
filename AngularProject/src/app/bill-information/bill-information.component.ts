@@ -9,6 +9,49 @@ import {RestaurantListingService} from '../services/restaurant-listing.service';
   templateUrl: 'bill-information.component.html'
 })
 export class BillInformationComponent {
+
+  public billList: Array<any> = [
+    {
+      productName: 'Бахур',
+      quantity: 3,
+      pricePerPiece: 2.5
+    },
+    {
+      productName: 'Бахур',
+      quantity: 3,
+      pricePerPiece: 2.5
+    },
+    {
+      productName: 'Бахур',
+      quantity: 3,
+      pricePerPiece: 2.5
+    },
+    {
+      productName: 'Бахур',
+      quantity: 3,
+      pricePerPiece: 2.5
+    },
+    {
+      productName: 'Бахур',
+      quantity: 3,
+      pricePerPiece: 2.5
+    },
+    {
+      productName: 'Бахур',
+      quantity: 3,
+      pricePerPiece: 2.5
+    },
+    {
+      productName: 'Бахур',
+      quantity: 3,
+      pricePerPiece: 2.5
+    },
+    {
+      productName: 'Бахур',
+      quantity: 3,
+      pricePerPiece: 2.5
+    }
+  ];
   public myBill: string = '24,5лв';
   public totalBill: string = '145лв';
   public isPayMode: boolean = false;
