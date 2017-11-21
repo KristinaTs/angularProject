@@ -11,12 +11,15 @@
   <div class="table-wrapper">
     <table class="table table-striped bill-table">
       <tbody>
-      <tr *ngFor="let item of billList">
+      <tr *ngFor="let item of billList; let i = index">
         <td>
           <div>{{item.productName}}</div>
           <span>
           {{item.quantity}} x {{item.pricePerPiece | number: '1.2'}} лв.
         </span>
+        </td>
+        <td *ngIf="isPayMode" class="remove-container">
+          <div class="remove-button" (click)="removeEntry(i)">Премахни</div>
         </td>
         <td class="entry-total-price">{{item.quantity*item.pricePerPiece | number: '1.2'}}  лв.</td>
       </tr>

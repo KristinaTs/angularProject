@@ -99,6 +99,18 @@ $buttonBlue: #6bc7f0;
     position: fixed;
 }
 
+.remove-container {
+    display: flex;
+    align-items: flex-end;
+    height: 73px;
+    .remove-button {
+       display: flex;
+        color: red;
+        font-size: 12px;
+        cursor: pointer;
+    }
+}
+
 .entry-total-price {
     font-weight: bold;
     text-align: right;

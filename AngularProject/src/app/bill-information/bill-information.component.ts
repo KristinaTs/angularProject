@@ -12,57 +12,57 @@ export class BillInformationComponent {
 
   public billList: Array<any> = [
     {
-      productName: 'Бахур',
+      productName: 'Бахур1',
       quantity: 3,
       pricePerPiece: 2.5
     },
     {
-      productName: 'Бахур',
+      productName: 'Бахур2',
       quantity: 3,
       pricePerPiece: 2.5
     },
     {
-      productName: 'Бахур',
+      productName: 'Бахур3',
       quantity: 3,
       pricePerPiece: 2.5
     },
     {
-      productName: 'Бахур',
+      productName: 'Бахур4',
       quantity: 3,
       pricePerPiece: 2.5
     },
     {
-      productName: 'Бахур',
+      productName: 'Бахур5',
       quantity: 3,
       pricePerPiece: 2.5
     },
     {
-      productName: 'Бахур',
+      productName: 'Бахур6',
       quantity: 3,
       pricePerPiece: 2.5
     },
     {
-      productName: 'Бахур',
+      productName: 'Бахур7',
       quantity: 3,
       pricePerPiece: 2.5
     },
     {
-      productName: 'Бахур',
+      productName: 'Бахур8',
       quantity: 3,
       pricePerPiece: 2.5
     },
     {
-      productName: 'Бахур',
+      productName: 'Бахур9',
       quantity: 3,
       pricePerPiece: 2.5
     },
     {
-      productName: 'Бахур',
+      productName: 'Бахур10',
       quantity: 3,
       pricePerPiece: 2.5
     },
     {
-      productName: 'Бахур',
+      productName: 'Бахур11',
       quantity: 3,
       pricePerPiece: 2.5
     }
@@ -90,5 +90,9 @@ export class BillInformationComponent {
    */
   public goToPayScreen(): void {
       this.isPayMode = true;
+  }
+
+  public removeEntry(index: number): void {
+    this.billList.splice(index,1);
   }
 }
