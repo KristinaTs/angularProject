@@ -29,6 +29,7 @@ $buttonBlue: #6bc7f0;
 }
 
 .restaurant-image {
+    z-index: 1;
   border-right: 1px solid lightgray;
 }
 
@@ -37,12 +38,9 @@ $buttonBlue: #6bc7f0;
   text-align: center;
 }
 
-.bill-table {
-  margin-top: 20px;
-}
-
 .button-wrapper {
   position: fixed;
+    z-index: 1;
   bottom: 0px;
   width: 100%;
 }
@@ -82,6 +80,26 @@ $buttonBlue: #6bc7f0;
   text-align: center;
 }
 
-.bill-information-wrapper {
+.table-wrapper {
+    z-index: 0;
+    width: 100%;
+    margin-bottom: 100px;
+    margin-top: 90px;
+}
 
+.bill-image {
+    z-index: 1;
+}
+
+.top-images-container {
+    width: 100%;
+    z-index: 1;
+    margin-left: 0 !important;
+    background-color: white;
+    position: fixed;
+}
+
+.entry-total-price {
+    font-weight: bold;
+    text-align: right;
 }

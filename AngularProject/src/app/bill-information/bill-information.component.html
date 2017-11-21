@@ -1,25 +1,29 @@
 <div class="bill-information-wrapper row">
   <div class="background-image"></div>
+  <div class="row top-images-container">
     <div class="col col-6 restaurant-image tx-center">
-        <img class="image" [src]="restaurant.image" alt="">
+      <img class="image" [src]="restaurant.image" alt="">
     </div>
     <div class="col col-xs-6 bill-image tx-center">
       <img class="image" [src]="restaurant.image" alt="">
     </div>
-  <table class="table table-striped bill-table">
-    <tbody>
-    <tr *ngFor="let item of billList">
-      <td>
-        <div>{{item.productName}}</div>
-        <span>
+  </div>
+  <div class="table-wrapper">
+    <table class="table table-striped bill-table">
+      <tbody>
+      <tr *ngFor="let item of billList">
+        <td>
+          <div>{{item.productName}}</div>
+          <span>
           {{item.quantity}} x {{item.pricePerPiece | number: '1.2'}} лв.
         </span>
-      </td>
-      <td>{{item.quantity*item.pricePerPiece}}</td>
-    </tr>
-    </tbody>
-  </table>
-  <div class="button-wrapper container" [ngClass]="isPayMode ? 'payment-screen' : ''">
+        </td>
+        <td class="entry-total-price">{{item.quantity*item.pricePerPiece | number: '1.2'}}  лв.</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="button-wrapper" [ngClass]="isPayMode ? 'payment-screen' : ''">
     <ng-template [ngIf]="!isPayMode">
       <div class="button confirm-pay pink-button float-left"></div>
       <div class="button blue-button float-left price-image">

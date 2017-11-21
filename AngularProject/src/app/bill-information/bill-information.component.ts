@@ -50,6 +50,21 @@ export class BillInformationComponent {
       productName: 'Бахур',
       quantity: 3,
       pricePerPiece: 2.5
+    },
+    {
+      productName: 'Бахур',
+      quantity: 3,
+      pricePerPiece: 2.5
+    },
+    {
+      productName: 'Бахур',
+      quantity: 3,
+      pricePerPiece: 2.5
+    },
+    {
+      productName: 'Бахур',
+      quantity: 3,
+      pricePerPiece: 2.5
     }
   ];
   public myBill: string = '24,5лв';
