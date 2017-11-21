@@ -68,6 +68,7 @@ $buttonBlue: #6bc7f0;
 
 .bill-information-pay-screen {
   height: 80px;
+    padding: 10px;
   background-color: rgba(255, 255, 255, 0.7);
 }
 
@@ -126,9 +127,15 @@ $buttonBlue: #6bc7f0;
     vertical-align: middle;
     cursor: pointer;
 }
+.tip-input {
+    width: 50%;
+    &:focus { outline:none; }
+}
 
 .info-icon-container{
     width: 23px;
     text-align: center;
     vertical-align: middle !important;
 }
+
+.half-width { width: 50%; }

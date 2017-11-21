@@ -41,12 +41,15 @@
     </ng-template>
     <ng-template [ngIf]="isPayMode">
         <div class="clearfix bill-information-pay-screen">
-          <div class="float-left">
-            <label for="tip">Бакшиш:</label>
-            <input type="text" id="tip">
+          <div class="float-left half-width">
+            <div>Бакшиш:</div>
+            <div>
+              <input type="text" class="tip-input">
+            </div>
           </div>
-          <div class="float-right">
-            Общо: {{totalBill}}
+          <div class="float-right half-width">
+            <div>Общо: </div>
+            <div>{{totalBill}}</div>
           </div>
         </div>
       <div class="clearfix">
