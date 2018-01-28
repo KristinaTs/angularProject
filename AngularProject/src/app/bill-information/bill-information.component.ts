@@ -10,6 +10,7 @@ import {RestaurantListingService} from '../services/restaurant-listing.service';
 })
 export class BillInformationComponent {
 
+
   public billList: Array<any> = [
     {
       productName: 'Бахур1',
@@ -70,6 +71,7 @@ export class BillInformationComponent {
   public myBill: string = '24,5лв';
   public totalBill: string = '145лв';
   public isPayMode: boolean = false;
+  public isEditMode: boolean = false;
   public restaurant = {
     id: 1,
     name: 'Red Rooster Restaurant',
@@ -94,5 +96,9 @@ export class BillInformationComponent {
 
   public removeEntry(index: number): void {
     this.billList.splice(index,1);
+  }
+
+  public goToEditMode(): void {
+    this.isEditMode = true;
   }
 }

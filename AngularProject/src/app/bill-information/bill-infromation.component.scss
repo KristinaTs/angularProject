@@ -127,8 +127,38 @@ $buttonBlue: #6bc7f0;
     cursor: pointer;
 }
 
+.white-arrow-right {
+  display: inline-block;
+  width: 23px;
+  height: 23px;
+  background-image: url("./assets/images/white-arrow.png");
+  background-size: cover;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+
+.white-check {
+  display: inline-block;
+  width: 23px;
+  height: 23px;
+  background-image: url("./assets/images/white-check.png");
+  background-size: cover;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
 .info-icon-container{
     width: 23px;
     text-align: center;
     vertical-align: middle !important;
+}
+
+.blue-mode {
+  background-color: $buttonBlue;
+  color: white;
 }
