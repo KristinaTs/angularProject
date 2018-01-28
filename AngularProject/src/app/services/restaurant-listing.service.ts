@@ -52,8 +52,20 @@ export class RestaurantListingService {
    * @returns {Promise<any>}
    */
   public createNewBill(restaurantId: number): Promise<any> {
-    console.log('BILL');
-    return this.httpService.get('ticket/request-ticket');
+    return this.httpService.post('ticket/request-ticket',  restaurantId);
+  }
+
+  public getSocket(): Promise<any> {
+    return this.httpService.get('/ticket-websocket');
+  }
+
+  /**
+   * Get information for current bill
+   * @param billId
+   * @returns {Promise<any>}
+   */
+  public getBillInformation(billId: number): Promise<any> {
+    return this.httpService.get('ticket/' + billId);
   }
 
 }
