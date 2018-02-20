@@ -1,12 +1,14 @@
 import {
-  Component, OnDestroy,
+  Component,
+  OnDestroy,
   OnInit
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
 
 
-import {RestaurantListingService} from '../services/restaurant-listing.service';
+import { RestaurantListingService } from '../services/restaurant-listing.service';
+import { WebSocketService } from '../services/websocket.service';
 
 
 @Component({
@@ -20,8 +22,13 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
   constructor (
     private router: Router,
     private restaurantService: RestaurantListingService,
-    private activateRouter: ActivatedRoute
+    private activateRouter: ActivatedRoute,
+    private webSocketService: WebSocketService
   ) {
+    // let event = webSocketService.connect();
+    // webSocketService.onMessageEmitter.subscribe((data) => {
+    //   console.log(data);
+    // });
   }
 
   public welcome: 'Добре дошли!';
@@ -32,7 +39,6 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     // here we get the information for the restaurant
-    // TODO uncomment when we have a correct request
     this.routerSubscription = this.activateRouter.params.subscribe(params => {
       const currentRestaurantId = params['id'];
       this.restaurantId = currentRestaurantId;
@@ -68,10 +74,9 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
   public sendRequestForBill() {
     // send request for bill
     this.isRequestSendForBill = true;
-    console.log('restaurantId', this.restaurantId);
     this.restaurantService.createNewBill(this.restaurantId)
       .then((data) => {
-      console.log(data);
+        this.billCode = data.id;
       })
       .catch(err => {
         console.error(err);

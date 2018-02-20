@@ -12,7 +12,8 @@
     <table class="table table-striped bill-table">
       <tbody>
       <tr *ngFor="let item of billList; let i = index">
-        <td>
+        <td class="button confirm-pay pink-button" *ngIf="isEditMode"><span  class="white-check"></span></td>
+        <td [class.blue-mode]="isEditMode">
           <div>{{item.productName}}</div>
           <span>
           {{item.quantity}} x {{item.pricePerPiece | number: '1.2'}} лв.
@@ -21,19 +22,20 @@
         <td *ngIf="isPayMode" class="remove-container">
           <div class="remove-button" (click)="removeEntry(i)">Премахни</div>
         </td>
-        <td class="entry-total-price">{{item.quantity*item.pricePerPiece | number: '1.2'}}  лв.</td>
-        <td class="info-icon-container"><span *ngIf="isPayMode" class="info-icon"></span></td>
+        <td class="entry-total-price"  [class.blue-mode]="isEditMode">{{item.quantity*item.pricePerPiece | number: '1.2'}}  лв.</td>
+        <td *ngIf="isPayMode" class="info-icon-container"><span  class="info-icon"></span></td>
+        <td class="button confirm-pay pink-button" *ngIf="isEditMode"><span  class="white-arrow-right"></span></td>
       </tr>
       </tbody>
     </table>
   </div>
   <div class="button-wrapper" [ngClass]="isPayMode ? 'payment-screen' : ''">
-    <ng-template [ngIf]="!isPayMode">
+    <ng-template [ngIf]="!isPayMode && !isEditMode">
       <div class="button confirm-pay pink-button float-left"></div>
       <div class="button blue-button float-left price-image">
         ОБЩО СМЕТКА: {{totalBill}}
       </div>
-      <div class="button confirm-pay pink-button float-left"></div>
+      <div class="button confirm-pay pink-button float-left" (click)="goToEditMode()"><span  class="white-arrow-right"></span></div>
       <div class="button pay-button float-left">
         <div class="margin-left-10 float-left">Мoята сметка: {{myBill}}</div>
         <div (click)="goToPayScreen()" class="float-right margin-right-10">ПЛАТИ</div>

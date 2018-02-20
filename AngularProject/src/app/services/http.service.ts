@@ -17,7 +17,7 @@ declare var Zone: any;
 @Injectable()
 export class HttpService {
   // set base url here
-  private baseUrl: any = 'http://192.168.0.14:8080';
+  private baseUrl: any = 'http://192.168.33.102:8080';
   private defaultOptions: any = {
     async: false,
     showMessages: true,

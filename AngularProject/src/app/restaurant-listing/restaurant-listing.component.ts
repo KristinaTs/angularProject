@@ -76,6 +76,7 @@ export class RestaurantListComponent implements OnInit {
   public restaurantList = null;
 
   public ngOnInit(): void {
+    console.log('testsetes');
     this.getAllRestaurants();
   }
 
