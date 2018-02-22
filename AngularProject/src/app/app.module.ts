@@ -19,9 +19,8 @@ import { RestaurantInformationComponent } from './restaurant-information/restaur
 import { RestaurantListingService } from './services/restaurant-listing.service';
 import { BillInformationComponent } from './bill-information/bill-information.component';
 // Import HttpClientModule from @angular/common/http
-import {HttpClientModule} from '@angular/common/http';
-
-
+import { HttpClientModule } from '@angular/common/http';
+import { BillInfoPopupComponent } from "./bill-info-popup/bill-info-popup.component";
 
 
 @NgModule({
@@ -29,7 +28,8 @@ import {HttpClientModule} from '@angular/common/http';
     AppComponent,
     RestaurantListComponent,
     BillInformationComponent,
-    RestaurantInformationComponent
+    RestaurantInformationComponent,
+    BillInfoPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -48,4 +48,5 @@ import {HttpClientModule} from '@angular/common/http';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -1,0 +1,59 @@
+<div class="popup-content">
+    <div class="bill-info-wrapper">
+        <div class="dash-bt-border header"> ОБЩА СМЕТКА: {{data.total}}</div>
+        <div class="widget-container dash-bt-border">
+            Участници:
+            <div class="participants-container">
+                <div class="participant"
+                     [class.self]="participant.self"
+                     [class.selected]="participant.selected"
+                     *ngFor="let participant of data.participants; let i = index"
+                     (click)="toggleSelectedParticipant(i)"
+                >
+                    {{participant.initials}}
+                </div>
+            </div>
+        </div>
+        <div class="widget-container dash-bt-border">
+            Дялове:
+            <div class="shares-container">
+                <div class="share"
+                     [class.self]="share.self"
+                     [class.selected]="share.selected"
+                     *ngFor="let share of data.shares; let i = index"
+                     (click)="toggleSelectedShareCount(i)"
+                >
+                    {{share.count}}
+                </div>
+            </div>
+        </div>
+        <div class="header">Дялове за мен:</div>
+        <div class="test">
+            <div class="share-slider-container">
+                <div class="slider"></div>
+            </div>
+        </div>
+        <div class="share-options-wrapper">
+            <div *ngFor="let shareOption of data.shareOptions; let i = index"
+                 (click)="setSharesForSelf(i)"
+                 [class.selected]="shareOption.selected"
+            >
+                {{shareOption.count}}
+            </div>
+        </div>
+    </div>
+
+    <div class="button-wrapper">
+        <div class="button confirm-pay pink-button float-left" (click)="goToEditMode()">
+            <span class="white-check"></span>
+        </div>
+        <div class="button blue-button float-left price-image">
+            Моят дял: {{totalBill}}
+        </div>
+
+        <div class="button pay-button float-left">
+            <div class="margin-left-10 float-left">Мoята сметка: {{myBill}}</div>
+            <div (click)="goToPayScreen()" class="float-right margin-right-10">ПЛАТИ</div>
+        </div>
+    </div>
+</div>

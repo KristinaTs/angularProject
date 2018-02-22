@@ -8,10 +8,11 @@ import {
   ActivatedRoute
 } from '@angular/router';
 
-import {RestaurantListingService} from '../services/restaurant-listing.service';
+import { RestaurantListingService } from '../services/restaurant-listing.service';
 
 @Component({
-  templateUrl: 'bill-information.component.html'
+  templateUrl: 'bill-information.component.html',
+  host: {style: 'position: relative;'}
 })
 export class BillInformationComponent implements OnInit {
 
@@ -21,6 +22,8 @@ export class BillInformationComponent implements OnInit {
   public totalBill: string = '145лв';
   public isPayMode: boolean = false;
   public isEditMode: boolean = false;
+  public isModalOpened: boolean = false;
+
   public restaurant = {
     id: 1,
     name: 'Red Rooster Restaurant',
@@ -111,13 +114,17 @@ export class BillInformationComponent implements OnInit {
     });
   }
 
+  public openBillInfoModal() {
+    this.isModalOpened = !this.isModalOpened;
+  }
+
   /*
-  Get bill information
+   Get bill information
    */
   public getBillInformation(currentId): void {
-      this.restaurantService.getBillInformation(currentId).then((data) => {
-          console.log(data);
-      });
+    this.restaurantService.getBillInformation(currentId).then((data) => {
+      console.log(data);
+    });
   }
 
 
@@ -125,7 +132,7 @@ export class BillInformationComponent implements OnInit {
    * Change pay mode to true so we can show the payment buttons
    */
   public goToPayScreen(): void {
-      this.isPayMode = true;
+    this.isPayMode = true;
   }
 
   public removeEntry(index: number): void {
