@@ -34,7 +34,19 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
   public welcome: 'Добре дошли!';
   public description: 'Място за послание или топ промоция от ресторанта!';
 
-   public restaurant = null;
+   public restaurant =  { id:1,
+     name:"Victoria",
+     address:"Bul. Bulgaria N118",
+     logoUrl:"https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg",
+     menuUrl:"",
+     category:"RESTAURANT",
+     rating: {
+       foodQuality:45,
+       serviceQuality:45,
+       atmosphere:40
+     },
+     menuItems:[]
+   };
 
 
   public ngOnInit(): void {
@@ -65,7 +77,7 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
     this.restaurantService.getRestaurantInformation(restaurantId)
       .then((response) => {
       console.log(response);
-          this.restaurant = response;
+          //this.restaurant = response;
       }).catch((err) => {
           console.error(err);
       });

@@ -18,6 +18,7 @@ import { RestaurantListComponent } from './restaurant-listing/restaurant-listing
 import { RestaurantInformationComponent } from './restaurant-information/restaurant-information.component';
 import { RestaurantListingService } from './services/restaurant-listing.service';
 import { BillInformationComponent } from './bill-information/bill-information.component';
+import { TopNavigationComponent } from './top-navigation/top-navigation.component';
 // Import HttpClientModule from @angular/common/http
 import {HttpClientModule} from '@angular/common/http';
 
@@ -29,7 +30,8 @@ import {HttpClientModule} from '@angular/common/http';
     AppComponent,
     RestaurantListComponent,
     BillInformationComponent,
-    RestaurantInformationComponent
+    RestaurantInformationComponent,
+    TopNavigationComponent
   ],
   imports: [
     BrowserModule,
