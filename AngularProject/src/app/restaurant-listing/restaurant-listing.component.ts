@@ -7,7 +7,8 @@ import {RestaurantListingService} from '../services/restaurant-listing.service';
 import {HttpClient} from '@angular/common/http';
 
 @Component({
-  templateUrl: 'restaurant-list.component.html'
+  templateUrl: 'restaurant-list.component.html',
+  selector: 'restaurant-listing'
 })
 export class RestaurantListComponent implements OnInit {
 
@@ -25,7 +26,7 @@ export class RestaurantListComponent implements OnInit {
     { id:1,
       name:"Victoria",
       address:"Bul. Bulgaria N118",
-      logoUrl:"images/Victoria.jpg",
+      logoUrl:"https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg",
       menuUrl:"",
       category:"RESTAURANT",
       rating: {
@@ -38,7 +39,7 @@ export class RestaurantListComponent implements OnInit {
     {id: 2,
       name:"Happy Bar&Grill",
       address:"Bul. Alexander Stamboliiski N53",
-      logoUrl :"images/Happy.jpg",
+      logoUrl :"https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg",
       menuUrl:"",
       category:"BAR_AND_GRILL",
       rating: {
@@ -103,9 +104,9 @@ export class RestaurantListComponent implements OnInit {
    * Get all restaurants
    */
   public getAllRestaurants(): void {
-    this.restaurantListingService.getAllRestaurants().then((data) => {
-      this.restaurantList = data;
-    });
+    // this.restaurantListingService.getAllRestaurants().then((data) => {
+    //   this.restaurantList = data;
+    // });
 
     this.restaurantList = this.forTesting;
   }
