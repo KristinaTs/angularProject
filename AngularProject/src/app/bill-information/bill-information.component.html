@@ -21,7 +21,7 @@
                     {{item.menuItem.title}}
                   </div>
                     <span>
-          {{item.menuItem.quantity}} x {{(item.menuItem.price/100) | number: '1.2'}} лв.
+          {{item.menuItem.count}} x {{(item.menuItem.price/100) | number: '1.2'}} лв.
         </span>
                 </td>
                 <td *ngIf="isPayMode" class="remove-container">
@@ -31,7 +31,7 @@
                     number: '1.2'}} лв.
                 </td>
                 <td *ngIf="isPayMode" class="info-icon-container"><span class="info-icon"></span></td>
-                <td class="button confirm-pay pink-button" *ngIf="isEditMode"><span class="white-arrow-right"></span>
+                <td *ngIf="isEditMode" (click)="goToEditModePerItem(i)" class="button confirm-pay pink-button"><span class="white-arrow-right"></span>
                 </td>
             </tr>
             </tbody>

@@ -69,3 +69,7 @@ ul {
   color: white;
   text-align: center;
 }
+
+button:disabled {
+  background-color: grey;
+}
