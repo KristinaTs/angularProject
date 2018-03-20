@@ -1,3 +1,14 @@
+<div class="bill-code row">
+  <div class="col-6">
+    <input type="text" placeholder="Код на сметка">
+  </div>
+  <div class="col-6">
+    <input type="text" placeholder="Парола">
+  </div>
+  <div class="confirm-button pointer">
+
+  </div>
+</div>
 <ng-template [ngIf]="restaurantList">
   <div class="restaurant-listing row">
     <div class="col col-12 restaurant-wrapper pointer" *ngFor="let restaurant of restaurantList"
@@ -6,13 +17,13 @@
         <div class="col col-3 image-container">
           <img class="image" [src]="restaurant.logoUrl" alt="">
         </div>
-        <div class="col col-9">
+        <div class="col col-7">
           <div class="title">{{restaurant.name}}</div>
           <div class="address text-gray">{{restaurant.address}}</div>
           <div class="stat-wrapper">
             <div class="rating-container">
               <span class="text-gray stats">Рейтинг:</span>
-              <!-- <span class="rating">{{restaurant.rating}}</span>-->
+              <span class="rating">{{restaurant.rating.foodQuality}}</span>
             </div>
             <ul class="rating-container description-list">
               <li class="text-gray stats"><span>Храна:</span><span> {{restaurant.rating.foodQuality}}</span></li>
@@ -21,6 +32,9 @@
               </li>
             </ul>
           </div>
+        </div>
+        <div class="col-2">
+          <div class="right-arrow"></div>
         </div>
       </div>
     </div>

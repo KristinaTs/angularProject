@@ -3,15 +3,13 @@
 @import './app/restaurant-information/restaurant-information.component.scss';
 @import './app/bill-information/bill-infromation.component';
 @import './app/top-navigation/top-navigation.component';
+@import './app/login-screen/login.component';
 
 
 body {
   background-color: #6bc7f0 !important;
 }
 
-.row {
-  background-color: white !important;
-}
 .text-gray {
   color: #a2a2a2;
 }

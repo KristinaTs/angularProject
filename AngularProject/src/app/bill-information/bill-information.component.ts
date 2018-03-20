@@ -47,61 +47,61 @@ export class BillInformationComponent implements OnInit {
 
 
   public billList: Array<any> = [
-    {
-      productName: 'Бахур1',
-      quantity: 3,
-      pricePerPiece: 2.5
-    },
-    {
-      productName: 'Бахур2',
-      quantity: 3,
-      pricePerPiece: 2.5
-    },
-    {
-      productName: 'Бахур3',
-      quantity: 3,
-      pricePerPiece: 2.5
-    },
-    {
-      productName: 'Бахур4',
-      quantity: 3,
-      pricePerPiece: 2.5
-    },
-    {
-      productName: 'Бахур5',
-      quantity: 3,
-      pricePerPiece: 2.5
-    },
-    {
-      productName: 'Бахур6',
-      quantity: 3,
-      pricePerPiece: 2.5
-    },
-    {
-      productName: 'Бахур7',
-      quantity: 3,
-      pricePerPiece: 2.5
-    },
-    {
-      productName: 'Бахур8',
-      quantity: 3,
-      pricePerPiece: 2.5
-    },
-    {
-      productName: 'Бахур9',
-      quantity: 3,
-      pricePerPiece: 2.5
-    },
-    {
-      productName: 'Бахур10',
-      quantity: 3,
-      pricePerPiece: 2.5
-    },
-    {
-      productName: 'Бахур11',
-      quantity: 3,
-      pricePerPiece: 2.5
-    }
+    // {
+    //   productName: 'Бахур1',
+    //   quantity: 3,
+    //   pricePerPiece: 2.5
+    // },
+    // {
+    //   productName: 'Бахур2',
+    //   quantity: 3,
+    //   pricePerPiece: 2.5
+    // },
+    // {
+    //   productName: 'Бахур3',
+    //   quantity: 3,
+    //   pricePerPiece: 2.5
+    // },
+    // {
+    //   productName: 'Бахур4',
+    //   quantity: 3,
+    //   pricePerPiece: 2.5
+    // },
+    // {
+    //   productName: 'Бахур5',
+    //   quantity: 3,
+    //   pricePerPiece: 2.5
+    // },
+    // {
+    //   productName: 'Бахур6',
+    //   quantity: 3,
+    //   pricePerPiece: 2.5
+    // },
+    // {
+    //   productName: 'Бахур7',
+    //   quantity: 3,
+    //   pricePerPiece: 2.5
+    // },
+    // {
+    //   productName: 'Бахур8',
+    //   quantity: 3,
+    //   pricePerPiece: 2.5
+    // },
+    // {
+    //   productName: 'Бахур9',
+    //   quantity: 3,
+    //   pricePerPiece: 2.5
+    // },
+    // {
+    //   productName: 'Бахур10',
+    //   quantity: 3,
+    //   pricePerPiece: 2.5
+    // },
+    // {
+    //   productName: 'Бахур11',
+    //   quantity: 3,
+    //   pricePerPiece: 2.5
+    // }
   ];
 
   public ngOnInit(): void {
@@ -123,7 +123,10 @@ export class BillInformationComponent implements OnInit {
    */
   public getBillInformation(currentId): void {
     this.restaurantService.getBillInformation(currentId).then((data) => {
-      console.log(data);
+      for(let i = 0; i < data.subTickets.length; i++) {
+        this.billList= this.billList.concat(data.subTickets[i].orderedItems);
+      }
+      console.log('billInfo',data);
     });
   }
 

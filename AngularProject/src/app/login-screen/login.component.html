@@ -1,0 +1,29 @@
+<div class="login-wrapper">
+  <div class="image-wrapper">
+    <img src="../../assets/login-logo.png" alt="">
+  </div>
+  <div class="row">
+    <form>
+      <div class="col-12">
+        <input type="text" [(ngModel)]="username" placeholder="Потребителско име" name="username">
+      </div>
+      <div class="col-12">
+        <input type="text" [(ngModel)]="password" placeholder="Парола" name="password">
+      </div>
+      <div class="col-12">
+        <div class="login-button pointer" (click)="login()">Вход</div>
+      </div>
+    </form>
+
+    <div class="col-12">
+      <div>Регистрация</div>
+    </div>
+    <div class="col-12">
+      <div>Влезте с профил на Google +</div>
+    </div>
+    <div class="col-12">
+      <div>Влес с Facebook профиле</div>
+    </div>
+
+  </div>
+</div>

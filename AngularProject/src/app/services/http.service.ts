@@ -17,7 +17,7 @@ declare var Zone: any;
 @Injectable()
 export class HttpService {
   // set base url here
-  private baseUrl: any = 'http://192.168.33.102:8080';
+  private baseUrl: any = 'http://192.168.0.17:8080';
   private defaultOptions: any = {
     async: false,
     showMessages: true,
@@ -32,26 +32,32 @@ export class HttpService {
   /**
    * Sends POST request to a given url
    */
+  /**
+   * Sends POST request to a given url
+   */
   public post(url: string, params: any = {}, options: any = {}): Promise<any> {
-    const config = this.createCorrectParams(options),
-      headers = new RequestOptions({ headers: this.getHeaders('post', config) }),
+    let config = this.createCorrectParams(options);
+    let customHeaders = this.getHeaders('post', config);
+    customHeaders['Autorizations']= 'Basic '+ params.username + ':' + params.password;
+    let headers = new RequestOptions({ headers: customHeaders }),
       postUrl = this.baseUrl + '/' + url;
 
+
     return new Promise((resolve, reject) => {
-      this.http.post(postUrl, params, headers)
+
+        this.http.post(postUrl, params, headers)
           .toPromise()
           .then(data => {
-            const response = data.json();
-            // change token if needed
+            let response = data.json();
+            //change token if needed
             resolve(response);
           })
           .catch(error => {
-            const parsedError = this.errorHandler(error, this);
+            let parsedError = this.errorHandler(error, this);
             reject(parsedError);
           });
     });
   }
-
   /**
    * GET request
    * */
@@ -144,6 +150,9 @@ export class HttpService {
     if (this.cookie.get('user') !== null && this.cookie.get('user') !== '') {
       paramsObj['User'] = this.cookie.get('user');
     }
+
+    let encode = new String(btoa('avramov@abv.bg:1234'));
+    paramsObj['Authorization'] = 'Basic '+ encode;
 
     return new Headers(paramsObj);
   }

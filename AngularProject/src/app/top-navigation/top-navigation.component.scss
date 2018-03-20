@@ -1,3 +1,81 @@
 .top-navigation-wrapper {
-  height: 60px;
+  background-color:  #C2D891;
+  height: 75px;
+
+  input {
+    background-color:#C2D891 ;
+    border: none;
+    color: white;
+    margin-left: 20px;
+    margin-top: 15px;
+  }
+
+  .search {
+    background-image: url('https://www.queryly.com/images/whitesearchicon.png');
+    width: 20px;
+    height: 20px;
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    margin-top: 35px;
+    margin-left: 35px;
+  }
+
+  .expand-navigation-icon {
+    background-image: url('http://www.pvhc.net/img46/pqkqspewhrfcsreamcnm.png');
+    width: 20px;
+    height: 20px;
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    margin-top: 35px;
+    margin-left: 42px;
+  }
+
+  .expand-side-navigation {
+    background-image: url('https://xeniapp.com/wp-content/uploads/package_img/file_broucher/1487145277_5_2416616.png');
+    width: 25px;
+    height: 28px;
+    background-size: 36px 34px;
+    background-repeat: no-repeat;
+    margin-top: 28px;
+    margin-left: 34px;
+  }
+
+  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: white;
+  }
+  ::-moz-placeholder { /* Firefox 19+ */
+    color: white;
+  }
+  :-ms-input-placeholder { /* IE 10+ */
+    color: white;
+  }
+  :-moz-placeholder { /* Firefox 18- */
+    color: white;
+  }
+}
+
+.top-navigation-expand {
+  .top-container {
+    height: 75px;
+    background-color: #9AB956;
+  }
+  .bottom-container {
+    height: 75px;
+    background-color: #C2D891;
+  }
+
+  .filter {
+    margin-top: 9px;
+    text-align: center;
+    color: white;
+  }
+
+  span {
+    padding-right: 5px;
+    border-right: 1px solid white;
+  }
+  span:last-child {
+    border: none;
+  }
+
 }

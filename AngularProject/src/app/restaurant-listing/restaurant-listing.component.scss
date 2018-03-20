@@ -1,6 +1,46 @@
 $greyBorder: #e9e9e9;
 $lightGreen: #afe069;
 
+
+.bill-code {
+  position: relative;
+  padding: 20px;
+  input {
+    background-color: white;
+    border-radius: 20px;
+    max-width: 100%;
+    border: none;
+    height: 40px;
+  }
+  .confirm-button {
+    position: absolute;
+    right: 11px;
+    top: 0;
+    background-image: url(http://www.freeiconspng.com/uploads/white-arrow-transparent-png-22.png);
+    width: 17px;
+    height: 58px;
+    background-size: 21px 24px;
+    background-repeat: no-repeat;
+    margin-top: 28px;
+  }
+
+  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    text-align: center;
+    color: grey;
+  }
+  ::-moz-placeholder { /* Firefox 19+ */
+    text-align: center;
+    color: grey;
+  }
+  :-ms-input-placeholder { /* IE 10+ */
+    text-align: center;
+    color: grey;
+  }
+  :-moz-placeholder { /* Firefox 18- */
+    text-align: center;
+    color: grey;
+  }
+}
 .restaurant-listing {
   background-color: white;
   margin-left: -3px !important;
@@ -22,6 +62,15 @@ $lightGreen: #afe069;
     height: 1px;
     content: "";
     border-bottom: 1px solid $greyBorder;
+  }
+
+  .right-arrow {
+    background-image: url('https://www.rentgreatplace.com/assets/images/arrow-right-gray.png');
+    width: 30px;
+    height: 35px;
+    background-size: 19px 34px;
+    background-repeat: no-repeat;
+    margin-top: 28px;
   }
 }
 

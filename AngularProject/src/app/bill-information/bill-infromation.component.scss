@@ -1,5 +1,14 @@
 $buttonGreen: #9ab956;
 $buttonBlue: #6bc7f0;
+.bill-information-wrapper {
+  background-color: white;
+}
+.smetka-image {
+  background-image: url("./assets/login-logo.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+}
 .bill-wrapper {
   width: 100%;
   height: 100%;
@@ -86,6 +95,22 @@ $buttonBlue: #6bc7f0;
     width: 100%;
     margin-bottom: 100px;
     margin-top: 90px;
+    height: 750px;
+    background-color: white;
+    overflow-y: scroll;
+    background-image: url("./assets/images/new-backgorund.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: bottom;
+}
+
+.bill-information-top-image {
+  padding: 20px;
+  img {
+    width: 60px;
+    height: 60px;
+  }
 }
 
 .bill-image {

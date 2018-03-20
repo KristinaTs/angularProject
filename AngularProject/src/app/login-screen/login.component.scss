@@ -1,0 +1,22 @@
+.login-wrapper {
+  margin-left: -15px;
+  margin-right: -15px;
+  background-color: #FFAF55;
+
+  .image-wrapper {
+    height: 250px;
+    text-align: center;
+    img {
+      width: 200px;
+      height: 200px;
+    }
+  }
+
+  .login-button {
+    color: red;
+    background-color: white;
+    text-align: center;
+    height: 55px;
+    line-height: 55px;
+  }
+}

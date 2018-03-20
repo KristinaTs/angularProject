@@ -4,7 +4,30 @@
   margin-left: -15px;
   text-align: center;
   height: 100%;
-    text-align: center;
+
+  .image-container {
+    background-image: url("./assets/restaurant-background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 140px;
+    position: relative;
+    margin-bottom: 50px;
+    img {
+      position: absolute;
+      bottom: -29px;
+      right: 0;
+      left: 0;
+      width: 110px;
+      height: 110px;
+      margin: auto;
+    }
+  }
+
+  .bill-send {
+    background-image: url("./assets/pin-background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
     .stat-wrapper {
        margin-top: 2rem;
     }

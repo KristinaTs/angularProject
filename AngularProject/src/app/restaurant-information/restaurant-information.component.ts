@@ -31,10 +31,12 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
     // });
   }
 
-  public welcome: 'Добре дошли!';
-  public description: 'Място за послание или топ промоция от ресторанта!';
+  public greeting = {
+    welcome: 'Добре дошли!',
+    description: 'Място за послание или топ промоция от ресторанта!'
+  }
 
-   public restaurant =  { id:1,
+ restaurant =  { id:1,
      name:"Victoria",
      address:"Bul. Bulgaria N118",
      logoUrl:"https://cloud.netlifyusercontent.com/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/68dd54ca-60cf-4ef7-898b-26d7cbe48ec7/10-dithering-opt.jpg",
@@ -77,7 +79,7 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
     this.restaurantService.getRestaurantInformation(restaurantId)
       .then((response) => {
       console.log(response);
-          //this.restaurant = response;
+          this.restaurant = response;
       }).catch((err) => {
           console.error(err);
       });
@@ -88,6 +90,7 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
     this.isRequestSendForBill = true;
     this.restaurantService.createNewBill(this.restaurantId)
       .then((data) => {
+        console.log(data);
         this.billCode = data.id;
       })
       .catch(err => {

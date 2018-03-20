@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { routes } from './app.routes';
 
 
+import { LoginComponent } from "./login-screen/login.component";
 // Restaurant listing and information components
 import { HttpService } from './services/http.service';
 import { CookieService } from './services/cookie.service';
@@ -31,7 +32,8 @@ import { BillInfoPopupComponent } from "./bill-info-popup/bill-info-popup.compon
     BillInformationComponent,
     RestaurantInformationComponent,
     BillInfoPopupComponent,
-    TopNavigationComponent
+    TopNavigationComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

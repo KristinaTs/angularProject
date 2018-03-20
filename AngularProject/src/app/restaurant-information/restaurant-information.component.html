@@ -28,10 +28,10 @@
       </div>
       <div class="col col-12 description-container">
         <div class="restaurant-description-box" *ngIf="!isRequestSendForBill">
-          {{welcome}}
-          {{description}}
+          <div>{{greeting.welcome}}</div>
+          <div>{{greeting.description}}</div>
         </div>
-        <div class="restaurant-description-box" *ngIf="isRequestSendForBill">
+        <div class="restaurant-description-box bill-send" *ngIf="isRequestSendForBill">
           {{billCode}}
         </div>
       </div>

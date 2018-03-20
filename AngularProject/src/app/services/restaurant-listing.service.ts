@@ -68,4 +68,7 @@ export class RestaurantListingService {
     return this.httpService.get('ticket/' + billId);
   }
 
+  public login(form): Promise<any> {
+    return this.httpService.post('login', form, {contentsType: 'x-www-form-urlencoded'});
+  }
 }

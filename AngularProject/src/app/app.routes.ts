@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { RestaurantListComponent } from './restaurant-listing/restaurant-listing.component';
 import { RestaurantInformationComponent } from './restaurant-information/restaurant-information.component';
 import { BillInformationComponent } from './bill-information/bill-information.component';
+import { LoginComponent } from "./login-screen/login.component";
 
 
 /*
@@ -23,5 +24,10 @@ export const routes: Routes = [
   {
     path: 'bill-information/:id',
     component: BillInformationComponent
-  }
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+
 ];

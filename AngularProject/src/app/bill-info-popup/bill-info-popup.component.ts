@@ -36,6 +36,13 @@ export class BillInfoPopupComponent {
     })
   }
 
+  /**
+   * Close model when clicking on white chec
+   */
+  public goToEditMode(): void {
+    this.closeModal.emit();
+  }
+
   public data = {
     total: '154.5лв',
     participants: [
