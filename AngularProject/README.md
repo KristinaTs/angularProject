@@ -1,3 +1,12 @@
+#Checking project out
+1. Checkout project
+2. Install node js on computer
+3. Install npm 
+4. Run npm install in angularProject folder
+5. Install angular cli
+6. Test with ng serve
+
+
 # AngularProject
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.2.
