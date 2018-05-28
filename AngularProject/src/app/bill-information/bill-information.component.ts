@@ -69,12 +69,12 @@ export class BillInformationComponent implements OnInit {
    Get bill information
    */
   public getBillInformation(currentId): void {
-    // this.restaurantService.getBillInformation(currentId).then((data) => {
-    //   for(let i = 0; i < data.subTickets.length; i++) {
-    //     this.billList= this.billList.concat(data.subTickets[i].orderedItems);
-    //   }
-    //   console.log('billInfo',data);
-    // });
+    this.restaurantService.getBillInformation(currentId).then((data) => {
+      for(let i = 0; i < data.subTickets.length; i++) {
+        this.billList= this.billList.concat(data.subTickets[i].orderedItems);
+      }
+      console.log('billInfo',data);
+    });
     let data = {
       "id": 3,
       "posId": 1,
@@ -307,5 +307,15 @@ export class BillInformationComponent implements OnInit {
 
   public goToEditMode(): void {
     this.isEditMode = true;
+      this.navigateToTicketStep2('PIN');
   }
+
+    /**
+     * Navigate to the page with restaurant information
+     * @param restaurant
+     */
+    public navigateToTicketStep2(ticketId: any) {
+      //TODO
+            this.router.navigate([`ticket-step-2/PIN`]);
+    }
 }

@@ -19,6 +19,8 @@ import { RestaurantListComponent } from './restaurant-listing/restaurant-listing
 import { RestaurantInformationComponent } from './restaurant-information/restaurant-information.component';
 import { RestaurantListingService } from './services/restaurant-listing.service';
 import { BillInformationComponent } from './bill-information/bill-information.component';
+import { TicketStep2Component } from './ticket-step-2/ticket-step-2.component';
+import { TicketStep3Component } from './ticket-step-3/ticket-step-3.component';
 import { TopNavigationComponent } from './top-navigation/top-navigation.component';
 // Import HttpClientModule from @angular/common/http
 import { HttpClientModule } from '@angular/common/http';
@@ -32,6 +34,8 @@ import { BillInfoPopupComponent } from "./bill-info-popup/bill-info-popup.compon
     BillInformationComponent,
     RestaurantInformationComponent,
     BillInfoPopupComponent,
+      TicketStep2Component,
+      TicketStep3Component,
     TopNavigationComponent,
     LoginComponent
   ],
