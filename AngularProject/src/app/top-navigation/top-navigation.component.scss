@@ -1,8 +1,14 @@
 .top-navigation-wrapper {
   background-color:  #C2D891;
   height: 75px;
+  display: flex;
+  align-items: center;
 
-  input {
+  .navigation-icon {
+    display: inline-block;
+  }
+
+  .location-input {
     background-color:#C2D891 ;
     border: none;
     color: white;
@@ -16,18 +22,14 @@
     height: 20px;
     background-size: 20px 20px;
     background-repeat: no-repeat;
-    margin-top: 35px;
-    margin-left: 35px;
   }
 
   .expand-navigation-icon {
-    background-image: url('http://www.pvhc.net/img46/pqkqspewhrfcsreamcnm.png');
+    background-image: url('/assets/images/hamburger-menu.png');
     width: 20px;
     height: 20px;
     background-size: 20px 20px;
     background-repeat: no-repeat;
-    margin-top: 35px;
-    margin-left: 42px;
   }
 
   .expand-side-navigation {
@@ -36,8 +38,6 @@
     height: 28px;
     background-size: 36px 34px;
     background-repeat: no-repeat;
-    margin-top: 28px;
-    margin-left: 34px;
   }
 
   ::-webkit-input-placeholder { /* Chrome/Opera/Safari */

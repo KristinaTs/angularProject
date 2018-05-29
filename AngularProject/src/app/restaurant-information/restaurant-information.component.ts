@@ -85,12 +85,17 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
       });
   }
 
+    /**
+     * Request for new bill (+Нова сметка)
+     */
   public sendRequestForBill() {
     // send request for bill
     this.isRequestSendForBill = true;
-    this.restaurantService.createNewBill(this.restaurantId)
+    let objectToSend = {
+        posId: this.restaurantId
+    };
+    this.restaurantService.createNewBill(objectToSend)
       .then((data) => {
-        console.log(data);
         this.billCode = data.id;
       })
       .catch(err => {
@@ -98,6 +103,9 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
       });
   }
 
+    /**
+     * After the bill is loaded the button navigates us to the bill screen
+     */
   public goToBillInformation() {
     this.router.navigate([`bill-information/${this.billCode}`]);
   }

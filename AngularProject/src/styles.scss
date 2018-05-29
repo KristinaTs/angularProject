@@ -8,6 +8,11 @@
 
 body {
   background-color: #6bc7f0 !important;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 .text-gray {
@@ -72,4 +77,8 @@ ul {
 
 button:disabled {
   background-color: grey;
+}
+
+.disabled {
+  background-color: lightslategrey;
 }

@@ -19,6 +19,34 @@ export class RestaurantListingService {
    * the different syntax of the method
    */
 
+    /**
+     *
+     * @returns {Promise<any>}
+     */
+  public getCurrentUser(): Promise<any> {
+      return this.httpService.get('customer/details');
+  }
+
+    /**
+     * Get bill summary (id, password, participants)
+     * @param id
+     * @returns {Promise<any>}
+     */
+  public getBillSummary(id): Promise<any> {
+      return this.httpService.get(`ticket/${id}/summary`);
+  }
+
+    /**
+     * Init new object
+     * (Called when clicked on lefr pink arrow button)
+     * @param billId
+     * @param objectToSend
+     * @returns {Promise<any>}
+     */
+  public initNewTicket(billId, objectToSend): Promise<any> {
+      return this.httpService.post(`ticket/${billId}/init`, objectToSend);
+  }
+
   /**
    * Get all the restaurants
    * @returns {Promise<any>}
@@ -51,8 +79,8 @@ export class RestaurantListingService {
    * @param restaurantId
    * @returns {Promise<any>}
    */
-  public createNewBill(restaurantId: number): Promise<any> {
-    return this.httpService.post('ticket/request-ticket',  restaurantId);
+  public createNewBill(objectToSend: object): Promise<any> {
+    return this.httpService.post('ticket/request-ticket',  objectToSend);
   }
 
   public getSocket(): Promise<any> {
@@ -70,5 +98,15 @@ export class RestaurantListingService {
 
   public login(form): Promise<any> {
     return this.httpService.post('login', form, {contentsType: 'x-www-form-urlencoded'});
+  }
+
+    /**
+     * Send request to join bill (restaurant information screen)
+     * @param id
+     * @param password
+     * @returns {Promise<any>}
+     */
+  public sendJoinRequest(id, password): Promise<any> {
+      return this.httpService.post(`tikcet/${id}/join`,{password: password});
   }
 }

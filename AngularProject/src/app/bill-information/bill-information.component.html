@@ -1,4 +1,4 @@
-<bill-info-popup *ngIf="isModalOpened" (closeModal)="isModalOpened = false"></bill-info-popup>
+<bill-info-popup *ngIf="isModalOpened" (closeModal)="isModalOpened = false" [ticketPayableData]="billInformation"></bill-info-popup>
 <div class="bill-information-wrapper row">
     <div class="row top-images-container">
         <div class="col col-6 restaurant-image tx-center bill-information-top-image">
@@ -14,21 +14,20 @@
             <tr *ngFor="let item of billList; let i = index">
                 <td class="button confirm-pay pink-button" *ngIf="isEditMode"><span class="white-check"></span></td>
                 <td [class.blue-mode]="isEditMode">
-                  <div *ngIf="item.menuItem.unit">
-                    {{item.menuItem.title}} {{item.menuItem.quantity}}{{item.menuItem.unit}}
+                  <div *ngIf="item.unit">
+                    {{item.title}} {{item.quantity}}{{item.unit}}
                   </div>
-                  <div *ngIf="!item.menuItem.unit">
-                    {{item.menuItem.title}}
+                  <div *ngIf="!item.unit">
+                    {{item.title}}
                   </div>
                     <span>
-          {{item.menuItem.count}} x {{(item.menuItem.price/100) | number: '1.2'}} лв.
+          {{item.count}} x {{(item.price/100) | number: '1.2'}} лв.
         </span>
                 </td>
                 <td *ngIf="isPayMode" class="remove-container">
                     <div class="remove-button" (click)="removeEntry(i)">Премахни</div>
                 </td>
-                <td class="entry-total-price" [class.blue-mode]="isEditMode">{{(item.menuItem.price/100) |
-                    number: '1.2'}} лв.
+                <td class="entry-total-price" [class.blue-mode]="isEditMode">{{(item.totalPrice/100)}} лв.
                 </td>
                 <td *ngIf="isPayMode" class="info-icon-container"><span class="info-icon"></span></td>
                 <td *ngIf="isEditMode" (click)="goToEditModePerItem(i)" class="button confirm-pay pink-button"><span class="white-arrow-right"></span>
@@ -39,13 +38,13 @@
     </div>
     <div class="button-wrapper" [ngClass]="isPayMode ? 'payment-screen' : ''">
         <ng-template [ngIf]="!isPayMode && !isEditMode">
-            <div class="button confirm-pay pink-button float-left pointer">
+            <div class="button confirm-pay pink-button float-left pointer" [class.disabled]="!isSelectEnabled" (click)="initTicket()">
               <span class="white-check"></span>
             </div>
-            <div class="button blue-button float-left price-image pointer" (click)="openBillInfoModal()" >
+            <div class="button blue-button float-left price-image pointer" [class.disabled]="!isShareEnabled" (click)="openBillInfoModal()" >
                 ОБЩО СМЕТКА: {{totalBill}}
             </div>
-            <div class="button confirm-pay pink-button float-left" (click)="goToEditMode()">
+            <div class="button confirm-pay pink-button float-left" [class.disabled]="!isExpandEnabled" (click)="navigateToSecondStepBill()">
               <span class="white-arrow-right"></span></div>
             <div class="button pay-button float-left">
                 <div class="margin-left-10 float-left">Мoята сметка: {{myBill}}</div>

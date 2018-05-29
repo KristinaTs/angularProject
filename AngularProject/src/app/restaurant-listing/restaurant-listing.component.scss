@@ -70,7 +70,15 @@ $lightGreen: #afe069;
     height: 35px;
     background-size: 19px 34px;
     background-repeat: no-repeat;
-    margin-top: 28px;
+  }
+
+  .restaurant-main-info{
+    padding-left: 35px;
+  }
+
+  .right-arrow-wrapper {
+    display: flex;
+    align-items: center;
   }
 }
 

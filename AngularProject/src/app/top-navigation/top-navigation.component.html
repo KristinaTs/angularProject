@@ -1,8 +1,8 @@
 <div class="top-navigation-wrapper row" *ngIf="this.router.url != '/login'">
-  <input type="text" placeholder="Заведения по GPS">
-  <div class="search pointer"></div>
-  <div class="expand-navigation-icon pointer" (click)="toggleTopNavigation()"></div>
-  <div class="expand-side-navigation pointer"></div>
+  <input class="location-input" type="text" placeholder="Заведения по GPS">
+  <div class="search navigation-icon pointer"></div>
+  <div class="expand-navigation-icon navigation-icon pointer" (click)="toggleTopNavigation()"></div>
+  <div class="expand-side-navigation navigation-icon pointer"></div>
 </div>
 <div *ngIf="expandVisible" class="top-navigation-expand row">
   <div class="top-container col-12">

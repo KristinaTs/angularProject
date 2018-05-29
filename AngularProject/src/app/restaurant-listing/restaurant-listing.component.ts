@@ -79,12 +79,8 @@ export class RestaurantListComponent implements OnInit {
   public restaurantList = null;
 
   public ngOnInit(): void {
-    console.log('testsetes');
     this.getAllRestaurants();
-    console.log('nachalo ' ,new Date().getTime());
      this.b= [...this.b];
-      console.log('krai ' ,new Date().getTime());
-
   }
 
 
@@ -105,9 +101,29 @@ export class RestaurantListComponent implements OnInit {
    */
   public getAllRestaurants(): void {
     this.restaurantListingService.getAllRestaurants().then((data) => {
-      this.restaurantList = data;
+      //this.restaurantList = data;
     });
 
     this.restaurantList = this.forTesting;
   }
+
+    /**
+     * send request ot join an existing bill
+     * @param id
+     * @param password
+     */
+  public sendJoinRequest(id, password) : void {
+        console.log(id);
+        console.log(password);
+        if (id != '' && password != '') {
+            this.restaurantListingService.sendJoinRequest(id, password).then((data) => {
+                if (data.success) {
+                    //Navigate to bill if succesful
+                    //this.router.navigate()
+                }
+            });
+        } else {
+            console.error('Invalid data for bill request to join!')
+        }
+    }
 }

@@ -1,13 +1,11 @@
 <div class="bill-code row">
   <div class="col-6">
-    <input type="text" placeholder="Код на сметка">
+    <input #idInput type="text" placeholder="Код на сметка">
   </div>
   <div class="col-6">
-    <input type="text" placeholder="Парола">
+    <input #passwordInput type="text" placeholder="Парола">
   </div>
-  <div class="confirm-button pointer">
-
-  </div>
+  <div class="confirm-button pointer" (click)="sendJoinRequest(idInput.value, passwordInput.value)"></div>
 </div>
 <ng-template [ngIf]="restaurantList">
   <div class="restaurant-listing row">
@@ -17,7 +15,7 @@
         <div class="col col-3 image-container">
           <img class="image" [src]="restaurant.logoUrl" alt="">
         </div>
-        <div class="col col-7">
+        <div class="col col-7 restaurant-main-info">
           <div class="title">{{restaurant.name}}</div>
           <div class="address text-gray">{{restaurant.address}}</div>
           <div class="stat-wrapper">
@@ -33,7 +31,7 @@
             </ul>
           </div>
         </div>
-        <div class="col-2">
+        <div class="col col-2 right-arrow-wrapper">
           <div class="right-arrow"></div>
         </div>
       </div>
