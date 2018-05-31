@@ -1,0 +1,19 @@
+<div class="popup-content">
+    <div class="bill-info-wrapper">
+        <div class="dash-bt-border header"> Код на сметка: {{data.id}}</div>
+        <div class="dash-bt-border header"> Парола: {{data.password}}</div>
+        <div class="widget-container dash-bt-border">
+            Гости:
+            <div class="participants-container">
+                <div class="participant"
+                     [class.self]="participant.id == currentUser.id"
+                     [class.selected]="participant.selected"
+                     *ngFor="let participant of data.participants; let i = index"
+                     (click)="toggleSelectedParticipant(i)"
+                >
+                    {{participant.id}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

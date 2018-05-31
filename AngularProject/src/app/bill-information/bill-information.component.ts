@@ -25,6 +25,7 @@ export class BillInformationComponent implements OnInit {
     public isPayMode: boolean = false;
     public isEditMode: boolean = false;
     public isModalOpened: boolean = false;
+    public isInfoModalOpened: boolean = true;
     public currentBillId = null;
     public currentUser = null;
     public billSummary = null;
@@ -88,6 +89,14 @@ export class BillInformationComponent implements OnInit {
         if(this.isShareEnabled) {
             this.isModalOpened = !this.isModalOpened;
         }
+    }
+
+    /**
+     * Show.hide modal
+     */
+    public openInfoPopup() {
+        console.log('HERE');
+        this.isInfoModalOpened = !this.isInfoModalOpened;
     }
 
     /**
