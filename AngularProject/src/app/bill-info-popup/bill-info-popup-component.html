@@ -5,12 +5,13 @@
             Участници:
             <div class="participants-container">
                 <div class="participant"
-                     [class.self]="participant.self"
+                     [class.self]="participant.id == currentUser.id"
                      [class.selected]="participant.selected"
-                     *ngFor="let participant of data.participants; let i = index"
+                     [ngClass]="'participant-shares'"
+                     *ngFor="let participant of participants; let i = index"
                      (click)="toggleSelectedParticipant(i)"
                 >
-                    {{participant.initials}}
+                    {{participant.id}}
                 </div>
             </div>
         </div>
@@ -20,10 +21,10 @@
                 <div class="share"
                      [class.self]="share.self"
                      [class.selected]="share.selected"
-                     *ngFor="let share of data.shares; let i = index"
+                     *ngFor="let share of shares; let i = index"
                      (click)="toggleSelectedShareCount(i)"
                 >
-                    {{share.count}}
+                    {{i + 1}}
                 </div>
             </div>
         </div>
@@ -44,7 +45,7 @@
     </div>
 
     <div class="button-wrapper">
-        <div class="button confirm-pay pink-button float-left" (click)="goToEditMode()">
+        <div class="button confirm-pay pink-button float-left" (click)="goToEditMode()" [class.disabled]="!isDistributionSet">
             <span class="white-check"></span>
         </div>
         <div class="button blue-button float-left price-image">

@@ -1,4 +1,4 @@
-<bill-info-popup *ngIf="isModalOpened" (closeModal)="isModalOpened = false" [ticketPayableData]="billInformation"></bill-info-popup>
+<bill-info-popup *ngIf="isModalOpened" (closeModal)="isModalOpened = false" [ticketPayableData]="billInformation"  [currentUser]="currentUser" [billSummary]="billSummary"></bill-info-popup>
 <info-popup *ngIf="isInfoModalOpened" (closeModal)="isInfoModalOpened = false" [billSummary]="billSummary" [currentUser]="currentUser"></info-popup>
 <div class="bill-information-wrapper row">
     <div class="row top-images-container">

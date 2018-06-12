@@ -18,7 +18,13 @@ export class BillInfoPopupComponent implements OnInit {
     public sharesForSelfArrowPosition: string = '';
     public arrowWidth = 15;
     @Output() closeModal: EventEmitter<any> = new EventEmitter<any>();
-    @Input('ticketPayableData') ticketPayableData: object = {};
+    @Input('ticketPayableData') ticketPayableData;
+    @Input('currentUser') currentUser;
+    @Input('billSummary') billSummary;
+
+    public participants = [];
+    public shares = [];
+    public isDistributionSet =  false;
 
     @HostListener('click', ['$event'])
     public onClick(event: any): void {
@@ -32,16 +38,33 @@ export class BillInfoPopupComponent implements OnInit {
      */
     public ngOnInit(): void {
         console.log(this.ticketPayableData);
+        console.log(this.billSummary);
+        this.checkIfCurrentUserHasShares();
+        this.participants = this.billSummary.participants;
+        this.shares = this.ticketPayableData.shares;
+        this.isDistributionSet = this.ticketPayableData.isDistributionSet;
+    }
+
+    public checkIfCurrentUserHasShares() {
+        let shares = this.ticketPayableData.shares;
+        let index = shares.map((participant) => {
+            return participant.id;
+        }).indexOf(this.currentUser.id);
+        if(index < 0) {
+            this.currentUser.hasShares = false;
+        } else {
+            this.currentUser.hasShares = true;
+        }
     }
 
     public toggleSelectedParticipant(participantIndex: number) {
-        this.data.participants.forEach((participant, index) => {
+        this.participants.forEach((participant, index) => {
             participant['selected'] = participantIndex === index;
         })
     }
 
     public toggleSelectedShareCount(shareIndex: number) {
-        this.data.shares.forEach((share, index) => {
+        this.shares.forEach((share, index) => {
             share['selected'] = shareIndex === index;
         })
     }

@@ -1,19 +1,23 @@
 <div class="popup-content">
     <div class="bill-info-wrapper">
-        <div class="dash-bt-border header"> Код на сметка: {{data.id}}</div>
-        <div class="dash-bt-border header"> Парола: {{data.password}}</div>
+        <div class="header-info-popup"> <span> Код на сметка: </span><span> {{data.id}}</span></div>
+        <div class="header-info-popup padding-bottom border-bottom"> <span> Парола: </span><span> {{data.password}}</span></div>
+        <div class="participants-header"> Гости:</div>
         <div class="widget-container dash-bt-border">
-            Гости:
             <div class="participants-container">
+                <div class="participant add-participant" (click)="addParticipant()">+</div>
                 <div class="participant"
                      [class.self]="participant.id == currentUser.id"
-                     [class.selected]="participant.selected"
+                     [class.selected]="participant.id == selectedUserID"
                      *ngFor="let participant of data.participants; let i = index"
                      (click)="toggleSelectedParticipant(i)"
                 >
                     {{participant.id}}
                 </div>
             </div>
+        </div>
+        <div class="selected-user-information">
+            {{selectedUserInformation}}
         </div>
     </div>
 </div>

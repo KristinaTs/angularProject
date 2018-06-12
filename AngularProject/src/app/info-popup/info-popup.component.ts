@@ -21,6 +21,9 @@ export class InfoPopupComponent implements OnInit {
     @Input('billSummary') billSummary;
     @Input('currentUser') currentUser;
 
+    public selectedUserID = null;
+    public selectedUserInformation = '';
+
 
     public data = {
         "id": 1,
@@ -49,7 +52,7 @@ export class InfoPopupComponent implements OnInit {
 
     @HostListener('click', ['$event'])
     public onClick(event: any): void {
-        if (event.target.tagName.toLowerCase() === 'bill-info-popup') {
+        if (event.target.tagName.toLowerCase() === 'info-popup') {
             this.closeModal.emit();
         }
     }
@@ -63,10 +66,14 @@ export class InfoPopupComponent implements OnInit {
     }
 
     public toggleSelectedParticipant(participantIndex: number) {
-        this.data.participants.forEach((participant, index) => {
-            participant['selected'] = participantIndex === index;
-        })
+        let participant = this.data.participants[participantIndex];
+        this.selectedUserID = participant.id;
+        this.selectedUserInformation = `${participant.firstName} ${participant.lastName}: обща сметка ${participant.totalPrice / 100} лв`;
     }
+
+    public addParticipant() {
+
+}
 
     // public toggleSelectedShareCount(shareIndex: number) {
     //     this.data.shares.forEach((share, index) => {

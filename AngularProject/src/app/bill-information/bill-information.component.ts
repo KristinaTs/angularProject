@@ -25,7 +25,7 @@ export class BillInformationComponent implements OnInit {
     public isPayMode: boolean = false;
     public isEditMode: boolean = false;
     public isModalOpened: boolean = false;
-    public isInfoModalOpened: boolean = true;
+    public isInfoModalOpened: boolean = false;
     public currentBillId = null;
     public currentUser = null;
     public billSummary = null;
