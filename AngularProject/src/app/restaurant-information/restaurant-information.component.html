@@ -14,15 +14,15 @@
         <div class="stat-wrapper row">
           <div class="rating-container col col-4">
             <div class="text-gray stats">Храна:</div>
-            <div class="rating">{{restaurant.rating.foodQuality}}</div>
+            <div class="rating">{{restaurant.rating.foodQuality / 10}}/5</div>
           </div>
           <div class="rating-container col col-4">
             <div class="text-gray stats">Обстановка:</div>
-            <div class="rating">{{restaurant.rating.atmosphere}}</div>
+            <div class="rating">{{restaurant.rating.atmosphere / 10}}/5 </div>
           </div>
           <div class="rating-container col col-4">
             <div class="text-gray stats">Обслужване:</div>
-            <div class="rating">{{restaurant.rating.serviceQuality}}</div>
+            <div class="rating">{{restaurant.rating.serviceQuality / 10}}/5 </div>
           </div>
         </div>
       </div>
@@ -32,7 +32,8 @@
           <div>{{greeting.description}}</div>
         </div>
         <div class="restaurant-description-box bill-send" *ngIf="isRequestSendForBill">
-          {{billCode}}
+          <div>Сподели този код със сервитьора: </div>
+          <strong>PIN: {{billCode}}</strong>
         </div>
       </div>
       <div class="col col-12">

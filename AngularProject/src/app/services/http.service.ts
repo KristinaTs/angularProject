@@ -17,7 +17,7 @@ declare var Zone: any;
 @Injectable()
 export class HttpService {
   // set base url here
-  private baseUrl: any = 'http://192.168.100.5:8080';
+  private baseUrl: any = 'http://192.168.100.6:8080';
   private defaultOptions: any = {
     async: false,
     showMessages: true,
@@ -38,7 +38,7 @@ export class HttpService {
   public post(url: string, params: any = {}, options: any = {}): Promise<any> {
     let config = this.createCorrectParams(options);
     let customHeaders = this.getHeaders('post', config);
-    customHeaders['Autorizations']= 'Basic '+ params.username + ':' + params.password;
+    // customHeaders['Autorizations']= 'Basic '+ params.username + ':' + params.password;
     let headers = new RequestOptions({ headers: customHeaders }),
       postUrl = this.baseUrl + '/' + url;
 

@@ -104,16 +104,16 @@ export class BillInformationComponent implements OnInit {
      */
     public getCurrentLoggedCustomer(): void {
         this.restaurantService.getCurrentUser().then((data) => {
-            //this.currentUser = data;
-        })
+            this.currentUser = data;
+        });
         //TODO delete
-        this.currentUser = {
-            "id": 3,
-            "firstName": "Aleksandar",
-            "lastName": "Avramov",
-            "email": "avramov@abv.bg",
-            "gender": "MALE"
-        };
+        // this.currentUser = {
+        //     "id": 3,
+        //     "firstName": "Aleksandar",
+        //     "lastName": "Avramov",
+        //     "email": "avramov@abv.bg",
+        //     "gender": "MALE"
+        // };
     }
 
     /**
@@ -122,7 +122,7 @@ export class BillInformationComponent implements OnInit {
      */
     public getGeneralInformationForBill(): void {
         this.restaurantService.getBillSummary(this.currentBillId).then((data) => {
-            //this.billSummary = data;
+            this.billSummary = data;
         });
 
         this.billSummary = {
@@ -150,9 +150,17 @@ export class BillInformationComponent implements OnInit {
      */
     public getBillInformation(currentId): void {
         this.restaurantService.getBillInformation(currentId).then((data) => {
-            // for (let i = 0; i < data.subTickets.length; i++) {
-            //     this.billList = this.billList.concat(data.subTickets[i].orderedItems);
-            // }
+            this.billList = data.ticketItems;
+            this.billInformation = data.ticketPayableData;
+            if(this.billInformation.price > 0) {
+                this.totalBill = (this.billInformation.price/100) + ' лв'
+            } else {
+                this.totalBill = '0 лв';
+            }
+            this.isSelectEnabled = this.billInformation.isSelectEnabled;
+            this.isShareEnabled = this.billInformation.isShareEnabled;
+            this.isExpandEnabled = this.billInformation.isExpandEnabled;
+            this.isDistributionSet = this.billInformation.isDistributionSet;
             console.log('billInfo', data);
         });
         let data = {
@@ -244,43 +252,20 @@ export class BillInformationComponent implements OnInit {
                 }
         };
 
-        //this.groupData(data);
-        this.billList = data.ticketItems;
-        this.billInformation = data.ticketPayableData;
-        if(this.billInformation.price > 0) {
-            this.totalBill = (this.billInformation.price/100) + ' лв'
-        } else {
-            this.totalBill = '0 лв';
-        }
-        this.isSelectEnabled = this.billInformation.isSelectEnabled;
-        this.isShareEnabled = this.billInformation.isShareEnabled;
-        this.isExpandEnabled = this.billInformation.isExpandEnabled;
-        this.isDistributionSet = this.billInformation.isDistributionSet;
-    }
+        // this.billList = data.ticketItems;
+        // this.billInformation = data.ticketPayableData;
+        // if(this.billInformation.price > 0) {
+        //     this.totalBill = (this.billInformation.price/100) + ' лв'
+        // } else {
+        //     this.totalBill = '0 лв';
+        // }
+        // this.isSelectEnabled = this.billInformation.isSelectEnabled;
+        // this.isShareEnabled = this.billInformation.isShareEnabled;
+        // this.isExpandEnabled = this.billInformation.isExpandEnabled;
+        // this.isDistributionSet = this.billInformation.isDistributionSet;
+        // console.log('billInfo', data);
 
-    /**
-     * Group data by product name
-     * @param data
-     */
-    public groupData(data): void {
-        this.billList = [];
-        let concatData = [];
-        for (let i = 0; i < data.subTickets.length; i++) {
-            concatData = concatData.concat(data.subTickets[i].orderedItems);
-        }
-        for (let index = 0; index < concatData.length; index++) {
-            // check if we have the same element in the array
-            let existingIndex = this.billList.map(element => {
-                return element.menuItem.id;
-            }).indexOf(concatData[index].menuItem.id);
-            if (existingIndex >= 0) {
-                this.billList[existingIndex].menuItem.count++;
-            } else {
-                let objectForList = concatData[index];
-                objectForList.menuItem.count = 1;
-                this.billList.push(objectForList);
-            }
-        }
+        //this.groupData(data);
     }
 
     /**
@@ -318,7 +303,7 @@ export class BillInformationComponent implements OnInit {
      * Navigate to step 2 on bill information
      */
     public navigateToSecondStepBill(): void {
-        if (this.isExpandEnabled) {
+        if (this.isExpandEnabled || true) {
             this.isEditMode = true;
             if (this.currentBillId) {
                 this.navigateToTicketStep2(this.currentBillId);
@@ -327,7 +312,7 @@ export class BillInformationComponent implements OnInit {
                 this.navigateToTicketStep2('PIN');
             }
         } else {
-            console.error('Cannot expand bill!')
+           // console.error('Cannot expand bill!')
         }
     }
 

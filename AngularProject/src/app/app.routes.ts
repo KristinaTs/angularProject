@@ -4,6 +4,7 @@ import {RestaurantInformationComponent} from './restaurant-information/restauran
 import {BillInformationComponent} from './bill-information/bill-information.component';
 import {LoginComponent} from "./login-screen/login.component";
 import {TicketStep2Component} from "./ticket-step-2/ticket-step-2.component";
+import {TicketStep3Component} from "./ticket-step-3/ticket-step-3.component";
 
 
 /*
@@ -30,6 +31,10 @@ export const routes: Routes = [
     {
         path: 'ticket-step-2/:id',
         component: TicketStep2Component
+    },
+    {
+        path: 'ticket-step-3/:id',
+        component: TicketStep3Component
     },
     {
         path: 'login',

@@ -28,6 +28,7 @@ public login(): void {
     username: this.username,
     password: this.password
   }
+
   this.restaurantService.login(form).then(data => {
     this.router.navigate(['/restaurant-listing']);
       });

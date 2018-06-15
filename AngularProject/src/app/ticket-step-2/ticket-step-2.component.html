@@ -1,4 +1,5 @@
-<bill-info-popup *ngIf="isModalOpened" (closeModal)="isModalOpened = false"></bill-info-popup>
+<bill-info-popup *ngIf="isModalOpened" (closeModal)="isModalOpened = false" [ticketPayableData]="billInformation"
+                 [currentUser]="currentUser" [billSummary]="billSummary"></bill-info-popup>
 <div class="bill-information-wrapper row">
     <div class="row top-images-container">
         <div class="col col-6 restaurant-image tx-center bill-information-top-image">
@@ -12,63 +13,30 @@
         <table class="table table-striped bill-table">
             <tbody>
             <tr *ngFor="let item of billList; let i = index">
-                <td class="button confirm-pay pink-button" *ngIf="isEditMode"><span class="white-check"></span></td>
-                <td [class.blue-mode]="isEditMode">
-                    <div *ngIf="item.menuItem.unit">
-                        {{item.menuItem.title}} {{item.menuItem.quantity}}{{item.menuItem.unit}}
+                <td class="button confirm-pay pink-button" [class.disabled]="!item.isSelectEnabled" (click)="initSubticketPerItem(subticketId)"><span
+                        class="white-check"></span></td>
+                <td [class.blue-mode]="!item.isShareEnabled" (click)="openBillInformationPopup(i)">
+                    <div *ngIf="item.unit">
+                        {{item.title}} {{item.quantity}}{{item.unit}}
                     </div>
-                    <div *ngIf="!item.menuItem.unit">
-                        {{item.menuItem.title}}
+                    <div *ngIf="!item.unit">
+                        {{item.title}}
                     </div>
-                    <span>
-          {{item.menuItem.count}} x {{(item.menuItem.price/100) | number: '1.2'}} лв.
-        </span>
+                    <span>{{item.description}}</span>
                 </td>
-                <td *ngIf="isPayMode" class="remove-container">
-                    <div class="remove-button" (click)="removeEntry(i)">Премахни</div>
-                </td>
-                <td class="entry-total-price" [class.blue-mode]="isEditMode">{{(item.menuItem.price/100) |
-                    number: '1.2'}} лв.
-                </td>
-                <td *ngIf="isPayMode" class="info-icon-container"><span class="info-icon"></span></td>
-                <td *ngIf="isEditMode" (click)="goToEditModePerItem(i)" class="button confirm-pay pink-button"><span class="white-arrow-right"></span>
+                <td class="entry-total-price blue-mode">{{(item.payableData.price / 100)}} лв.</td>
+                <td (click)="goToEditModePerItem(item.id)" class="button confirm-pay pink-button"
+                    [class.disalbed]="!item.isExpandEnabled">
+                    <span class="white-arrow-right"></span>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
-    <div class="button-wrapper" [ngClass]="isPayMode ? 'payment-screen' : ''">
-        <ng-template [ngIf]="!isPayMode && !isEditMode">
-            <div class="button confirm-pay pink-button float-left pointer">
-                <span class="white-check"></span>
-            </div>
-            <div class="button blue-button float-left price-image pointer" (click)="openBillInfoModal()" >
-                ОБЩО СМЕТКА: {{totalBill}}
-            </div>
-            <div class="button confirm-pay pink-button float-left" (click)="goToEditMode()">
-                <span class="white-arrow-right"></span></div>
-            <div class="button pay-button float-left">
-                <div class="margin-left-10 float-left">Мoята сметка: {{myBill}}</div>
-                <div (click)="goToPayScreen()" class="float-right margin-right-10">ПЛАТИ</div>
-            </div>
-        </ng-template>
-        <ng-template [ngIf]="isPayMode">
-            <div class="clearfix bill-information-pay-screen">
-                <div class="float-left half-width">
-                    <div>Бакшиш:</div>
-                    <div>
-                        <input type="text" class="tip-input" placeholder="00,00лв">
-                    </div>
-                </div>
-                <div class="float-right half-width">
-                    <div>Общо:</div>
-                    <strong>{{totalBill}}</strong>
-                </div>
-            </div>
-            <div class="clearfix">
-                <div class="button green-button payment-method-button float-left">В БРОЙ</div>
-                <div class="button blue-button payment-method-button float-left">С КАРТА</div>
-            </div>
-        </ng-template>
+    <div class="button-wrapper">
+        <div class="button pay-button float-left">
+            <div class="margin-left-10 float-left">Мoята сметка: {{myBill}}</div>
+            <div (click)="goToPayScreen()" class="float-right margin-right-10">ПЛАТИ</div>
+        </div>
     </div>
 </div>

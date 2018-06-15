@@ -1,13 +1,13 @@
 <div class="popup-content">
     <div class="bill-info-wrapper">
-        <div class="dash-bt-border header"> ОБЩА СМЕТКА: {{data.total}}</div>
+        <div class="dash-bt-border header"> ОБЩА СМЕТКА: {{totalBill}}</div>
         <div class="widget-container dash-bt-border">
             Участници:
             <div class="participants-container">
                 <div class="participant"
                      [class.self]="participant.id == currentUser.id"
                      [class.selected]="participant.selected"
-                     [ngClass]="'participant-shares'"
+                     [ngClass]="currentUser.hasShares ? 'participant-has-shares': 'participant-no-shares'"
                      *ngFor="let participant of participants; let i = index"
                      (click)="toggleSelectedParticipant(i)"
                 >
@@ -21,10 +21,11 @@
                 <div class="share"
                      [class.self]="share.self"
                      [class.selected]="share.selected"
+                     [class.disabled] = "isDistributionSet"
                      *ngFor="let share of shares; let i = index"
                      (click)="toggleSelectedShareCount(i)"
                 >
-                    {{i + 1}}
+                    {{share.totalParts}}
                 </div>
             </div>
         </div>
@@ -35,21 +36,21 @@
             </div>
         </div>
         <div class="share-options-wrapper">
-            <div *ngFor="let shareOption of data.shareOptions; let i = index"
+            <div *ngFor="let shareOption of shareOptions; let i = index"
                  (click)="setSharesForSelf(i)"
                  [class.selected]="shareOption.selected"
             >
-                {{shareOption.count}}
+                {{shareOption.totalParts}}
             </div>
         </div>
     </div>
 
     <div class="button-wrapper">
-        <div class="button confirm-pay pink-button float-left" (click)="goToEditMode()" [class.disabled]="!isDistributionSet">
+        <div class="button confirm-pay pink-button float-left" (click)="initOrUpdateTicket()" [class.disabled]="!canApply">
             <span class="white-check"></span>
         </div>
         <div class="button blue-button float-left price-image">
-            Моят дял: {{totalBill}}
+            Моят дял: {{totalPriceString}}
         </div>
 
         <div class="button pay-button float-left">

@@ -97,7 +97,7 @@ export class RestaurantListingService {
   }
 
   public login(form): Promise<any> {
-    return this.httpService.post('login', form, {contentsType: 'x-www-form-urlencoded'});
+    return this.httpService.post('logme', form);
   }
 
     /**

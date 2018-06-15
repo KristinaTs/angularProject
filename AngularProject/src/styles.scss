@@ -42,6 +42,7 @@ ul {
 }
 .stats {
   font-size: 11px;
+  padding-bottom: 10px;
 }
 
 .rating-container {
@@ -76,9 +77,9 @@ ul {
 }
 
 button:disabled {
-  background-color: grey;
+  background-color:  #C4C4C4;
 }
 
 .disabled {
-  background-color: lightslategrey;
+  background-color: #C4C4C4;
 }

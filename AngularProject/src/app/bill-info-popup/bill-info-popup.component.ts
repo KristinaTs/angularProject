@@ -7,6 +7,8 @@ import {
     OnInit
 } from "@angular/core";
 
+import {RestaurantListingService} from '../services/restaurant-listing.service';
+
 @Component({
     selector: 'bill-info-popup',
     templateUrl: './bill-info-popup-component.html',
@@ -15,8 +17,6 @@ import {
 })
 
 export class BillInfoPopupComponent implements OnInit {
-    public sharesForSelfArrowPosition: string = '';
-    public arrowWidth = 15;
     @Output() closeModal: EventEmitter<any> = new EventEmitter<any>();
     @Input('ticketPayableData') ticketPayableData;
     @Input('currentUser') currentUser;
@@ -24,7 +24,22 @@ export class BillInfoPopupComponent implements OnInit {
 
     public participants = [];
     public shares = [];
-    public isDistributionSet =  false;
+    public shareOptions = [];
+    public isDistributionSet = false;
+    public myTotalShareNumber = 0;
+    public totalPriceString = '0 лв';
+    public myBill = '0 лв';
+    public totalBill = '0 лв';
+    public canApply = false;
+    public selectedUser;
+    public freeIds = [];
+    public viewLoaded = false;
+    public ticketDataSharesUsers = [];
+    public selectedOption;
+    public selectedDistirbutionId;
+
+    constructor(public restaurantService: RestaurantListingService) {
+    }
 
     @HostListener('click', ['$event'])
     public onClick(event: any): void {
@@ -37,99 +52,225 @@ export class BillInfoPopupComponent implements OnInit {
      * On init separate the data
      */
     public ngOnInit(): void {
-        console.log(this.ticketPayableData);
-        console.log(this.billSummary);
-        this.checkIfCurrentUserHasShares();
-        this.participants = this.billSummary.participants;
-        this.shares = this.ticketPayableData.shares;
-        this.isDistributionSet = this.ticketPayableData.isDistributionSet;
+        this.selectedUser = this.currentUser;
+        this.getCorrectData();
     }
 
-    public checkIfCurrentUserHasShares() {
+    public getCorrectData(): void {
+        console.log(this.ticketPayableData);
+        console.log(this.currentUser);
+        this.checkIfCurrentUserHasShares();
+        this.participants = this.billSummary.participants;
+        this.isDistributionSet = this.ticketPayableData.isDistributionSet;
+        this.freeIds = this.ticketPayableData.freeIds;
+        this.ticketDataSharesUsers = this.ticketPayableData.shares;
+        if (this.isDistributionSet) {
+            this.updateDataWhenDistributionIsSet();
+        } else {
+            this.shares = JSON.parse(JSON.stringify(this.ticketPayableData.distributions));
+            this.shares[0].selected = true;
+            this.shareOptions.push({
+                totalParts: 0,
+                value: 0,
+                selected: true
+            });
+            this.shareOptions.push({
+                totalParts: 1,
+                value: this.shares[0].values[0]
+            });
+        }
+        this.totalBill = (this.ticketPayableData.price / 100) + 'лв';
+        this.viewLoaded = true;
+    }
+
+    public updateDataWhenDistributionIsSet(): void {
+        this.shares = [this.ticketPayableData.distributions[this.ticketPayableData.selectedDistributionId - 1]];
+        let values = this.ticketPayableData.distributions[this.ticketPayableData.selectedDistributionId - 1].values;
+        //Here we set the correct value for each share
+        // get index from taked Ids
+        this.getSelectedUserTakenIds();
+
+        let sharesArray = this.selectedUser.takenIds.concat(this.freeIds);
+        console.log(values);
+        console.log(sharesArray)
+
+        this.shareOptions = [];
+        for (let i = 0; i <= sharesArray.length; i++) {
+            let valueForShareOption = this.calculateValueForShareOption(sharesArray, i, values);
+
+            let selectedId = this.selectedUser.takenIds.length;
+            //бвойката е селецтнатия усер + freeIds
+            //values = current user ids;
+            if (i == selectedId) {
+                this.shareOptions.push({
+                    totalParts: i,
+                    value: valueForShareOption,
+                    selected: true
+                });
+            } else {
+                this.shareOptions.push({
+                    totalParts: i,
+                    value: valueForShareOption,
+                    selected: false
+                });
+            }
+        }
+
+        console.log(this.shareOptions);
+    }
+
+    /**
+     * Return the correct valu for each option
+     * @param array
+     * @param index
+     * @param valuesArray
+     * @returns {number}
+     */
+    public calculateValueForShareOption(array, index, valuesArray): number {
+        let value = 0;
+        if (index == 0) {
+            return 0;
+        } else {
+            array.forEach((indexValue, i) => {
+                if (i < index) {
+                    value += valuesArray[indexValue];
+                }
+            });
+            return value;
+        }
+    }
+
+    /**
+     * Check if the currently logged user has any shares
+     * to determine the color of the button
+     */
+    public checkIfCurrentUserHasShares(): void {
         let shares = this.ticketPayableData.shares;
         let index = shares.map((participant) => {
             return participant.id;
         }).indexOf(this.currentUser.id);
-        if(index < 0) {
+        if (index < 0) {
             this.currentUser.hasShares = false;
         } else {
             this.currentUser.hasShares = true;
         }
     }
 
-    public toggleSelectedParticipant(participantIndex: number) {
+    /**
+     * Select a participant
+     * @param {number} participantIndex
+     */
+    public toggleSelectedParticipant(participantIndex: number): void {
         this.participants.forEach((participant, index) => {
+            if (participantIndex === index) {
+                this.selectedUser = this.participants[index];
+            }
             participant['selected'] = participantIndex === index;
-        })
-    }
-
-    public toggleSelectedShareCount(shareIndex: number) {
-        this.shares.forEach((share, index) => {
-            share['selected'] = shareIndex === index;
-        })
-    }
-
-    public setSharesForSelf(shareIndex: number) {
-        this.data.shareOptions.forEach((share, index) => {
-            share['selected'] = shareIndex === index;
-        })
+        });
+        this.getSelectedUserTakenIds();
+        this.updateDataWhenDistributionIsSet();
     }
 
     /**
-     * Close model when clicking on white chec
+     * Select the count on which we split the bill
+     * @param {number} shareIndex
      */
-    public goToEditMode(): void {
-        this.closeModal.emit();
+    public toggleSelectedShareCount(shareIndex: number) {
+        if (!this.isDistributionSet) {
+            this.shares.forEach((share, index) => {
+                share['selected'] = shareIndex === index;
+            });
+            this.selectedDistirbutionId = shareIndex;
+            this.shares = [this.ticketPayableData.distributions[shareIndex]];
+            let values = this.ticketPayableData.distributions[this.ticketPayableData.selectedDistributionId - 1].values;
+
+            this.shares = JSON.parse(JSON.stringify(this.ticketPayableData.distributions));
+            this.shares[shareIndex].selected = true;
+            this.shareOptions = [];
+            this.shareOptions.push({
+                totalParts: 0,
+                value: 0,
+                selected: true
+            });
+            this.shareOptions.push({
+                totalParts: 1,
+                value: this.shares[0].values[0]
+            });
+        }
     }
 
-    public data = {
-        total: '154.5лв',
-        participants: [
-            {
-                initials: 'НВ'
-            },
-            {
-                initials: 'РВ'
-            },
-            {
-                initials: 'СВ',
-                self: true
-            }
-        ],
-        shares: [
-            {
-                count: '2'
-            },
-            {
-                count: '3'
-            },
-            {
-                count: '4'
-            },
-            {
-                count: '5'
-            },
-            {
-                count: '6'
-            }
-        ],
-        shareOptions: [
-            {
-                count: '1'
-            },
-            {
-                count: '2'
-            },
-            {
-                count: '3'
-            },
-            {
-                count: '4'
-            },
-            {
-                count: '5'
-            }
-        ]
+    /**
+     * Get the takenIds when an user is selected
+     */
+    public getSelectedUserTakenIds(): void {
+        let userIndex = this.ticketDataSharesUsers.map((user) => {
+            return user.id;
+        }).indexOf(this.selectedUser.id);
+        this.selectedUser.takenIds = this.ticketDataSharesUsers[userIndex].takenIds;
+        //this.changeSelectedUserPartValue(this.selectedUser.takenIds.length - 1);
     }
 
+    /**
+     * Set the number of shares per user
+     * @param {number} shareIndex
+     */
+    public setSharesForSelf(shareIndex: number): void {
+        this.shareOptions.forEach((share, index) => {
+            share['selected'] = shareIndex === index;
+        });
+        //TODO has to be cheged is the state is chaged ]
+        this.selectedOption = this.shareOptions[shareIndex];
+        // kogato indecsa e razlichek  ili kogato disxtrubution e false
+        if (shareIndex !== this.currentUser.takenIds.length || this.isDistributionSet == false) {
+            this.canApply = true;
+        } else {
+            this.canApply = false;
+        }
+
+        // for(let i = 0; i < shareIndex; i++) {
+        //     this.selectedUser.takenIds.push({
+        //
+        //     })
+        // };
+
+        this.changeSelectedUserPartValue(shareIndex);
+    }
+
+    /**
+     * Set the selectes user price to pay
+     * @param value
+     */
+    public changeSelectedUserPartValue(shareIndex): void {
+        let value = this.shareOptions[shareIndex].value;
+        let myTotalShareNumber = value;
+        this.totalPriceString = (myTotalShareNumber / 100) + ' лв';
+    }
+
+    /**
+     * Close model when clicking on white check
+     */
+    public initOrUpdateTicket(): void {
+        let objectToSend = {};
+
+        if(!this.isDistributionSet) {
+            objectToSend = {
+                distributionId: this.selectedDistirbutionId,
+                myParts: this.selectedOption.totalParts
+            };
+            this.restaurantService.initNewTicket(this.billSummary.id, objectToSend).then((data) => {
+                //TODO
+                this.closeModal.emit();
+                console.log('SUCCESS')
+            });
+        } else {
+            objectToSend = {
+                myParts: this.selectedOption.totalParts
+            };
+            // this.restaurantService.updateTicket(this.billSummary.id, objectToSend).then((data) => {
+            //     //TODO
+            //     //this.closeModal.emit();
+            //     console.log('SUCCESS')
+            // });
+        }
+    }
 }
