@@ -151,8 +151,8 @@ export class HttpService {
       paramsObj['User'] = this.cookie.get('user');
     }
 
-    let encode = new String(btoa('avramov@abv.bg:1234'));
-    paramsObj['Authorization'] = 'Basic '+ encode;
+   // let encode = new String(btoa('avramov@abv.bg:1234'));
+    //paramsObj['Authorization'] = 'Basic '+ encode;
 
     return new Headers(paramsObj);
   }

@@ -266,11 +266,11 @@ export class BillInfoPopupComponent implements OnInit {
             objectToSend = {
                 myParts: this.selectedOption.totalParts
             };
-            // this.restaurantService.updateTicket(this.billSummary.id, objectToSend).then((data) => {
-            //     //TODO
-            //     //this.closeModal.emit();
-            //     console.log('SUCCESS')
-            // });
+            this.restaurantService.updateTicket(this.billSummary.id, objectToSend).then((data) => {
+                //TODO
+                this.closeModal.emit();
+                console.log('SUCCESS');
+            });
         }
     }
 }

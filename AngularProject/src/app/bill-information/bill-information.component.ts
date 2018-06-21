@@ -125,24 +125,24 @@ export class BillInformationComponent implements OnInit {
             this.billSummary = data;
         });
 
-        this.billSummary = {
-            "id": 1,
-            "password": "8839",
-            "participants": [
-                {
-                    "id": 2,
-                    "firstName": "Georgi",
-                    "lastName": "Vladimirov",
-                    "totalPrice": 882
-                },
-                {
-                    "id": 3,
-                    "firstName": "Aleksandar",
-                    "lastName": "Avramov",
-                    "totalPrice": 882
-                }
-            ]
-        };
+        // this.billSummary = {
+        //     "id": 1,
+        //     "password": "8839",
+        //     "participants": [
+        //         {
+        //             "id": 2,
+        //             "firstName": "Georgi",
+        //             "lastName": "Vladimirov",
+        //             "totalPrice": 882
+        //         },
+        //         {
+        //             "id": 3,
+        //             "firstName": "Aleksandar",
+        //             "lastName": "Avramov",
+        //             "totalPrice": 882
+        //         }
+        //     ]
+        // };
     }
 
     /**

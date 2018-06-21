@@ -64,7 +64,7 @@ export class TicketStep2Component implements OnInit {
 
         this.getCurrentLoggedCustomer();
         this.getGeneralInformationForBill();
-        this.getBillSuntickets();
+        this.getBillSubtickets();
     }
 
     public openBillInfoModal() {
@@ -76,9 +76,8 @@ export class TicketStep2Component implements OnInit {
      */
     public getBillInformation(currentId): void {
         this.restaurantService.getBillInformation(currentId).then((data) => {
-            // for (let i = 0; i < data.subTickets.length; i++) {
-            //     this.billList = this.billList.concat(data.subTickets[i].orderedItems);
-            // }
+            this.billList = data.ticketItems;
+            this.billInformation = data.ticketPayableData;
             console.log('billInfo', data);
         });
         this.data = {
@@ -215,17 +214,15 @@ export class TicketStep2Component implements OnInit {
                         }]
                 }
         }
-        this.billList = this.data.ticketItems;
-        this.billInformation = this.data.ticketPayableData;
     }
 
-    public getBillSuntickets() {
-        // this.restaurantService.getBillSubtickets(this.billId).then((data) => {
-        //     // for (let i = 0; i < data.subTickets.length; i++) {
-        //     //     this.billList = data;
-        //     // }
-        //     console.log('billInfo', data);
-        // });
+    public getBillSubtickets() {
+        this.restaurantService.getBillSubtickets(this.billId).then((data) => {
+            // for (let i = 0; i < data.subTickets.length; i++) {
+            //     this.billList = data;
+            // }
+            console.log('billInfo', data);
+        });
     }
 
     /**
@@ -234,52 +231,27 @@ export class TicketStep2Component implements OnInit {
      */
     public getGeneralInformationForBill(): void {
         this.restaurantService.getBillSummary(this.billId).then((data) => {
-            //this.billSummary = data;
+            this.billSummary = data;
         });
 
-        this.billSummary = {
-            "id": 1,
-            "password": "8839",
-            "participants": [
-                {
-                    "id": 2,
-                    "firstName": "Georgi",
-                    "lastName": "Vladimirov",
-                    "totalPrice": 882
-                },
-                {
-                    "id": 3,
-                    "firstName": "Aleksandar",
-                    "lastName": "Avramov",
-                    "totalPrice": 882
-                }
-            ]
-        };
-    }
-
-    /**
-     * Group data by product name
-     * @param data
-     */
-    public groupData(data): void {
-        this.billList = [];
-        let concatData = [];
-        for (let i = 0; i < data.subTickets.length; i++) {
-            concatData = concatData.concat(data.subTickets[i].orderedItems);
-        }
-        for (let index = 0; index < concatData.length; index++) {
-            // check if we have the same element in the array
-            let existingIndex = this.billList.map(element => {
-                return element.menuItem.id;
-            }).indexOf(concatData[index].menuItem.id);
-            if (existingIndex >= 0) {
-                this.billList[existingIndex].menuItem.count++;
-            } else {
-                let objectForList = concatData[index];
-                objectForList.menuItem.count = 1;
-                this.billList.push(objectForList);
-            }
-        }
+        // this.billSummary = {
+        //     "id": 1,
+        //     "password": "8839",
+        //     "participants": [
+        //         {
+        //             "id": 2,
+        //             "firstName": "Georgi",
+        //             "lastName": "Vladimirov",
+        //             "totalPrice": 882
+        //         },
+        //         {
+        //             "id": 3,
+        //             "firstName": "Aleksandar",
+        //             "lastName": "Avramov",
+        //             "totalPrice": 882
+        //         }
+        //     ]
+        // };
     }
 
     /**
@@ -287,16 +259,16 @@ export class TicketStep2Component implements OnInit {
      */
     public getCurrentLoggedCustomer(): void {
         this.restaurantService.getCurrentUser().then((data) => {
-            //this.currentUser = data;
-        })
+            this.currentUser = data;
+        });
         //TODO delete
-        this.currentUser = {
-            "id": 3,
-            "firstName": "Aleksandar",
-            "lastName": "Avramov",
-            "email": "avramov@abv.bg",
-            "gender": "MALE"
-        };
+        // this.currentUser = {
+        //     "id": 3,
+        //     "firstName": "Aleksandar",
+        //     "lastName": "Avramov",
+        //     "email": "avramov@abv.bg",
+        //     "gender": "MALE"
+        // };
     }
 
     /**
@@ -308,9 +280,9 @@ export class TicketStep2Component implements OnInit {
             distributionId: 1,
             myParts:1
         }
-        // this.restaurantService.initSubticketPerGroup(this.billId, id, objectToSend).then((data) => {
-        //     console.log(data);
-        // })
+        this.restaurantService.initSubticketPerGroup(this.billId, id, objectToSend).then((data) => {
+            console.log(data);
+        })
     }
 
     public openBillInformationPopup(index) {

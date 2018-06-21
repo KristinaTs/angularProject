@@ -20,14 +20,14 @@ constructor(private restaurantService: RestaurantListingService, private router:
 
 
 public login(): void {
-  // let form = new FormData();
-  // form.append('username', this.username);
-  // form.append('password', this.password);
+  let form = new FormData();
+  form.append('username', this.username);
+  form.append('password', this.password);
 
-  let form = {
-    username: this.username,
-    password: this.password
-  }
+  // let form = {
+  //   username: this.username,
+  //   password: this.password
+  // }
 
   this.restaurantService.login(form).then(data => {
     this.router.navigate(['/restaurant-listing']);

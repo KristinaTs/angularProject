@@ -1,40 +1,41 @@
 import {
-  Injectable
+    Injectable
 } from '@angular/core';
 import {HttpService} from './http.service';
 
 @Injectable()
 export class RestaurantListingService {
 
-  constructor(
-    private httpService: HttpService
-  ) {}
+    constructor(
+        private httpService: HttpService
+    ) {
+    }
 
-  public baseUrl = 'poses';
+    public baseUrl = 'poses';
 
 
-  /**
-   * The method 'getAllRestaurants' and 'getRestaurantInformation'
-   * do the same, I have written them in different ways just to show
-   * the different syntax of the method
-   */
+    /**
+     * The method 'getAllRestaurants' and 'getRestaurantInformation'
+     * do the same, I have written them in different ways just to show
+     * the different syntax of the method
+     */
 
     /**
      *
      * @returns {Promise<any>}
      */
-  public getCurrentUser(): Promise<any> {
-      return this.httpService.get('customer/details');
-  }
+    public getCurrentUser(): Promise<any> {
+        return this.httpService.get('customer/details');
+    }
 
     /**
      * Get bill summary (id, password, participants)
      * @param id
      * @returns {Promise<any>}
      */
-  public getBillSummary(id): Promise<any> {
-      return this.httpService.get(`ticket/${id}/summary`);
-  }
+    public getBillSummary(id): Promise<any> {
+        return this.httpService.get(`ticket/${id}/summary`);
+    }
 
     /**
      * Init new object
@@ -43,62 +44,66 @@ export class RestaurantListingService {
      * @param objectToSend
      * @returns {Promise<any>}
      */
-  public initNewTicket(billId, objectToSend): Promise<any> {
-      return this.httpService.post(`ticket/${billId}/init`, objectToSend);
-  }
+    public initNewTicket(billId, objectToSend): Promise<any> {
+        return this.httpService.post(`ticket/${billId}/init`, objectToSend);
+    }
 
-  /**
-   * Get all the restaurants
-   * @returns {Promise<any>}
-   */
-  public getAllRestaurants(): Promise<any> {
-    // return new Promise<any>((resolve, reject) => {
-       return this.httpService.get(this.baseUrl)
-        .then((response: any) => {
-            console.log(response);
-            return response;
-        })
-        .catch((error) => {
-           // reject(error);
-        });
-   //  });
-  }
+    /**
+     * Get all the restaurants
+     * @returns {Promise<any>}
+     */
+    public getAllRestaurants(): Promise<any> {
+        // return new Promise<any>((resolve, reject) => {
+        return this.httpService.get(this.baseUrl)
+            .then((response: any) => {
+                console.log(response);
+                return response;
+            })
+            .catch((error) => {
+                // reject(error);
+            });
+        //  });
+    }
 
 
-  /**
-   * Get information for specific restaurant
-   * @param restaurantId
-   * @returns {Promise<any>}
-   */
-  public getRestaurantInformation(restaurantId: number): Promise<any> {
-   return this.httpService.get(this.baseUrl + '/' + restaurantId);
-  }
+    /**
+     * Get information for specific restaurant
+     * @param restaurantId
+     * @returns {Promise<any>}
+     */
+    public getRestaurantInformation(restaurantId: number): Promise<any> {
+        return this.httpService.get(this.baseUrl + '/' + restaurantId);
+    }
 
-  /**
-   * Create new bill for the restaurant
-   * @param restaurantId
-   * @returns {Promise<any>}
-   */
-  public createNewBill(objectToSend: object): Promise<any> {
-    return this.httpService.post('ticket/request-ticket',  objectToSend);
-  }
+    /**
+     * Create new bill for the restaurant
+     * @param restaurantId
+     * @returns {Promise<any>}
+     */
+    public createNewBill(objectToSend: object): Promise<any> {
+        return this.httpService.post('ticket/request-ticket', objectToSend);
+    }
 
-  public getSocket(): Promise<any> {
-    return this.httpService.get('/ticket-websocket');
-  }
+    public getSocket(): Promise<any> {
+        return this.httpService.get('/ticket-websocket');
+    }
 
-  /**
-   * Get information for current bill
-   * @param billId
-   * @returns {Promise<any>}
-   */
-  public getBillInformation(billId: number): Promise<any> {
-    return this.httpService.get('ticket/' + billId);
-  }
+    /**
+     * Get information for current bill
+     * @param billId
+     * @returns {Promise<any>}
+     */
+    public getBillInformation(billId: number): Promise<any> {
+        return this.httpService.get('ticket/' + billId);
+    }
 
-  public login(form): Promise<any> {
-    return this.httpService.post('logme', form);
-  }
+    // public login(form): Promise<any> {
+    //   return this.httpService.post('logme', form);
+    // }
+
+    public login(form): Promise<any> {
+        return this.httpService.post('login', form, {contentsType: 'multipart/form-data'});
+    }
 
     /**
      * Send request to join bill (restaurant information screen)
@@ -106,7 +111,19 @@ export class RestaurantListingService {
      * @param password
      * @returns {Promise<any>}
      */
-  public sendJoinRequest(id, password): Promise<any> {
-      return this.httpService.post(`tikcet/${id}/join`,{password: password});
-  }
+    public sendJoinRequest(id, password): Promise<any> {
+        return this.httpService.post(`tikcet/${id}/join`, {password: password});
+    }
+
+    public updateTicket(id, object): Promise<any> {
+        return this.httpService.post(`tikcet/${id}/update`, object);
+    }
+
+    public initSubticketPerGroup(billId, id, objectToSend): Promise<any> {
+        return this.httpService.post(`“/ticket/${billId}/subtickets/${id}/init`, objectToSend);
+    }
+
+    public getBillSubtickets(id): Promise<any> {
+        return this.httpService.get(`"ticket/${id}/subtickets`);
+    }
 }
