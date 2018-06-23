@@ -37,6 +37,8 @@ export class BillInfoPopupComponent implements OnInit {
     public ticketDataSharesUsers = [];
     public selectedOption;
     public selectedDistirbutionId;
+    public selectedIdsPerUser = [];
+    public selectedPartsFromUser = [];
 
     constructor(public restaurantService: RestaurantListingService) {
     }
@@ -57,8 +59,8 @@ export class BillInfoPopupComponent implements OnInit {
     }
 
     public getCorrectData(): void {
-        console.log(this.ticketPayableData);
-        console.log(this.currentUser);
+        //console.log(this.ticketPayableData);
+        //console.log(this.currentUser);
         this.checkIfCurrentUserHasShares();
         this.participants = this.billSummary.participants;
         this.isDistributionSet = this.ticketPayableData.isDistributionSet;
@@ -91,8 +93,9 @@ export class BillInfoPopupComponent implements OnInit {
         this.getSelectedUserTakenIds();
 
         let sharesArray = this.selectedUser.takenIds.concat(this.freeIds);
-        console.log(values);
-        console.log(sharesArray)
+        this.calculateSelectedUserBill();
+        //console.log(values);
+        //console.log(sharesArray)
 
         this.shareOptions = [];
         for (let i = 0; i <= sharesArray.length; i++) {
@@ -116,7 +119,15 @@ export class BillInfoPopupComponent implements OnInit {
             }
         }
 
-        console.log(this.shareOptions);
+        //console.log(this.shareOptions);
+    }
+
+    public calculateSelectedUserBill() {
+        let myTotalShareNumber = 0;
+        for(let i = 0; i < this.selectedPartsFromUser.length; i ++) {
+            myTotalShareNumber+=this.shares[0].values[this.selectedPartsFromUser[i]];
+        }
+        this.totalPriceString = (myTotalShareNumber/100) + 'лв';
     }
 
     /**
@@ -207,6 +218,7 @@ export class BillInfoPopupComponent implements OnInit {
             return user.id;
         }).indexOf(this.selectedUser.id);
         this.selectedUser.takenIds = this.ticketDataSharesUsers[userIndex].takenIds;
+        this.selectedPartsFromUser = [...this.selectedUser.takenIds];
         //this.changeSelectedUserPartValue(this.selectedUser.takenIds.length - 1);
     }
 
@@ -227,13 +239,24 @@ export class BillInfoPopupComponent implements OnInit {
             this.canApply = false;
         }
 
-        // for(let i = 0; i < shareIndex; i++) {
-        //     this.selectedUser.takenIds.push({
-        //
-        //     })
-        // };
+        if(shareIndex == this.selectedUser.takenIds.length){
+            this.selectedPartsFromUser = [...this.selectedUser.takenIds];
+        } else if(shareIndex > this.selectedUser.takenIds.length) {
+            console.log('>')
+            let numberOfNewShares = shareIndex - this.selectedUser.takenIds.length;
+            for(let i = 0; i < numberOfNewShares; i++) {
+                this.selectedPartsFromUser.push(this.freeIds[i]);
+            }
+            console.log(this.selectedPartsFromUser);
+        } else if(shareIndex < this.selectedUser.takenIds.length) {
+            console.log('<')
+            let numberOfNewShares = this.selectedUser.takenIds.length - shareIndex;
+            for(let i = 0; i < numberOfNewShares; i++) {
+                this.selectedPartsFromUser.pop();
+            }
+        }
 
-        this.changeSelectedUserPartValue(shareIndex);
+        this.calculateSelectedUserBill();
     }
 
     /**
