@@ -20,7 +20,7 @@ import {RestaurantListingService} from '../services/restaurant-listing.service';
 export class BillInformationComponent implements OnInit {
     public routerSubscription: Subscription;
     public billId;
-    public myBill: string;
+    public myBill: string = '0 лв';
     public totalBill: string = null;
     public isPayMode: boolean = false;
     public isEditMode: boolean = false;
@@ -303,13 +303,13 @@ export class BillInformationComponent implements OnInit {
      * Navigate to step 2 on bill information
      */
     public navigateToSecondStepBill(): void {
-        if (this.isExpandEnabled || true) {
+        if (this.isExpandEnabled) {
             this.isEditMode = true;
             if (this.currentBillId) {
                 this.navigateToTicketStep2(this.currentBillId);
             } else {
                 //TODO delete
-                this.navigateToTicketStep2('PIN');
+                this.navigateToTicketStep2(this.billId);
             }
         } else {
            // console.error('Cannot expand bill!')
@@ -322,7 +322,7 @@ export class BillInformationComponent implements OnInit {
      */
     public navigateToTicketStep2(ticketId: any) {
         //TODO
-        this.router.navigate([`ticket-step-2/PIN`]);
+        this.router.navigate([`ticket-step-2/${ticketId}`]);
     }
 
     /**
@@ -353,7 +353,7 @@ export class BillInformationComponent implements OnInit {
             return user.id;
         }).indexOf(this.currentUser.id);
         let price = participants[indexOfCurrectUser].totalPrice;
-        if (price > 0) {
+        if ( price && price > 0) {
             this.myBill = (price / 100) + ' лв';
         } else {
             this.myBill = '0 лв';

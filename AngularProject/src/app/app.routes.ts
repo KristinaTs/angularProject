@@ -17,7 +17,7 @@ export const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'restaurant-listing',
+        redirectTo: 'login',
         pathMatch: 'full'
     },
     {

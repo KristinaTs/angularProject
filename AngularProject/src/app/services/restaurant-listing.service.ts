@@ -112,11 +112,11 @@ export class RestaurantListingService {
      * @returns {Promise<any>}
      */
     public sendJoinRequest(id, password): Promise<any> {
-        return this.httpService.post(`tikcet/${id}/join`, {password: password});
+        return this.httpService.post(`ticket/${id}/join`, {password: password});
     }
 
     public updateTicket(id, object): Promise<any> {
-        return this.httpService.post(`tikcet/${id}/update`, object);
+        return this.httpService.post(`ticket/${id}/update`, object);
     }
 
     public initSubticketPerGroup(billId, id, objectToSend): Promise<any> {

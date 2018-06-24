@@ -1,24 +1,25 @@
-<div class="top-navigation-wrapper row" *ngIf="this.router.url != '/login'">
-  <input class="location-input" type="text" placeholder="Заведения по GPS">
-  <div class="search navigation-icon pointer"></div>
-  <div class="expand-navigation-icon navigation-icon pointer" (click)="toggleTopNavigation()"></div>
-  <div class="expand-side-navigation navigation-icon pointer"></div>
-</div>
-<div *ngIf="expandVisible" class="top-navigation-expand row">
-  <div class="top-container col-12">
-    <div class="filter">Филтрирай по:</div>
-    <div class="filter">
-      <span>Локация</span>
-      <span>Мой рейтинг</span>
-      <span>Рейтинг на приятели</span>
+<div class="row" *ngIf="this.router.url != '/login'">
+    <div class="col-12 top-navigation-wrapper">
+        <input class="location-input" type="text" placeholder="Заведения по GPS">
+        <div class="search navigation-icon pointer"></div>
+        <div class="expand-navigation-icon navigation-icon pointer" (click)="toggleTopNavigation()"></div>
+        <div class="expand-side-navigation navigation-icon pointer"></div>
     </div>
-  </div>
-  <div class="bottom-container col-12">
-    <div class="filter">Филтрирай по най-често посещение:</div>
-    <div class="filter">
-      <span>От мен</span>
-      <span>От приятели</span>
+    <div *ngIf="expandVisible" class="top-navigation-expand row">
+        <div class="top-container col-12">
+            <div class="filter">Филтрирай по:</div>
+            <div class="filter">
+                <span>Локация</span>
+                <span>Мой рейтинг</span>
+                <span>Рейтинг на приятели</span>
+            </div>
+        </div>
+        <div class="bottom-container col-12">
+            <div class="filter">Филтрирай по най-често посещение:</div>
+            <div class="filter">
+                <span>От мен</span>
+                <span>От приятели</span>
+            </div>
+        </div>
     </div>
-  </div>
-
 </div>

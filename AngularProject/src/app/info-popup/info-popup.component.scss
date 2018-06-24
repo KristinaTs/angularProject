@@ -65,10 +65,10 @@ $buttonBlue: #6bc7f0;
   }
 }
 
-.participant.selected:after {
+.participant.selected:before {
   content: '';
   position: absolute;
-  bottom: -15px;
+  top: -15px;
   right: 0;
   left: 0;
   margin: auto;
@@ -81,6 +81,7 @@ $buttonBlue: #6bc7f0;
 }
 
 .selected-user-information {
+  padding-top: 10px;
   color: #AED078;
   font-size: 14px;
   font-weight: bold;
@@ -88,7 +89,7 @@ $buttonBlue: #6bc7f0;
 }
 
 .widget-container {
-  padding: 20px 0;
+  padding: 20px 0 10px 0;
   display: flex;
   color: #838383;
   align-items: center;

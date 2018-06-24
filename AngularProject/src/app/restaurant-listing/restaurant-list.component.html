@@ -18,12 +18,12 @@
         <div class="col col-7 restaurant-main-info">
           <div class="title">{{restaurant.name}}</div>
           <div class="address text-gray">{{restaurant.address}}</div>
-          <div class="stat-wrapper">
-            <div class="rating-container">
+          <div class="row stat-wrapper">
+            <div class="col-4 rating-container">
               <span class="text-gray stats">Рейтинг:</span>
               <span class="rating">{{restaurant.rating.foodQuality}}</span>
             </div>
-            <ul class="rating-container description-list">
+            <ul class="col-8 rating-container description-list">
               <li class="text-gray stats"><span>Храна:</span><span> {{restaurant.rating.foodQuality}}</span></li>
               <li class="text-gray stats"><span>Обстановка:</span><span> {{restaurant.rating.atmosphere}}</span></li>
               <li class="text-gray stats"><span>Обслужване:</span><span> {{restaurant.rating.serviceQuality}}</span>

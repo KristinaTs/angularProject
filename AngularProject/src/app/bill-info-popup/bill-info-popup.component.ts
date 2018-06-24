@@ -66,6 +66,7 @@ export class BillInfoPopupComponent implements OnInit {
         this.isDistributionSet = this.ticketPayableData.isDistributionSet;
         this.freeIds = this.ticketPayableData.freeIds;
         this.ticketDataSharesUsers = this.ticketPayableData.shares;
+        this.getCurrentUserTotalBill();
         if (this.isDistributionSet) {
             this.updateDataWhenDistributionIsSet();
         } else {
@@ -83,6 +84,23 @@ export class BillInfoPopupComponent implements OnInit {
         }
         this.totalBill = (this.ticketPayableData.price / 100) + 'лв';
         this.viewLoaded = true;
+    }
+
+    /**
+     * Find current user in participants array and get total price
+     */
+    public getCurrentUserTotalBill(): void {
+        let participants = this.participants;
+        let indexOfCurrectUser = participants.map((user) => {
+            return user.id;
+        }).indexOf(this.currentUser.id);
+        let price = participants[indexOfCurrectUser].totalPrice;
+        if ( price && price > 0) {
+            this.myBill = (price / 100) + ' лв';
+        } else {
+            this.myBill = '0 лв';
+        }
+
     }
 
     public updateDataWhenDistributionIsSet(): void {
@@ -242,14 +260,11 @@ export class BillInfoPopupComponent implements OnInit {
         if(shareIndex == this.selectedUser.takenIds.length){
             this.selectedPartsFromUser = [...this.selectedUser.takenIds];
         } else if(shareIndex > this.selectedUser.takenIds.length) {
-            console.log('>')
             let numberOfNewShares = shareIndex - this.selectedUser.takenIds.length;
             for(let i = 0; i < numberOfNewShares; i++) {
                 this.selectedPartsFromUser.push(this.freeIds[i]);
             }
-            console.log(this.selectedPartsFromUser);
         } else if(shareIndex < this.selectedUser.takenIds.length) {
-            console.log('<')
             let numberOfNewShares = this.selectedUser.takenIds.length - shareIndex;
             for(let i = 0; i < numberOfNewShares; i++) {
                 this.selectedPartsFromUser.pop();
@@ -285,7 +300,7 @@ export class BillInfoPopupComponent implements OnInit {
                 this.closeModal.emit();
                 console.log('SUCCESS')
             });
-        } else {
+        } else  if(this.isDistributionSet && this.canApply) {
             objectToSend = {
                 myParts: this.selectedOption.totalParts
             };
