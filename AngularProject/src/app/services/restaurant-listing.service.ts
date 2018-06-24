@@ -102,7 +102,18 @@ export class RestaurantListingService {
     // }
 
     public login(form): Promise<any> {
-        return this.httpService.post('login', form, {contentsType: 'multipart/form-data'});
+        return new Promise((resolve, reject) => {
+                this.httpService.post('logme', form, {contentsType: 'multipart/form-data'}).then((user) => {
+                    if(user) {
+                        let string =  new String(btoa(user.username + ':' + user.password));
+                        this.httpService.setAutorizationString(string);
+                        resolve(user);
+                    } else {
+                        reject(user);
+                    }
+                })
+            }
+        )
     }
 
     /**

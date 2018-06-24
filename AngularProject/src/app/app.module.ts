@@ -43,7 +43,7 @@ import {InfoPopupComponent} from "./info-popup/info-popup.component";
     ],
     imports: [
         BrowserModule,
-        RouterModule.forRoot(routes),
+        RouterModule.forRoot(routes, {useHash: true}),
         FormsModule,
         ReactiveFormsModule,
         CommonModule,
