@@ -87,4 +87,26 @@ export class BillInformationService {
         return this.httpService.get(`"ticket/${id}/subtickets`);
     }
 
+    /**
+     * Init subticket select to pay the fall bill from the share popup
+     * @param ticketId
+     * @param subticketId
+     * @param object
+     * @returns {Promise<any>}
+     */
+    public initNewSubticketTicket(ticketId, subticketId, object): Promise<any> {
+        return this.httpService.post(`/ticket/${ticketId}/subtickets/${subticketId}/init`, object);
+    }
+
+    /**
+     * Update subticket per group
+     * @param ticketId
+     * @param subticketId
+     * @param object
+     * @returns {Promise<any>}
+     */
+    public updateSubticket(ticketId, subticketId, object): Promise<any> {
+        return this.httpService.post(`/ticket/${ticketId}/subtickets/${subticketId}/update`, object);
+    }
+
 }

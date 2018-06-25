@@ -26,6 +26,7 @@ export class TicketStep2Component implements OnInit {
     public currentUser;
     public billInformation;
     public billSummary;
+    public subticketId;
 
     public restaurant = {
         id: 1,
@@ -78,7 +79,7 @@ export class TicketStep2Component implements OnInit {
      */
     public getBillInformation(currentId): void {
         this.billInformationService.getBillInformation(currentId).then((data) => {
-            this.billList = data.ticketItems;
+           // this.billList = data.ticketItems;
             this.billInformation = data.ticketPayableData;
             console.log('billInfo', data);
         });
@@ -218,12 +219,12 @@ export class TicketStep2Component implements OnInit {
         }
     }
 
+    /**
+     * Get curretn bill subtickets
+     */
     public getBillSubtickets() {
         this.billInformationService.getBillSubtickets(this.billId).then((data) => {
-            // for (let i = 0; i < data.subTickets.length; i++) {
-            //     this.billList = data;
-            // }
-            console.log('billInfo', data);
+            this.billList = data;
         });
     }
 
@@ -281,15 +282,16 @@ export class TicketStep2Component implements OnInit {
         let objectToSend = {
             distributionId: 1,
             myParts:1
-        }
+        };
         this.billInformationService.initSubticketPerGroup(this.billId, id, objectToSend).then((data) => {
             console.log(data);
         })
     }
 
     public openBillInformationPopup(index) {
-        this.isModalOpened = true;
+        this.subticketId = this.billList[index].id;
         this.billInformation = this.billList[index].payableData;
+        this.isModalOpened = true;
         console.log('tet');
     }
 

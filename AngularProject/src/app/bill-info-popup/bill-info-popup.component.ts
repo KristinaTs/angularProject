@@ -22,6 +22,8 @@ export class BillInfoPopupComponent implements OnInit {
     @Input('ticketPayableData') ticketPayableData;
     @Input('currentUser') currentUser;
     @Input('billSummary') billSummary;
+    @Input('type') type;
+    @Input('subticketId') subticketId = null;
 
     public participants = [];
     public shares = [];
@@ -86,7 +88,6 @@ export class BillInfoPopupComponent implements OnInit {
         this.totalBill = (this.ticketPayableData.price / 100) + 'лв';
         this.viewLoaded = true;
     }
-
     /**
      * Find current user in participants array and get total price
      */
@@ -296,20 +297,41 @@ export class BillInfoPopupComponent implements OnInit {
                 distributionId: this.selectedDistirbutionId,
                 myParts: this.selectedOption.totalParts
             };
-            this.billInformationService.initNewTicket(this.billSummary.id, objectToSend).then((data) => {
-                //TODO
-                this.closeModal.emit();
-                console.log('SUCCESS')
-            });
+            switch (this.type) {
+                case 'main-screem':
+                    this.billInformationService.initNewTicket(this.billSummary.id, objectToSend).then((data) => {
+                        //TODO
+                        this.closeModal.emit();
+                        console.log('SUCCESS')
+                    });
+                    break;
+                case 'step-2':
+                    this.billInformationService.initNewSubticketTicket(this.billSummary.id, this.subticketId, objectToSend).then((data) => {
+                        //TODO
+                        this.closeModal.emit();
+                        console.log('SUCCESS')
+                    });
+                    break;
+            }
         } else  if(this.isDistributionSet && this.canApply) {
             objectToSend = {
                 myParts: this.selectedOption.totalParts
             };
-            this.billInformationService.updateTicket(this.billSummary.id, objectToSend).then((data) => {
-                //TODO
-                this.closeModal.emit();
-                console.log('SUCCESS');
-            });
+            switch (this.type) {
+                case 'main-screem':
+                    this.billInformationService.updateTicket(this.billSummary.id, objectToSend).then((data) => {
+                        //TODO
+                        this.closeModal.emit();
+                        console.log('SUCCESS');
+                    });
+                    break;
+                case 'step-2':
+                    this.billInformationService.updateSubticket(this.billSummary.id, this.subticketId, objectToSend).then((data) => {
+                        //TODO
+                        this.closeModal.emit();
+                        console.log('SUCCESS');
+                    });
+            }
         }
     }
 }
