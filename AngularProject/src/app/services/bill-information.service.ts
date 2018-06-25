@@ -5,10 +5,7 @@ import {HttpService} from './http.service';
 
 @Injectable()
 export class BillInformationService {
-    constructor(
-        private httpService: HttpService
-    ) {}
-
+    constructor(private httpService: HttpService) {}
 
     /**
      * Get bill summary (id, password, participants)

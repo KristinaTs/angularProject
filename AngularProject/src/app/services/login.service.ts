@@ -4,8 +4,7 @@ import {HttpService} from './http.service';
 @Injectable()
 export class LoginService {
 
-    constructor(private httpService: HttpService) {
-    }
+    constructor(private httpService: HttpService) {}
 
     /**
      * Login user and call httpservice to save user
@@ -23,7 +22,6 @@ export class LoginService {
                         reject(user);
                     }
                 })
-            }
-        )
+            })
     }
 }

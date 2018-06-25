@@ -6,19 +6,9 @@ import {HttpService} from './http.service';
 @Injectable()
 export class RestaurantListingService {
 
-    constructor(
-        private httpService: HttpService
-    ) {
-    }
+    constructor(private httpService: HttpService) {}
 
     public baseUrl = 'poses';
-
-
-    /**
-     * The method 'getAllRestaurants' and 'getRestaurantInformation'
-     * do the same, I have written them in different ways just to show
-     * the different syntax of the method
-     */
 
     /**
      *
@@ -29,22 +19,26 @@ export class RestaurantListingService {
     }
 
     /**
+     * The method 'getAllRestaurants' and 'getRestaurantInformation'
+     * do the same, I have written them in different ways just to show
+     * the different syntax of the method
+     */
+    /**
      * Get all the restaurants
      * @returns {Promise<any>}
      */
     public getAllRestaurants(): Promise<any> {
-        // return new Promise<any>((resolve, reject) => {
-        return this.httpService.get(this.baseUrl)
-            .then((response: any) => {
-                console.log(response);
-                return response;
-            })
-            .catch((error) => {
-                // reject(error);
-            });
-        //  });
+        return new Promise<any>((resolve, reject) => {
+            return this.httpService.get(this.baseUrl)
+                .then((response: any) => {
+                    console.log(response);
+                    resolve(response);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
     }
-
 
     /**
      * Get information for specific restaurant
