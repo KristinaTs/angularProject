@@ -1,5 +1,5 @@
 <bill-info-popup *ngIf="isModalOpened" (closeModal)="close()" [ticketPayableData]="billInformation"
-                 [currentUser]="currentUser" [billSummary]="billSummary"></bill-info-popup>
+                 [currentUser]="currentUser" [billSummary]="billSummary" [type]="'main-screen'"></bill-info-popup>
 <info-popup *ngIf="isInfoModalOpened" (closeModal)="isInfoModalOpened = false" [billSummary]="billSummary"
             [currentUser]="currentUser"></info-popup>
 <div class="bill-information-wrapper row">

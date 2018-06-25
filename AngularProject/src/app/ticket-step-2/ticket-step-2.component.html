@@ -1,5 +1,5 @@
 <bill-info-popup *ngIf="isModalOpened" (closeModal)="isModalOpened = false" [ticketPayableData]="billInformation"
-                 [currentUser]="currentUser" [billSummary]="billSummary"></bill-info-popup>
+                 [currentUser]="currentUser" [billSummary]="billSummary" [subticketId]="subticketId"></bill-info-popup>
 <div class="bill-information-wrapper row">
     <div class="row top-images-container">
         <div class="col col-6 restaurant-image tx-center bill-information-top-image">
@@ -13,7 +13,7 @@
         <table class="table table-striped bill-table">
             <tbody>
             <tr *ngFor="let item of billList; let i = index">
-                <td class="button confirm-pay pink-button" [class.disabled]="!item.isSelectEnabled" (click)="initSubticketPerItem(subticketId)"><span
+                <td class="button confirm-pay pink-button" [class.disabled]="!item.isSelectEnabled" (click)="initSubticketPerItem(item.id)"><span
                         class="white-check"></span></td>
                 <td [class.blue-mode]="!item.isShareEnabled" (click)="openBillInformationPopup(i)">
                     <div *ngIf="item.unit">

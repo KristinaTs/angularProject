@@ -27,6 +27,7 @@ import {TopNavigationComponent} from './top-navigation/top-navigation.component'
 import {HttpClientModule} from '@angular/common/http';
 import {BillInfoPopupComponent} from "./bill-info-popup/bill-info-popup.component";
 import {InfoPopupComponent} from "./info-popup/info-popup.component";
+import {BillInformationService} from "./services/bill-information.service";
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import {InfoPopupComponent} from "./info-popup/info-popup.component";
         HttpService,
         CookieService,
         RestaurantListingService,
-        LoginService
+        LoginService,
+        BillInformationService
     ],
     bootstrap: [AppComponent]
 })
