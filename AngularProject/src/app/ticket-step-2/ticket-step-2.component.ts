@@ -27,6 +27,7 @@ export class TicketStep2Component implements OnInit {
     public billInformation;
     public billSummary;
     public subticketId;
+    public isInfoModalOpened = false;
 
     public restaurant = {
         id: 1,
@@ -288,11 +289,14 @@ export class TicketStep2Component implements OnInit {
         })
     }
 
+    /**
+     * Open bill information popup
+     * @param index
+     */
     public openBillInformationPopup(index) {
         this.subticketId = this.billList[index].id;
         this.billInformation = this.billList[index].payableData;
         this.isModalOpened = true;
-        console.log('tet');
     }
 
     /**
