@@ -11,6 +11,7 @@ import {
 } from '@angular/router';
 
 import {RestaurantListingService} from '../services/restaurant-listing.service';
+import {BillInformationService} from "../services/bill-information.service";
 
 @Component({
     templateUrl: 'bill-information.component.html',
@@ -53,6 +54,7 @@ export class BillInformationComponent implements OnInit {
     constructor(
         private router: Router,
         private restaurantService: RestaurantListingService,
+        private billInformationService: BillInformationService,
         private activateRouter: ActivatedRoute
     ) {
     }
@@ -121,7 +123,7 @@ export class BillInformationComponent implements OnInit {
      * {id, password, participants}
      */
     public getGeneralInformationForBill(): void {
-        this.restaurantService.getBillSummary(this.currentBillId).then((data) => {
+        this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
             this.billSummary = data;
         });
 
@@ -159,7 +161,7 @@ export class BillInformationComponent implements OnInit {
      Get bill information/ products in bill/ shares
      */
     public getBillInformation(currentId): void {
-        this.restaurantService.getBillInformation(currentId).then((data) => {
+        this.billInformationService.getBillInformation(currentId).then((data) => {
             this.billList = data.ticketItems;
             this.billInformation = data.ticketPayableData;
             if(this.billInformation.price > 0) {
@@ -344,7 +346,7 @@ export class BillInformationComponent implements OnInit {
                 distributionId: 1,
                 myParts: 1
             };
-            this.restaurantService.initNewTicket(this.billId, objectToSend).then((data) => {
+            this.billInformationService.initNewTicket(this.billId, objectToSend).then((data) => {
                 //TODO
                 console.log('SUCCESS')
             })

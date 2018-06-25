@@ -9,6 +9,7 @@ import {
 } from '@angular/router';
 
 import {RestaurantListingService} from '../services/restaurant-listing.service';
+import {BillInformationService} from "../services/bill-information.service";
 
 @Component({
     templateUrl: 'ticket-step-2.component.html',
@@ -43,7 +44,8 @@ export class TicketStep2Component implements OnInit {
 
     constructor(private router: Router,
                 private restaurantService: RestaurantListingService,
-                private activateRouter: ActivatedRoute,) {
+                private billInformationService: BillInformationService,
+                private activateRouter: ActivatedRoute) {
     }
 
 
@@ -75,7 +77,7 @@ export class TicketStep2Component implements OnInit {
      Get bill information/ products in bill/ shares
      */
     public getBillInformation(currentId): void {
-        this.restaurantService.getBillInformation(currentId).then((data) => {
+        this.billInformationService.getBillInformation(currentId).then((data) => {
             this.billList = data.ticketItems;
             this.billInformation = data.ticketPayableData;
             console.log('billInfo', data);
@@ -217,7 +219,7 @@ export class TicketStep2Component implements OnInit {
     }
 
     public getBillSubtickets() {
-        this.restaurantService.getBillSubtickets(this.billId).then((data) => {
+        this.billInformationService.getBillSubtickets(this.billId).then((data) => {
             // for (let i = 0; i < data.subTickets.length; i++) {
             //     this.billList = data;
             // }
@@ -230,7 +232,7 @@ export class TicketStep2Component implements OnInit {
      * {id, password, participants}
      */
     public getGeneralInformationForBill(): void {
-        this.restaurantService.getBillSummary(this.billId).then((data) => {
+        this.billInformationService.getBillSummary(this.billId).then((data) => {
             this.billSummary = data;
         });
 
@@ -280,7 +282,7 @@ export class TicketStep2Component implements OnInit {
             distributionId: 1,
             myParts:1
         }
-        this.restaurantService.initSubticketPerGroup(this.billId, id, objectToSend).then((data) => {
+        this.billInformationService.initSubticketPerGroup(this.billId, id, objectToSend).then((data) => {
             console.log(data);
         })
     }

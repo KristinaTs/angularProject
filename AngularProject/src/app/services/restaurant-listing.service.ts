@@ -29,26 +29,6 @@ export class RestaurantListingService {
     }
 
     /**
-     * Get bill summary (id, password, participants)
-     * @param id
-     * @returns {Promise<any>}
-     */
-    public getBillSummary(id): Promise<any> {
-        return this.httpService.get(`ticket/${id}/summary`);
-    }
-
-    /**
-     * Init new object
-     * (Called when clicked on lefr pink arrow button)
-     * @param billId
-     * @param objectToSend
-     * @returns {Promise<any>}
-     */
-    public initNewTicket(billId, objectToSend): Promise<any> {
-        return this.httpService.post(`ticket/${billId}/init`, objectToSend);
-    }
-
-    /**
      * Get all the restaurants
      * @returns {Promise<any>}
      */
@@ -75,48 +55,7 @@ export class RestaurantListingService {
         return this.httpService.get(this.baseUrl + '/' + restaurantId);
     }
 
-    /**
-     * Create new bill for the restaurant
-     * @param restaurantId
-     * @returns {Promise<any>}
-     */
-    public createNewBill(objectToSend: object): Promise<any> {
-        return this.httpService.post('ticket/request-ticket', objectToSend);
-    }
-
     public getSocket(): Promise<any> {
         return this.httpService.get('/ticket-websocket');
-    }
-
-    /**
-     * Get information for current bill
-     * @param billId
-     * @returns {Promise<any>}
-     */
-    public getBillInformation(billId: number): Promise<any> {
-        return this.httpService.get('ticket/' + billId);
-    }
-
-
-    /**
-     * Send request to join bill (restaurant information screen)
-     * @param id
-     * @param password
-     * @returns {Promise<any>}
-     */
-    public sendJoinRequest(id, password): Promise<any> {
-        return this.httpService.post(`ticket/${id}/join`, {password: password});
-    }
-
-    public updateTicket(id, object): Promise<any> {
-        return this.httpService.post(`ticket/${id}/update`, object);
-    }
-
-    public initSubticketPerGroup(billId, id, objectToSend): Promise<any> {
-        return this.httpService.post(`“/ticket/${billId}/subtickets/${id}/init`, objectToSend);
-    }
-
-    public getBillSubtickets(id): Promise<any> {
-        return this.httpService.get(`"ticket/${id}/subtickets`);
     }
 }

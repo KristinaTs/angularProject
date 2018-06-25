@@ -4,7 +4,8 @@ import {HttpService} from './http.service';
 @Injectable()
 export class LoginService {
 
-    constructor(private httpService: HttpService) {}
+    constructor(private httpService: HttpService) {
+    }
 
     /**
      * Login user and call httpservice to save user
@@ -14,8 +15,8 @@ export class LoginService {
     public login(form): Promise<any> {
         return new Promise((resolve, reject) => {
                 this.httpService.post('logme', form, {contentsType: 'multipart/form-data'}).then((user) => {
-                    if(user) {
-                        let string =  new String(btoa(user.username + ':' + user.password));
+                    if (user) {
+                        let string = new String(btoa(user.username + ':' + user.password));
                         this.httpService.setAutorizationString(string);
                         resolve(user);
                     } else {
@@ -25,5 +26,4 @@ export class LoginService {
             }
         )
     }
-
 }

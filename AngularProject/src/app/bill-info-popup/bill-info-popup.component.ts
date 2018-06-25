@@ -8,6 +8,7 @@ import {
 } from "@angular/core";
 
 import {RestaurantListingService} from '../services/restaurant-listing.service';
+import {BillInformationService} from "../services/bill-information.service";
 
 @Component({
     selector: 'bill-info-popup',
@@ -40,7 +41,7 @@ export class BillInfoPopupComponent implements OnInit {
     public selectedIdsPerUser = [];
     public selectedPartsFromUser = [];
 
-    constructor(public restaurantService: RestaurantListingService) {
+    constructor(public restaurantService: RestaurantListingService, public billInformationService: BillInformationService) {
     }
 
     @HostListener('click', ['$event'])
@@ -295,7 +296,7 @@ export class BillInfoPopupComponent implements OnInit {
                 distributionId: this.selectedDistirbutionId,
                 myParts: this.selectedOption.totalParts
             };
-            this.restaurantService.initNewTicket(this.billSummary.id, objectToSend).then((data) => {
+            this.billInformationService.initNewTicket(this.billSummary.id, objectToSend).then((data) => {
                 //TODO
                 this.closeModal.emit();
                 console.log('SUCCESS')
@@ -304,7 +305,7 @@ export class BillInfoPopupComponent implements OnInit {
             objectToSend = {
                 myParts: this.selectedOption.totalParts
             };
-            this.restaurantService.updateTicket(this.billSummary.id, objectToSend).then((data) => {
+            this.billInformationService.updateTicket(this.billSummary.id, objectToSend).then((data) => {
                 //TODO
                 this.closeModal.emit();
                 console.log('SUCCESS');
