@@ -80,8 +80,8 @@ export class BillInformationComponent implements OnInit {
         });
 
         this.getCurrentLoggedCustomer();
-        this.getGeneralInformationForBill();
         this.getCurrentUserTotalBill();
+        this.getGeneralInformationForBill();
     }
 
     /**
@@ -97,7 +97,6 @@ export class BillInformationComponent implements OnInit {
      * Show.hide modal
      */
     public openInfoPopup() {
-        console.log('HERE');
         this.isInfoModalOpened = !this.isInfoModalOpened;
     }
 
@@ -125,6 +124,7 @@ export class BillInformationComponent implements OnInit {
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
             this.billSummary = data;
+            this.getCurrentUserTotalBill();
         });
 
         // this.billSummary = {
@@ -343,7 +343,7 @@ export class BillInformationComponent implements OnInit {
     public initTicket(): void {
         if (this.isSelectEnabled) {
             let objectToSend = {
-                distributionId: 1,
+                totalParts: 1,
                 myParts: 1
             };
             this.billInformationService.initNewTicket(this.billId, objectToSend).then((data) => {
