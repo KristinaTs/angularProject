@@ -11,6 +11,7 @@ import {routes} from './app.routes';
 
 
 import {LoginComponent} from "./login-screen/login.component";
+import {LoginService} from './services/login.service';
 // Restaurant listing and information components
 import {HttpService} from './services/http.service';
 import {CookieService} from './services/cookie.service';
@@ -54,7 +55,8 @@ import {InfoPopupComponent} from "./info-popup/info-popup.component";
         WebSocketService,
         HttpService,
         CookieService,
-        RestaurantListingService
+        RestaurantListingService,
+        LoginService
     ],
     bootstrap: [AppComponent]
 })

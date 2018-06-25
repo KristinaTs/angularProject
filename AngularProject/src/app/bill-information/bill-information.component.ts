@@ -145,6 +145,16 @@ export class BillInformationComponent implements OnInit {
         // };
     }
 
+    public close() {
+        this.isModalOpened = false;
+            this.getBillInformation(this.currentBillId);
+
+
+    this.getCurrentLoggedCustomer();
+    this.getGeneralInformationForBill();
+    this.getCurrentUserTotalBill();
+    }
+
     /**
      Get bill information/ products in bill/ shares
      */

@@ -28,11 +28,20 @@ export class HttpService {
     constructor(
         private http: Http,
         private cookie: CookieService
-    ) {}
+    ) {
+        let user = localStorage.getItem('user');
+        if(user) {
+            this.autorization = user;
+        }
+    }
 
-
+    /**
+     * Set the autorization string per user
+     * @param string
+     */
     public setAutorizationString(string) {
         this.autorization = string;
+        localStorage.setItem('user', string);
     }
 
     /**

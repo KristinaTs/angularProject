@@ -123,7 +123,7 @@ export class RestaurantListComponent implements OnInit {
                 console.log('DONE');
                 if (data.success) {
                     //Navigate to bill if succesful
-                    //this.router.navigate()
+                    this.router.navigate([`bill-information/${id}`]);
                 }
             });
         } else {
