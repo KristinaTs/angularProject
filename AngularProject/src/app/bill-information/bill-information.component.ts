@@ -11,6 +11,7 @@ import {
 } from '@angular/router';
 
 import {RestaurantListingService} from '../services/restaurant-listing.service';
+import {SharedCommunicationService} from "../services/shared-communication.service";
 
 @Component({
     templateUrl: 'bill-information.component.html',
@@ -53,7 +54,8 @@ export class BillInformationComponent implements OnInit {
     constructor(
         private router: Router,
         private restaurantService: RestaurantListingService,
-        private activateRouter: ActivatedRoute
+        private activateRouter: ActivatedRoute,
+        private sharedCommunicationService: SharedCommunicationService
     ) {
     }
 
@@ -345,6 +347,7 @@ export class BillInformationComponent implements OnInit {
     }
 
     public goToPayWithCard(): void {
+        this.sharedCommunicationService.setState({totalBill: this.totalBill});
         this.router.navigate(['/pay-with-card']);
     }
 

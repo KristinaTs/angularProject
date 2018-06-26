@@ -27,6 +27,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {BillInfoPopupComponent} from "./bill-info-popup/bill-info-popup.component";
 import {InfoPopupComponent} from "./info-popup/info-popup.component";
 import {PayWithCardComponent} from "./pay-with-card/pay-with-card.component";
+import {SharedCommunicationService} from "./services/shared-communication.service";
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import {PayWithCardComponent} from "./pay-with-card/pay-with-card.component";
         WebSocketService,
         HttpService,
         CookieService,
-        RestaurantListingService
+        RestaurantListingService,
+        SharedCommunicationService
     ],
     bootstrap: [AppComponent]
 })
