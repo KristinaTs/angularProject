@@ -1,9 +1,13 @@
 .restaurant-information-wrapper {
+  overflow: hidden;
   background-color: white;
   margin-right: -15px;
   margin-left: -15px;
   text-align: center;
-  height: 100%;
+
+  .information-row {
+    height: calc(100vh - 75px);
+  }
 
   .image-container {
     background-image: url("./assets/restaurant-background.png");
@@ -12,6 +16,7 @@
     min-height: 140px;
     position: relative;
     margin-bottom: 50px;
+    background-clip: content-box;
     img {
       position: absolute;
       bottom: -29px;
@@ -35,8 +40,9 @@
   .rating {
     width: 40px;
     height: 40px;
-    line-height: 24px;
+    line-height: 40px;
     display: inline-block;
+    padding: 0;
   }
 
   .rating-container {
