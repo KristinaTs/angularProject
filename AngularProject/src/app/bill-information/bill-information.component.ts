@@ -56,8 +56,7 @@ export class BillInformationComponent implements OnInit {
         private restaurantService: RestaurantListingService,
         private billInformationService: BillInformationService,
         private activateRouter: ActivatedRoute
-    ) {
-    }
+    ) {}
 
 
     /**
@@ -78,10 +77,10 @@ export class BillInformationComponent implements OnInit {
                 this.getBillInformation(currentBillId);
             }
         });
-
+        this.getGeneralInformationForBill();
         this.getCurrentLoggedCustomer();
         this.getCurrentUserTotalBill();
-        this.getGeneralInformationForBill();
+
     }
 
     /**
@@ -105,16 +104,16 @@ export class BillInformationComponent implements OnInit {
      */
     public getCurrentLoggedCustomer(): void {
         this.restaurantService.getCurrentUser().then((data) => {
-           this.currentUser = data;
+           //this.currentUser = data;
         });
         //TODO delete
-        // this.currentUser = {
-        //     "id": 3,
-        //     "firstName": "Aleksandar",
-        //     "lastName": "Avramov",
-        //     "email": "avramov@abv.bg",
-        //     "gender": "MALE"
-        // };
+        this.currentUser = {
+            "id": 1,
+            "firstName": "Aleksandar",
+            "lastName": "Avramov",
+            "email": "avramov@abv.bg",
+            "gender": "MALE"
+        };
     }
 
     /**
@@ -123,28 +122,30 @@ export class BillInformationComponent implements OnInit {
      */
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
-            this.billSummary = data;
-            this.getCurrentUserTotalBill();
+            //this.billSummary = data;
+            //this.getCurrentUserTotalBill();
         });
 
-        // this.billSummary = {
-        //     "id": 1,
-        //     "password": "8839",
-        //     "participants": [
-        //         {
-        //             "id": 2,
-        //             "firstName": "Georgi",
-        //             "lastName": "Vladimirov",
-        //             "totalPrice": 882
-        //         },
-        //         {
-        //             "id": 3,
-        //             "firstName": "Aleksandar",
-        //             "lastName": "Avramov",
-        //             "totalPrice": 882
-        //         }
-        //     ]
-        // };
+        this.billSummary = {
+            "id": 1,
+            "password": "1293",
+            "participants": [
+                {
+                    "shortName": "GV",
+                    "fullName": "Georgi Vladimirov",
+                    "isMe": true,
+                    "totalPrice": 0,
+                    id:1
+                },
+                {
+                    "shortName": "AA",
+                    "fullName": "Aleksandar Avramov",
+                    "isMe": false,
+                    "totalPrice": 0,
+                    id:2
+                }
+            ]
+        }
     }
 
     public close() {
@@ -162,17 +163,17 @@ export class BillInformationComponent implements OnInit {
      */
     public getBillInformation(currentId): void {
         this.billInformationService.getBillInformation(currentId).then((data) => {
-            this.billList = data.ticketItems;
-            this.billInformation = data.ticketPayableData;
-            if(this.billInformation.price > 0) {
-                this.totalBill = (this.billInformation.price/100) + ' лв'
-            } else {
-                this.totalBill = '0 лв';
-            }
-            this.isSelectEnabled = this.billInformation.isSelectEnabled;
-            this.isShareEnabled = this.billInformation.isShareEnabled;
-            this.isExpandEnabled = this.billInformation.isExpandEnabled;
-            this.isDistributionSet = this.billInformation.isDistributionSet;
+            // this.billList = data.ticketItems;
+            // this.billInformation = data.ticketPayableData;
+            // if(this.billInformation.price > 0) {
+            //     this.totalBill = (this.billInformation.price/100) + ' лв'
+            // } else {
+            //     this.totalBill = '0 лв';
+            // }
+            // this.isSelectEnabled = this.billInformation.isSelectEnabled;
+            // this.isShareEnabled = this.billInformation.isShareEnabled;
+            // this.isExpandEnabled = this.billInformation.isExpandEnabled;
+            // this.isDistributionSet = this.billInformation.isDistributionSet;
             console.log('billInfo', data);
         });
         let data = {
@@ -264,17 +265,17 @@ export class BillInformationComponent implements OnInit {
                 }
         };
 
-        // this.billList = data.ticketItems;
-        // this.billInformation = data.ticketPayableData;
-        // if(this.billInformation.price > 0) {
-        //     this.totalBill = (this.billInformation.price/100) + ' лв'
-        // } else {
-        //     this.totalBill = '0 лв';
-        // }
-        // this.isSelectEnabled = this.billInformation.isSelectEnabled;
-        // this.isShareEnabled = this.billInformation.isShareEnabled;
-        // this.isExpandEnabled = this.billInformation.isExpandEnabled;
-        // this.isDistributionSet = this.billInformation.isDistributionSet;
+        this.billList = data.ticketItems;
+        this.billInformation = data.ticketPayableData;
+        if(this.billInformation.price > 0) {
+            this.totalBill = (this.billInformation.price/100) + ' лв'
+        } else {
+            this.totalBill = '0 лв';
+        }
+        this.isSelectEnabled = this.billInformation.isSelectEnabled;
+        this.isShareEnabled = this.billInformation.isShareEnabled;
+        this.isExpandEnabled = this.billInformation.isExpandEnabled;
+        this.isDistributionSet = this.billInformation.isDistributionSet;
         console.log('billInfo', data);
 
         //this.groupData(data);
