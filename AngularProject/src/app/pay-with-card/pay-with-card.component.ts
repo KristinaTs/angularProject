@@ -6,7 +6,8 @@ import {Component} from "@angular/core";
 })
 export class PayWithCardComponent {
 
-    totalBill: number = 28;
+    totalBill: number = 26;
+
 
 
 }
