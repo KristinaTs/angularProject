@@ -20,11 +20,8 @@ import {BillInformationService} from "../services/bill-information.service";
 
 export class BillInformationComponent implements OnInit {
     public routerSubscription: Subscription;
-    public billId;
     public myBill: string = '0 лв';
     public totalBill: string = null;
-    public isPayMode: boolean = false;
-    public isEditMode: boolean = false;
     public isModalOpened: boolean = false;
     public isInfoModalOpened: boolean = false;
     public currentBillId = null;
@@ -72,7 +69,6 @@ export class BillInformationComponent implements OnInit {
         this.routerSubscription = this.activateRouter.params.subscribe(params => {
             const currentBillId = params['id'];
             this.currentBillId = currentBillId;
-            this.billId = currentBillId;
             if (currentBillId) {
                 this.getBillInformation(currentBillId);
             }
@@ -281,35 +277,11 @@ export class BillInformationComponent implements OnInit {
         //this.groupData(data);
     }
 
-    /**
-     * Create array with separated elements
-     * @param index
-     */
-    public goToEditModePerItem(index): void {
-        let item = this.billList[index];
-        let newDataPerItem = [];
-        let count = item.menuItem.count;
-        item.menuItem.count = 1;
-        for (let i = 0; i < count; i++) {
-            newDataPerItem.push(item);
-        }
-        this.billList = newDataPerItem;
-    }
-
-
     /***
      * Change pay mode to true so we can show the payment buttons
      */
     public goToPayScreen(): void {
-        this.isPayMode = true;
-    }
-
-    /**
-     * Delete enrty
-     * @param {number} index
-     */
-    public removeEntry(index: number): void {
-        this.billList.splice(index, 1);
+        this.router.navigate([`/my-bill/${this.currentBillId}`]);
     }
 
     /**
@@ -317,12 +289,11 @@ export class BillInformationComponent implements OnInit {
      */
     public navigateToSecondStepBill(): void {
         if (this.isExpandEnabled) {
-            this.isEditMode = true;
             if (this.currentBillId) {
                 this.navigateToTicketStep2(this.currentBillId);
             } else {
                 //TODO delete
-                this.navigateToTicketStep2(this.billId);
+               // this.navigateToTicketStep2(this.billId);
             }
         } else {
            // console.error('Cannot expand bill!')
@@ -347,7 +318,7 @@ export class BillInformationComponent implements OnInit {
                 totalParts: 1,
                 myParts: 1
             };
-            this.billInformationService.initNewTicket(this.billId, objectToSend).then((data) => {
+            this.billInformationService.initNewTicket(this.currentBillId, objectToSend).then((data) => {
                 //TODO
                 console.log('SUCCESS')
             })

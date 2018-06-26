@@ -28,6 +28,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {BillInfoPopupComponent} from "./bill-info-popup/bill-info-popup.component";
 import {InfoPopupComponent} from "./info-popup/info-popup.component";
 import {BillInformationService} from "./services/bill-information.service";
+import {MyBillComponent} from "./my-bill/my-bill.component";
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {BillInformationService} from "./services/bill-information.service";
         TicketStep2Component,
         TicketStep3Component,
         TopNavigationComponent,
-        LoginComponent
+        LoginComponent,
+        MyBillComponent
     ],
     imports: [
         BrowserModule,

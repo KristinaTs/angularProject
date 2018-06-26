@@ -109,4 +109,13 @@ export class BillInformationService {
         return this.httpService.post(`/ticket/${ticketId}/subtickets/${subticketId}/update`, object);
     }
 
+    /**
+     * Get current logged user bill for pay screen
+     * @param ticketId
+     * @returns {Promise<any>}
+     */
+    public getCurrentUserBill(ticketId): Promise<any> {
+        return this.httpService.get(`/ticket/${ticketId}/my-ticket`);
+    }
+
 }
