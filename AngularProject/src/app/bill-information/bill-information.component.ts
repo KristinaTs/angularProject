@@ -77,10 +77,10 @@ export class BillInformationComponent implements OnInit {
                 this.getBillInformation(currentBillId);
             }
         });
-
+        this.getGeneralInformationForBill();
         this.getCurrentLoggedCustomer();
         this.getCurrentUserTotalBill();
-        this.getGeneralInformationForBill();
+
     }
 
     /**
@@ -108,7 +108,7 @@ export class BillInformationComponent implements OnInit {
         });
         //TODO delete
         this.currentUser = {
-            "id": 3,
+            "id": 1,
             "firstName": "Aleksandar",
             "lastName": "Avramov",
             "email": "avramov@abv.bg",
@@ -122,28 +122,30 @@ export class BillInformationComponent implements OnInit {
      */
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
-            this.billSummary = data;
-            this.getCurrentUserTotalBill();
+            //this.billSummary = data;
+            //this.getCurrentUserTotalBill();
         });
 
-        // this.billSummary = {
-        //     "id": 1,
-        //     "password": "8839",
-        //     "participants": [
-        //         {
-        //             "id": 2,
-        //             "firstName": "Georgi",
-        //             "lastName": "Vladimirov",
-        //             "totalPrice": 882
-        //         },
-        //         {
-        //             "id": 3,
-        //             "firstName": "Aleksandar",
-        //             "lastName": "Avramov",
-        //             "totalPrice": 882
-        //         }
-        //     ]
-        // };
+        this.billSummary = {
+            "id": 1,
+            "password": "1293",
+            "participants": [
+                {
+                    "shortName": "GV",
+                    "fullName": "Georgi Vladimirov",
+                    "isMe": true,
+                    "totalPrice": 0,
+                    id:1
+                },
+                {
+                    "shortName": "AA",
+                    "fullName": "Aleksandar Avramov",
+                    "isMe": false,
+                    "totalPrice": 0,
+                    id:2
+                }
+            ]
+        }
     }
 
     public close() {
