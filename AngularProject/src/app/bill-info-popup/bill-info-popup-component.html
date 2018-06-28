@@ -5,42 +5,42 @@
             Участници:
             <div class="participants-container">
                 <div class="participant"
-                     [class.self]="participant.id == currentUser.id"
+                     [class.self]="participant.isMe"
                      [class.selected]="participant.selected"
-                     [ngClass]="currentUser.hasShares ? 'participant-has-shares': 'participant-no-shares'"
+                     [ngClass]="participant.isIn ? 'participant-has-shares': 'participant-no-shares'"
                      *ngFor="let participant of participants; let i = index"
                      (click)="toggleSelectedParticipant(i)"
                 >
-                    {{participant.id}}
+                    {{participant.shortName}}
                 </div>
             </div>
         </div>
         <div class="widget-container dash-bt-border">
             Дялове:
             <div class="shares-container">
-                <div class="share"
-                     [class.self]="share.self"
-                     [class.selected]="share.selected"
-                     [class.disabled] = "isDistributionSet"
-                     *ngFor="let share of shares; let i = index"
-                     (click)="toggleSelectedShareCount(i)"
+                <div  *ngFor="let distribution of distributions; let i = index"
+                      class="share"
+                     [class.self]="distribution.self"
+                     [class.selected]="distribution.selected"
+                     [class.disabled] = "!distribution.isSelectable"
+                     (click)="toggleSelectedDistibutionCount(i)"
                 >
-                    {{share.totalParts}}
+                    {{distribution.totalParts}}
                 </div>
             </div>
         </div>
         <div class="header">Дялове за мен:</div>
         <div class="test">
             <div class="share-slider-container">
-                <div class="slider"></div>
+                <div class="slider" [class.disabled]="!isShareActive"></div>
             </div>
         </div>
         <div class="share-options-wrapper">
-            <div *ngFor="let shareOption of shareOptions; let i = index"
+            <div *ngFor="let shareOption of shares; let i = index"
                  (click)="setSharesForSelf(i)"
-                 [class.selected]="shareOption.selected"
+                 [class.selected]="shareOption.isCurrent"
             >
-                {{shareOption.totalParts}}
+                {{shareOption.number}}
             </div>
         </div>
     </div>

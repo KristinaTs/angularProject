@@ -35,16 +35,14 @@ export class BillInfoPopupComponent implements OnInit {
     public totalBill = '0 лв';
     public canApply = false;
     public selectedUser;
-    public freeIds = [];
     public viewLoaded = false;
-    public ticketDataSharesUsers = [];
     public selectedOption;
     public selectedDistirbutionId;
-    public selectedIdsPerUser = [];
-    public selectedPartsFromUser = [];
+    public distributions = [];
+    public userShareOption;
+    public isShareActive = true;
 
-    constructor(public restaurantService: RestaurantListingService, public billInformationService: BillInformationService) {
-    }
+    constructor(public restaurantService: RestaurantListingService, public billInformationService: BillInformationService) {}
 
     @HostListener('click', ['$event'])
     public onClick(event: any): void {
@@ -62,31 +60,32 @@ export class BillInfoPopupComponent implements OnInit {
     }
 
     public getCorrectData(): void {
-        //console.log(this.ticketPayableData);
-        //console.log(this.currentUser);
-        this.checkIfCurrentUserHasShares();
-        this.participants = this.billSummary.participants;
+        //this.checkIfCurrentUserHasShares();
+        this.participants = this.ticketPayableData.participantDatas;
         this.isDistributionSet = this.ticketPayableData.isDistributionSet;
-        this.freeIds = this.ticketPayableData.freeIds;
-        this.ticketDataSharesUsers = this.ticketPayableData.shares;
         this.getCurrentUserTotalBill();
-        if (this.isDistributionSet) {
-            this.updateDataWhenDistributionIsSet();
-        } else {
-            this.shares = JSON.parse(JSON.stringify(this.ticketPayableData.distributions));
-            this.shares[0].selected = true;
-            this.shareOptions.push({
-                totalParts: 0,
-                value: 0,
-                selected: true
-            });
-            this.shareOptions.push({
-                totalParts: 1,
-                value: this.shares[0].values[0]
-            });
-        }
+        this.getDistributionsAndShares();
         this.totalBill = (this.ticketPayableData.price / 100) + 'лв';
         this.viewLoaded = true;
+    }
+
+    public getDistributionsAndShares() {
+        let indexForDistribution = this.ticketPayableData.participantDatas.map((person) => {
+            return person.id;
+        }).indexOf(this.selectedUser.id);
+        this.distributions = this.ticketPayableData.participantDatas[indexForDistribution].distributions;
+        this.distributions[0].selected = true;
+        //always start from the first element
+        this.shares = this.distributions[0].shares;
+        this.userShareOption = this.shares.filter((share) => {
+            if (share.isCurrent) {
+                return share;
+            }
+        })[0];
+        let indexForSelecedElement = this.shares.map((share) => {
+            return share.isCurrent
+        }).indexOf(true);
+        this.setSharesForSelf(indexForSelecedElement);
     }
     /**
      * Find current user in participants array and get total price
@@ -104,142 +103,33 @@ export class BillInfoPopupComponent implements OnInit {
         }
 
     }
-
-    public updateDataWhenDistributionIsSet(): void {
-        this.shares = [this.ticketPayableData.distributions[this.ticketPayableData.selectedDistributionId - 1]];
-        let values = this.ticketPayableData.distributions[this.ticketPayableData.selectedDistributionId - 1].values;
-        //Here we set the correct value for each share
-        // get index from taked Ids
-        this.getSelectedUserTakenIds();
-
-        let sharesArray = this.selectedUser.takenIds.concat(this.freeIds);
-        this.calculateSelectedUserBill();
-        //console.log(values);
-        //console.log(sharesArray)
-
-        this.shareOptions = [];
-        for (let i = 0; i <= sharesArray.length; i++) {
-            let valueForShareOption = this.calculateValueForShareOption(sharesArray, i, values);
-
-            let selectedId = this.selectedUser.takenIds.length;
-            //бвойката е селецтнатия усер + freeIds
-            //values = current user ids;
-            if (i == selectedId) {
-                this.shareOptions.push({
-                    totalParts: i,
-                    value: valueForShareOption,
-                    selected: true
-                });
-            } else {
-                this.shareOptions.push({
-                    totalParts: i,
-                    value: valueForShareOption,
-                    selected: false
-                });
-            }
-        }
-
-        //console.log(this.shareOptions);
-    }
-
-    public calculateSelectedUserBill() {
-        let myTotalShareNumber = 0;
-        for(let i = 0; i < this.selectedPartsFromUser.length; i ++) {
-            myTotalShareNumber+=this.shares[0].values[this.selectedPartsFromUser[i]];
-        }
-        this.totalPriceString = (myTotalShareNumber/100) + 'лв';
-    }
-
-    /**
-     * Return the correct valu for each option
-     * @param array
-     * @param index
-     * @param valuesArray
-     * @returns {number}
-     */
-    public calculateValueForShareOption(array, index, valuesArray): number {
-        let value = 0;
-        if (index == 0) {
-            return 0;
-        } else {
-            array.forEach((indexValue, i) => {
-                if (i < index) {
-                    value += valuesArray[indexValue];
-                }
-            });
-            return value;
-        }
-    }
-
-    /**
-     * Check if the currently logged user has any shares
-     * to determine the color of the button
-     */
-    public checkIfCurrentUserHasShares(): void {
-        let shares = this.ticketPayableData.shares;
-        let index = shares.map((participant) => {
-            return participant.id;
-        }).indexOf(this.currentUser.id);
-        if (index < 0) {
-            this.currentUser.hasShares = false;
-        } else {
-            this.currentUser.hasShares = true;
-        }
-    }
-
     /**
      * Select a participant
      * @param {number} participantIndex
      */
     public toggleSelectedParticipant(participantIndex: number): void {
         this.participants.forEach((participant, index) => {
-            if (participantIndex === index) {
-                this.selectedUser = this.participants[index];
-            }
             participant['selected'] = participantIndex === index;
         });
-        this.getSelectedUserTakenIds();
-        this.updateDataWhenDistributionIsSet();
+        if(this.selectedUser.id != this.participants[participantIndex].id) {
+            this.selectedUser = this.participants[participantIndex];
+            this.isShareActive = this.selectedUser.id == this.currentUser.id;
+            this.getDistributionsAndShares();
+        }
     }
 
     /**
      * Select the count on which we split the bill
      * @param {number} shareIndex
      */
-    public toggleSelectedShareCount(shareIndex: number) {
-        if (!this.isDistributionSet) {
-            this.shares.forEach((share, index) => {
-                share['selected'] = shareIndex === index;
+    public toggleSelectedDistibutionCount(distributionIndex: number) {
+        if (this.distributions[distributionIndex].isSelectable) {
+            this.distributions.forEach((share, index) => {
+                share['selected'] = distributionIndex === index;
             });
-            this.selectedDistirbutionId = shareIndex;
-            this.shares = [this.ticketPayableData.distributions[shareIndex]];
-            let values = this.ticketPayableData.distributions[this.ticketPayableData.selectedDistributionId - 1].values;
-
-            this.shares = JSON.parse(JSON.stringify(this.ticketPayableData.distributions));
-            this.shares[shareIndex].selected = true;
-            this.shareOptions = [];
-            this.shareOptions.push({
-                totalParts: 0,
-                value: 0,
-                selected: true
-            });
-            this.shareOptions.push({
-                totalParts: 1,
-                value: this.shares[0].values[0]
-            });
+            this.selectedDistirbutionId = distributionIndex;
+            this.shares = this.distributions[distributionIndex].shares;
         }
-    }
-
-    /**
-     * Get the takenIds when an user is selected
-     */
-    public getSelectedUserTakenIds(): void {
-        let userIndex = this.ticketDataSharesUsers.map((user) => {
-            return user.id;
-        }).indexOf(this.selectedUser.id);
-        this.selectedUser.takenIds = this.ticketDataSharesUsers[userIndex].takenIds;
-        this.selectedPartsFromUser = [...this.selectedUser.takenIds];
-        //this.changeSelectedUserPartValue(this.selectedUser.takenIds.length - 1);
     }
 
     /**
@@ -247,43 +137,18 @@ export class BillInfoPopupComponent implements OnInit {
      * @param {number} shareIndex
      */
     public setSharesForSelf(shareIndex: number): void {
-        this.shareOptions.forEach((share, index) => {
-            share['selected'] = shareIndex === index;
-        });
-        //TODO has to be cheged is the state is chaged ]
-        this.selectedOption = this.shareOptions[shareIndex];
-        // kogato indecsa e razlichek  ili kogato disxtrubution e false
-        if (shareIndex !== this.currentUser.takenIds.length || this.isDistributionSet == false) {
-            this.canApply = true;
-        } else {
-            this.canApply = false;
-        }
-
-        if(shareIndex == this.selectedUser.takenIds.length){
-            this.selectedPartsFromUser = [...this.selectedUser.takenIds];
-        } else if(shareIndex > this.selectedUser.takenIds.length) {
-            let numberOfNewShares = shareIndex - this.selectedUser.takenIds.length;
-            for(let i = 0; i < numberOfNewShares; i++) {
-                this.selectedPartsFromUser.push(this.freeIds[i]);
+        if (this.currentUser.id == this.selectedUser.id) {
+            this.shares.forEach((share, index) => {
+                share['isCurrent'] = shareIndex === index;
+            });
+            if (this.shares[shareIndex].number !== this.userShareOption.number) {
+                this.canApply = true;
+            } else {
+                this.canApply = false;
             }
-        } else if(shareIndex < this.selectedUser.takenIds.length) {
-            let numberOfNewShares = this.selectedUser.takenIds.length - shareIndex;
-            for(let i = 0; i < numberOfNewShares; i++) {
-                this.selectedPartsFromUser.pop();
-            }
+            this.selectedOption = this.shares[shareIndex];
+            this.totalPriceString = (this.selectedOption.price / 100) + ' лв';
         }
-
-        this.calculateSelectedUserBill();
-    }
-
-    /**
-     * Set the selectes user price to pay
-     * @param value
-     */
-    public changeSelectedUserPartValue(shareIndex): void {
-        let value = this.shareOptions[shareIndex].value;
-        let myTotalShareNumber = value;
-        this.totalPriceString = (myTotalShareNumber / 100) + ' лв';
     }
 
     /**
@@ -291,14 +156,13 @@ export class BillInfoPopupComponent implements OnInit {
      */
     public initOrUpdateTicket(): void {
         let objectToSend = {};
-
         if(!this.isDistributionSet) {
             objectToSend = {
                 distributionId: this.selectedDistirbutionId,
-                myParts: this.selectedOption.totalParts
+                myParts: this.selectedOption.number
             };
             switch (this.type) {
-                case 'main-screem':
+                case 'main-screen':
                     this.billInformationService.initNewTicket(this.billSummary.id, objectToSend).then((data) => {
                         //TODO
                         this.closeModal.emit();
@@ -313,12 +177,12 @@ export class BillInfoPopupComponent implements OnInit {
                     });
                     break;
             }
-        } else  if(this.isDistributionSet && this.canApply) {
+        } else if(this.isDistributionSet && this.canApply) {
             objectToSend = {
                 myParts: this.selectedOption.totalParts
             };
             switch (this.type) {
-                case 'main-screem':
+                case 'main-screen':
                     this.billInformationService.updateTicket(this.billSummary.id, objectToSend).then((data) => {
                         //TODO
                         this.closeModal.emit();

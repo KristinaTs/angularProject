@@ -13,27 +13,30 @@
         <table class="table table-striped bill-table">
             <tbody>
             <tr *ngFor="let item of billList; let i = index">
-                <td class="entry-total-price">{{(item.totalPrice/100)}} лв.
+                <td>
+                    <div class="menu-item-title">
+                        {{item.title}}
+                    </div>
+                    <span>{{item.quantity}} x {{(item.price/100) | number: '1.2'}} лв.</span>
                 </td>
+                <td class="entry-total-price">{{(item.totalPrice/100)}} лв.</td>
             </tr>
             </tbody>
         </table>
     </div>
-        <ng-template>
-            <div class="col-2 button confirm-pay pink-button float-left pointer" [class.disabled]="!isSelectEnabled"
-                 (click)="initTicket()">
-                <span class="white-check"></span>
-            </div>
-            <div class="col-8 button blue-button float-left price-image pointer" [class.disabled]="!isShareEnabled"
-                 (click)="openBillInfoModal()">
-                ОБЩA СМЕТКА: {{totalBill}}
-            </div>
-            <div class="col-2 button confirm-pay pink-button float-left" [class.disabled]="!isExpandEnabled"
-                 (click)="navigateToSecondStepBill()">
-                <span class="white-arrow-right"></span></div>
-            <div class="col-12 button pay-button float-left">
-                <div class="margin-left-10 float-left">Мoята сметка: {{myBill}}</div>
-                <div (click)="goToPayScreen()" class="float-right margin-right-10">ПЛАТИ</div>
-            </div>
-        </ng-template>
+    <div class="col-2 button confirm-pay pink-button float-left pointer" [class.disabled]="!isSelectEnabled"
+         (click)="initTicket()">
+        <span class="white-check"></span>
+    </div>
+    <div class="col-8 button blue-button float-left price-image pointer" [class.disabled]="!isShareEnabled"
+         (click)="openBillInfoModal()">
+        ОБЩA СМЕТКА: {{totalBill}}
+    </div>
+    <div class="col-2 button confirm-pay pink-button float-left" [class.disabled]="!isExpandEnabled"
+         (click)="navigateToSecondStepBill()">
+        <span class="white-arrow-right"></span></div>
+    <div class="col-12 button pay-button float-left">
+        <div class="margin-left-10 float-left">Мoята сметка: {{myBill}}</div>
+        <div (click)="goToPayScreen()" class="float-right margin-right-10">ПЛАТИ</div>
+    </div>
 </div>
