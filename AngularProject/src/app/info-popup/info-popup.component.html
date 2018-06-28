@@ -7,12 +7,12 @@
             <div class="participants-container">
                 <div class="participant add-participant" (click)="addParticipant()">+</div>
                 <div class="participant"
-                     [class.self]="participant.id == currentUser.id"
+                     [class.self]="participant.isMe"
                      [class.selected]="participant.id == selectedUserID"
                      *ngFor="let participant of data.participants; let i = index"
                      (click)="toggleSelectedParticipant(i)"
                 >
-                    {{participant.id}}
+                    {{participant.shortName}}
                 </div>
             </div>
         </div>

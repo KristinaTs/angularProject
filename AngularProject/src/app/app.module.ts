@@ -11,6 +11,7 @@ import {routes} from './app.routes';
 
 
 import {LoginComponent} from "./login-screen/login.component";
+import {LoginService} from './services/login.service';
 // Restaurant listing and information components
 import {HttpService} from './services/http.service';
 import {CookieService} from './services/cookie.service';
@@ -28,6 +29,7 @@ import {BillInfoPopupComponent} from "./bill-info-popup/bill-info-popup.componen
 import {InfoPopupComponent} from "./info-popup/info-popup.component";
 import {PayWithCardComponent} from "./pay-with-card/pay-with-card.component";
 import {SharedCommunicationService} from "./services/shared-communication.service";
+import {BillInformationService} from "./services/bill-information.service";
 
 
 @NgModule({
@@ -58,7 +60,9 @@ import {SharedCommunicationService} from "./services/shared-communication.servic
         HttpService,
         CookieService,
         RestaurantListingService,
-        SharedCommunicationService
+        SharedCommunicationService,
+        LoginService,
+        BillInformationService
     ],
     bootstrap: [AppComponent]
 })

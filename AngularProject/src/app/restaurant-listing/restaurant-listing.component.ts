@@ -5,6 +5,7 @@ import {
 import {Router} from '@angular/router';
 import {RestaurantListingService} from '../services/restaurant-listing.service';
 import {HttpClient} from '@angular/common/http';
+import {BillInformationService} from "../services/bill-information.service";
 
 @Component({
     templateUrl: 'restaurant-list.component.html',
@@ -15,7 +16,7 @@ export class RestaurantListComponent implements OnInit {
     constructor(
         private router: Router,
         private restaurantListingService: RestaurantListingService,
-        private http: HttpClient
+        private billInformationService: BillInformationService
     ) {
         this.getAllRestaurants();
     }
@@ -106,7 +107,6 @@ export class RestaurantListComponent implements OnInit {
         this.restaurantListingService.getAllRestaurants().then((data) => {
             this.restaurantList = data;
         });
-
         //this.restaurantList = this.forTesting;
     }
 
@@ -119,11 +119,11 @@ export class RestaurantListComponent implements OnInit {
         console.log(id);
         console.log(password);
         if (id != '' && password != '') {
-            this.restaurantListingService.sendJoinRequest(id, password).then((data) => {
+            this.billInformationService.sendJoinRequest(id, password).then((data) => {
                 console.log('DONE');
                 if (data.success) {
                     //Navigate to bill if succesful
-                    //this.router.navigate()
+                    this.router.navigate([`bill-information/${id}`]);
                 }
             });
         } else {

@@ -12,6 +12,7 @@ import {
 
 import {RestaurantListingService} from '../services/restaurant-listing.service';
 import {SharedCommunicationService} from "../services/shared-communication.service";
+import {BillInformationService} from "../services/bill-information.service";
 
 @Component({
     templateUrl: 'bill-information.component.html',
@@ -55,9 +56,9 @@ export class BillInformationComponent implements OnInit {
         private router: Router,
         private restaurantService: RestaurantListingService,
         private activateRouter: ActivatedRoute,
+        private billInformationService: BillInformationService,
         private sharedCommunicationService: SharedCommunicationService
-    ) {
-    }
+    ) {}
 
 
     /**
@@ -78,17 +79,17 @@ export class BillInformationComponent implements OnInit {
                 this.getBillInformation(currentBillId);
             }
         });
-
-        this.getCurrentLoggedCustomer();
         this.getGeneralInformationForBill();
+        this.getCurrentLoggedCustomer();
         this.getCurrentUserTotalBill();
+
     }
 
     /**
      * Show.hide modal
      */
     public openBillInfoModal() {
-        if (this.isShareEnabled) {
+        if(this.isShareEnabled) {
             this.isModalOpened = !this.isModalOpened;
         }
     }
@@ -97,7 +98,6 @@ export class BillInformationComponent implements OnInit {
      * Show.hide modal
      */
     public openInfoPopup() {
-        console.log('HERE');
         this.isInfoModalOpened = !this.isInfoModalOpened;
     }
 
@@ -123,9 +123,10 @@ export class BillInformationComponent implements OnInit {
      * {id, password, participants}
      */
     public getGeneralInformationForBill(): void {
-        // this.restaurantService.getBillSummary(this.currentBillId).then((data) => {
-        //     this.billSummary = data;
-        // });
+        this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
+            //this.billSummary = data;
+            //this.getCurrentUserTotalBill();
+        });
 
         this.billSummary = {
             "id": 1,
@@ -151,20 +152,20 @@ export class BillInformationComponent implements OnInit {
      Get bill information/ products in bill/ shares
      */
     public getBillInformation(currentId): void {
-        // this.restaurantService.getBillInformation(currentId).then((data) => {
-        //     this.billList = data.ticketItems;
-        //     this.billInformation = data.ticketPayableData;
-        //     if(this.billInformation.price > 0) {
-        //         this.totalBill = (this.billInformation.price/100) + ' лв'
-        //     } else {
-        //         this.totalBill = '0 лв';
-        //     }
-        //     this.isSelectEnabled = this.billInformation.isSelectEnabled;
-        //     this.isShareEnabled = this.billInformation.isShareEnabled;
-        //     this.isExpandEnabled = this.billInformation.isExpandEnabled;
-        //     this.isDistributionSet = this.billInformation.isDistributionSet;
-        //     console.log('billInfo', data);
-        // });
+        this.billInformationService.getBillInformation(currentId).then((data) => {
+            // this.billList = data.ticketItems;
+            // this.billInformation = data.ticketPayableData;
+            // if(this.billInformation.price > 0) {
+            //     this.totalBill = (this.billInformation.price/100) + ' лв'
+            // } else {
+            //     this.totalBill = '0 лв';
+            // }
+            // this.isSelectEnabled = this.billInformation.isSelectEnabled;
+            // this.isShareEnabled = this.billInformation.isShareEnabled;
+            // this.isExpandEnabled = this.billInformation.isExpandEnabled;
+            // this.isDistributionSet = this.billInformation.isDistributionSet;
+            console.log('billInfo', data);
+        });
         let data = {
             "id": 1,
             "ticketItems": [
@@ -256,8 +257,8 @@ export class BillInformationComponent implements OnInit {
 
         this.billList = data.ticketItems;
         this.billInformation = data.ticketPayableData;
-        if (this.billInformation.price > 0) {
-            this.totalBill = (this.billInformation.price / 100) + ' лв'
+        if(this.billInformation.price > 0) {
+            this.totalBill = (this.billInformation.price/100) + ' лв'
         } else {
             this.totalBill = '0 лв';
         }
@@ -314,7 +315,7 @@ export class BillInformationComponent implements OnInit {
                 this.navigateToTicketStep2(this.billId);
             }
         } else {
-            // console.error('Cannot expand bill!')
+           // console.error('Cannot expand bill!')
         }
     }
 
@@ -333,10 +334,10 @@ export class BillInformationComponent implements OnInit {
     public initTicket(): void {
         if (this.isSelectEnabled) {
             let objectToSend = {
-                distributionId: 1,
+                totalParts: 1,
                 myParts: 1
             };
-            this.restaurantService.initNewTicket(this.billId, objectToSend).then((data) => {
+            this.billInformationService.initNewTicket(this.billId, objectToSend).then((data) => {
                 //TODO
                 console.log('SUCCESS')
             })
@@ -360,7 +361,7 @@ export class BillInformationComponent implements OnInit {
             return user.id;
         }).indexOf(this.currentUser.id);
         let price = participants[indexOfCurrectUser].totalPrice;
-        if (price && price > 0) {
+        if ( price && price > 0) {
             this.myBill = (price / 100) + ' лв';
         } else {
             this.myBill = '0 лв';

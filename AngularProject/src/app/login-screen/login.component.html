@@ -6,23 +6,19 @@
 
             <input type="text" [(ngModel)]="username" placeholder="Потребителско име" name="username">
 
-            <input type="text" [(ngModel)]="password" placeholder="Парола" name="password">
+            <input type="password" [(ngModel)]="password" placeholder="Парола" name="password">
 
             <div class="login-button pointer" (click)="login()">ВХОД</div>
 
         </form>
-
         <div class="col-12 no-gutter tx-center">
             <div class="margin-10-0">Нямаш акаунт? Регистрирай се сега!</div>
             <div class="margin-10-0">или</div>
         </div>
-
         <div class="col-12 no-gutter">
             <button class="loginBtn loginBtn--google">
                 Login with Google
             </button>
-
-
             <button class="loginBtn loginBtn--facebook">
                 Влез с Facebook профил
             </button>

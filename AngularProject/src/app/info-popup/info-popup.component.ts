@@ -27,19 +27,21 @@ export class InfoPopupComponent implements OnInit {
 
     public data = {
         "id": 1,
-        "password": "8839",
+        "password": "1293",
         "participants": [
             {
-                "id": 2,
-                "firstName": "Georgi",
-                "lastName": "Vladimirov",
-                "totalPrice": 882
+                "shortName": "GV",
+                "fullName": "Georgi Vladimirov",
+                "isMe": true,
+                "totalPrice": 0,
+                id:1
             },
             {
-                "id": 3,
-                "firstName": "Aleksandar",
-                "lastName": "Avramov",
-                "totalPrice": 882
+                "shortName": "AA",
+                "fullName": "Aleksandar Avramov",
+                "isMe": false,
+                "totalPrice": 0,
+                id:2
             }
         ]
     };
@@ -62,7 +64,7 @@ export class InfoPopupComponent implements OnInit {
      */
     public ngOnInit(): void {
         this.data = this.billSummary;
-        console.log(this.billSummary)
+        console.log(this.billSummary);
         this.selectedUserID = this.currentUser.id;
         this.toggleSelectedParticipant(0);
     }
@@ -70,7 +72,7 @@ export class InfoPopupComponent implements OnInit {
     public toggleSelectedParticipant(participantIndex: number) {
         let participant = this.data.participants[participantIndex];
         this.selectedUserID = participant.id;
-        this.selectedUserInformation = `${participant.firstName} ${participant.lastName}: ${participant.totalPrice / 100} лв`;
+        this.selectedUserInformation = `${participant.fullName}: ${participant.totalPrice / 100} лв`;
     }
 
     public addParticipant() {
