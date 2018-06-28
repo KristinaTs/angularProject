@@ -18,6 +18,7 @@ import {BillInformationService} from "../services/bill-information.service";
 export class RestaurantInformationComponent implements OnInit, OnDestroy {
     public routerSubscription: Subscription;
     public isRequestSendForBill = false;
+    public loaded: boolean = false;
     public restaurantId: number;
     public billCode = 'PIN';
 
@@ -54,6 +55,9 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
         menuItems: []
     };
 
+    public test() {
+        console.log('Finished');
+    }
 
     public ngOnInit(): void {
         // here we get the information for the restaurant
@@ -95,6 +99,9 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
     public sendRequestForBill() {
         // send request for bill
         this.isRequestSendForBill = true;
+        setTimeout(()=> {
+            this.loaded = true;
+        });
         let objectToSend = {
             posId: this.restaurantId
         };
