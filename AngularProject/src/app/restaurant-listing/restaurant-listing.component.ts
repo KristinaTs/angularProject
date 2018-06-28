@@ -103,11 +103,11 @@ export class RestaurantListComponent implements OnInit {
      * Get all restaurants
      */
     public getAllRestaurants(): void {
-        this.restaurantListingService.getAllRestaurants().then((data) => {
-            this.restaurantList = data;
-        });
+        // this.restaurantListingService.getAllRestaurants().then((data) => {
+        //     this.restaurantList = data;
+        // });
 
-        //this.restaurantList = this.forTesting;
+        this.restaurantList = this.forTesting;
     }
 
     /**

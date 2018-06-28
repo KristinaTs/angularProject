@@ -12,18 +12,18 @@
     <div class="col col-12 restaurant-wrapper pointer" *ngFor="let restaurant of restaurantList"
          (click)="navigateToRestaurant(restaurant)">
       <div class="row">
-        <div class="col col-3 image-container">
+        <div class="image-container">
           <img class="image" [src]="restaurant.logoUrl" alt="">
         </div>
-        <div class="col col-7 restaurant-main-info">
+        <div class="restaurant-main-info">
           <div class="title">{{restaurant.name}}</div>
           <div class="address text-gray">{{restaurant.address}}</div>
           <div class="row stat-wrapper">
-            <div class="col-4 rating-container">
+            <div class="col-5 rating-container">
               <span class="text-gray stats">Рейтинг:</span>
               <span class="rating">{{restaurant.rating.foodQuality}}</span>
             </div>
-            <ul class="col-8 rating-container description-list">
+            <ul class="col-7 rating-container description-list">
               <li class="text-gray stats"><span>Храна:</span><span> {{restaurant.rating.foodQuality}}</span></li>
               <li class="text-gray stats"><span>Обстановка:</span><span> {{restaurant.rating.atmosphere}}</span></li>
               <li class="text-gray stats"><span>Обслужване:</span><span> {{restaurant.rating.serviceQuality}}</span>
@@ -31,7 +31,7 @@
             </ul>
           </div>
         </div>
-        <div class="col col-2 right-arrow-wrapper">
+        <div class="right-arrow-wrapper">
           <div class="right-arrow"></div>
         </div>
       </div>
