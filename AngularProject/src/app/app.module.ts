@@ -27,6 +27,8 @@ import {TopNavigationComponent} from './top-navigation/top-navigation.component'
 import {HttpClientModule} from '@angular/common/http';
 import {BillInfoPopupComponent} from "./bill-info-popup/bill-info-popup.component";
 import {InfoPopupComponent} from "./info-popup/info-popup.component";
+import {PayWithCardComponent} from "./pay-with-card/pay-with-card.component";
+import {SharedCommunicationService} from "./services/shared-communication.service";
 import {BillInformationService} from "./services/bill-information.service";
 
 
@@ -41,7 +43,8 @@ import {BillInformationService} from "./services/bill-information.service";
         TicketStep2Component,
         TicketStep3Component,
         TopNavigationComponent,
-        LoginComponent
+        LoginComponent,
+        PayWithCardComponent
     ],
     imports: [
         BrowserModule,
@@ -57,6 +60,7 @@ import {BillInformationService} from "./services/bill-information.service";
         HttpService,
         CookieService,
         RestaurantListingService,
+        SharedCommunicationService,
         LoginService,
         BillInformationService
     ],
