@@ -8,7 +8,6 @@ import {Component, EventEmitter, HostListener, Input, Output} from "@angular/cor
             <span *ngIf="!started">{{initialLabel}}</span>
             <span class="color-white" *ngIf="started && !finished">{{inProgressLabel}}</span>
             <span *ngIf="finished">{{loadedLabel}}</span>
-
             <div class="loader" *ngIf="!finished" [style.width]="currentWidth+'%'"></div>
         </div>`
 })
