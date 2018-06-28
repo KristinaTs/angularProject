@@ -1,9 +1,8 @@
 import {
     Component
 } from '@angular/core';
-import {RestaurantListingService} from "../services/restaurant-listing.service";
+import {LoginService} from "../services/login.service";
 import {Router} from "@angular/router";
-
 
 
 @Component({
@@ -14,9 +13,7 @@ export class LoginComponent {
     public username;
     public password;
 
-    constructor(private restaurantService: RestaurantListingService, private router: Router) {
-
-    }
+    constructor(private loginService: LoginService, private router: Router) {}
 
 
     public login() {
@@ -25,14 +22,14 @@ export class LoginComponent {
         // form.append('password', this.password);
 
         let form = {
-          username: this.username,
-          password: this.password
+            username: this.username,
+            password: this.password
         }
 
-        this.restaurantService.login(form).then(data => {
-          console.log(data);
+        this.loginService.login(form).then(data => {
             this.router.navigate(['/restaurant-listing']);
+        }).catch((err) => {
+            console.log(err);
         });
     }
-
 }

@@ -11,6 +11,8 @@ import {
 } from '@angular/router';
 
 import {RestaurantListingService} from '../services/restaurant-listing.service';
+import {SharedCommunicationService} from "../services/shared-communication.service";
+import {BillInformationService} from "../services/bill-information.service";
 
 @Component({
     templateUrl: 'bill-information.component.html',
@@ -32,7 +34,7 @@ export class BillInformationComponent implements OnInit {
     public billInformation = null;
     public isSelectEnabled: boolean = false;
     public isShareEnabled: boolean = false;
-    public isExpandEnabled: boolean  = false;
+    public isExpandEnabled: boolean = false;
     public isDistributionSet: boolean = false;
 
     public restaurant = {
@@ -53,9 +55,10 @@ export class BillInformationComponent implements OnInit {
     constructor(
         private router: Router,
         private restaurantService: RestaurantListingService,
-        private activateRouter: ActivatedRoute
-    ) {
-    }
+        private activateRouter: ActivatedRoute,
+        private billInformationService: BillInformationService,
+        private sharedCommunicationService: SharedCommunicationService
+    ) {}
 
 
     /**
@@ -76,10 +79,10 @@ export class BillInformationComponent implements OnInit {
                 this.getBillInformation(currentBillId);
             }
         });
-
-        this.getCurrentLoggedCustomer();
         this.getGeneralInformationForBill();
+        this.getCurrentLoggedCustomer();
         this.getCurrentUserTotalBill();
+
     }
 
     /**
@@ -95,7 +98,6 @@ export class BillInformationComponent implements OnInit {
      * Show.hide modal
      */
     public openInfoPopup() {
-        console.log('HERE');
         this.isInfoModalOpened = !this.isInfoModalOpened;
     }
 
@@ -103,17 +105,17 @@ export class BillInformationComponent implements OnInit {
      * Get current logged in user
      */
     public getCurrentLoggedCustomer(): void {
-        this.restaurantService.getCurrentUser().then((data) => {
-           this.currentUser = data;
-        });
-        //TODO delete
-        // this.currentUser = {
-        //     "id": 3,
-        //     "firstName": "Aleksandar",
-        //     "lastName": "Avramov",
-        //     "email": "avramov@abv.bg",
-        //     "gender": "MALE"
-        // };
+        // this.restaurantService.getCurrentUser().then((data) => {
+        //    this.currentUser = data;
+        // });
+        // TODO delete
+        this.currentUser = {
+            "id": 3,
+            "firstName": "Aleksandar",
+            "lastName": "Avramov",
+            "email": "avramov@abv.bg",
+            "gender": "MALE"
+        };
     }
 
     /**
@@ -121,46 +123,47 @@ export class BillInformationComponent implements OnInit {
      * {id, password, participants}
      */
     public getGeneralInformationForBill(): void {
-        this.restaurantService.getBillSummary(this.currentBillId).then((data) => {
-            this.billSummary = data;
+        this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
+            //this.billSummary = data;
+            //this.getCurrentUserTotalBill();
         });
 
-        // this.billSummary = {
-        //     "id": 1,
-        //     "password": "8839",
-        //     "participants": [
-        //         {
-        //             "id": 2,
-        //             "firstName": "Georgi",
-        //             "lastName": "Vladimirov",
-        //             "totalPrice": 882
-        //         },
-        //         {
-        //             "id": 3,
-        //             "firstName": "Aleksandar",
-        //             "lastName": "Avramov",
-        //             "totalPrice": 882
-        //         }
-        //     ]
-        // };
+        this.billSummary = {
+            "id": 1,
+            "password": "8839",
+            "participants": [
+                {
+                    "id": 2,
+                    "firstName": "Georgi",
+                    "lastName": "Vladimirov",
+                    "totalPrice": 882
+                },
+                {
+                    "id": 3,
+                    "firstName": "Aleksandar",
+                    "lastName": "Avramov",
+                    "totalPrice": 882
+                }
+            ]
+        };
     }
 
     /**
      Get bill information/ products in bill/ shares
      */
     public getBillInformation(currentId): void {
-        this.restaurantService.getBillInformation(currentId).then((data) => {
-            this.billList = data.ticketItems;
-            this.billInformation = data.ticketPayableData;
-            if(this.billInformation.price > 0) {
-                this.totalBill = (this.billInformation.price/100) + ' лв'
-            } else {
-                this.totalBill = '0 лв';
-            }
-            this.isSelectEnabled = this.billInformation.isSelectEnabled;
-            this.isShareEnabled = this.billInformation.isShareEnabled;
-            this.isExpandEnabled = this.billInformation.isExpandEnabled;
-            this.isDistributionSet = this.billInformation.isDistributionSet;
+        this.billInformationService.getBillInformation(currentId).then((data) => {
+            // this.billList = data.ticketItems;
+            // this.billInformation = data.ticketPayableData;
+            // if(this.billInformation.price > 0) {
+            //     this.totalBill = (this.billInformation.price/100) + ' лв'
+            // } else {
+            //     this.totalBill = '0 лв';
+            // }
+            // this.isSelectEnabled = this.billInformation.isSelectEnabled;
+            // this.isShareEnabled = this.billInformation.isShareEnabled;
+            // this.isExpandEnabled = this.billInformation.isExpandEnabled;
+            // this.isDistributionSet = this.billInformation.isDistributionSet;
             console.log('billInfo', data);
         });
         let data = {
@@ -252,17 +255,17 @@ export class BillInformationComponent implements OnInit {
                 }
         };
 
-        // this.billList = data.ticketItems;
-        // this.billInformation = data.ticketPayableData;
-        // if(this.billInformation.price > 0) {
-        //     this.totalBill = (this.billInformation.price/100) + ' лв'
-        // } else {
-        //     this.totalBill = '0 лв';
-        // }
-        // this.isSelectEnabled = this.billInformation.isSelectEnabled;
-        // this.isShareEnabled = this.billInformation.isShareEnabled;
-        // this.isExpandEnabled = this.billInformation.isExpandEnabled;
-        // this.isDistributionSet = this.billInformation.isDistributionSet;
+        this.billList = data.ticketItems;
+        this.billInformation = data.ticketPayableData;
+        if(this.billInformation.price > 0) {
+            this.totalBill = (this.billInformation.price/100) + ' лв'
+        } else {
+            this.totalBill = '0 лв';
+        }
+        this.isSelectEnabled = this.billInformation.isSelectEnabled;
+        this.isShareEnabled = this.billInformation.isShareEnabled;
+        this.isExpandEnabled = this.billInformation.isExpandEnabled;
+        this.isDistributionSet = this.billInformation.isDistributionSet;
         console.log('billInfo', data);
 
         //this.groupData(data);
@@ -331,10 +334,10 @@ export class BillInformationComponent implements OnInit {
     public initTicket(): void {
         if (this.isSelectEnabled) {
             let objectToSend = {
-                distributionId: 1,
+                totalParts: 1,
                 myParts: 1
             };
-            this.restaurantService.initNewTicket(this.billId, objectToSend).then((data) => {
+            this.billInformationService.initNewTicket(this.billId, objectToSend).then((data) => {
                 //TODO
                 console.log('SUCCESS')
             })
@@ -342,6 +345,11 @@ export class BillInformationComponent implements OnInit {
             //TODO
             console.error('Cannot send init!')
         }
+    }
+
+    public goToPayWithCard(): void {
+        this.sharedCommunicationService.setState({totalBill: this.totalBill});
+        this.router.navigate(['/pay-with-card']);
     }
 
     /**

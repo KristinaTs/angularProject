@@ -11,6 +11,7 @@ import {routes} from './app.routes';
 
 
 import {LoginComponent} from "./login-screen/login.component";
+import {LoginService} from './services/login.service';
 // Restaurant listing and information components
 import {HttpService} from './services/http.service';
 import {CookieService} from './services/cookie.service';
@@ -26,6 +27,9 @@ import {TopNavigationComponent} from './top-navigation/top-navigation.component'
 import {HttpClientModule} from '@angular/common/http';
 import {BillInfoPopupComponent} from "./bill-info-popup/bill-info-popup.component";
 import {InfoPopupComponent} from "./info-popup/info-popup.component";
+import {PayWithCardComponent} from "./pay-with-card/pay-with-card.component";
+import {SharedCommunicationService} from "./services/shared-communication.service";
+import {BillInformationService} from "./services/bill-information.service";
 
 
 @NgModule({
@@ -39,7 +43,8 @@ import {InfoPopupComponent} from "./info-popup/info-popup.component";
         TicketStep2Component,
         TicketStep3Component,
         TopNavigationComponent,
-        LoginComponent
+        LoginComponent,
+        PayWithCardComponent
     ],
     imports: [
         BrowserModule,
@@ -54,7 +59,10 @@ import {InfoPopupComponent} from "./info-popup/info-popup.component";
         WebSocketService,
         HttpService,
         CookieService,
-        RestaurantListingService
+        RestaurantListingService,
+        SharedCommunicationService,
+        LoginService,
+        BillInformationService
     ],
     bootstrap: [AppComponent]
 })
