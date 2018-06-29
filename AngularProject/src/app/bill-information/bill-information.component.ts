@@ -220,16 +220,16 @@ export class BillInformationComponent implements OnInit {
      */
     public getCurrentLoggedCustomer(): void {
         this.restaurantService.getCurrentUser().then((data) => {
-            //this.currentUser = data;
+            this.currentUser = data;
         });
-        //TODO delete
-        this.currentUser = {
-            "id": 3,
-            "shortName": "GV",
-            "fullName": "GeorgiVladimirov",
-            "isMe": true,
-            "isIn": false
-        };
+        // //TODO delete
+        // this.currentUser = {
+        //     "id": 3,
+        //     "shortName": "GV",
+        //     "fullName": "GeorgiVladimirov",
+        //     "isMe": true,
+        //     "isIn": false
+        // };
     }
 
     /**
@@ -238,40 +238,38 @@ export class BillInformationComponent implements OnInit {
      */
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
-            //this.billSummary = data;
-            //this.getCurrentUserTotalBill();
+            this.billSummary = data;
+            this.getCurrentUserTotalBill();
         });
 
-        this.billSummary = {
-            "id": 1,
-            "password": "1293",
-            "participants": [
-                // {
-                //     "shortName": "GV",
-                //     "fullName": "Georgi Vladimirov",
-                //     "isMe": true,
-                //     "totalPrice": 0,
-                //     id: 2
-                // },
-                {
-                    "shortName": "AA",
-                    "fullName": "Aleksandar Avramov",
-                    "isMe": false,
-                    "totalPrice": 0,
-                    id: 3
-                }
-            ]
-        }
+        // this.billSummary = {
+        //     "id": 1,
+        //     "password": "1293",
+        //     "participants": [
+        //         // {
+        //         //     "shortName": "GV",
+        //         //     "fullName": "Georgi Vladimirov",
+        //         //     "isMe": true,
+        //         //     "totalPrice": 0,
+        //         //     id: 2
+        //         // },
+        //         {
+        //             "shortName": "AA",
+        //             "fullName": "Aleksandar Avramov",
+        //             "isMe": false,
+        //             "totalPrice": 0,
+        //             id: 3
+        //         }
+        //     ]
+        // }
     }
 
     public close() {
         this.isModalOpened = false;
         this.getBillInformation(this.currentBillId);
-
-
         this.getCurrentLoggedCustomer();
         this.getGeneralInformationForBill();
-        this.getCurrentUserTotalBill();
+        //this.getCurrentUserTotalBill();
     }
 
     /**
@@ -279,30 +277,30 @@ export class BillInformationComponent implements OnInit {
      */
     public getBillInformation(currentId): void {
         this.billInformationService.getBillInformation(currentId).then((data) => {
-            // this.billList = data.ticketItems;
-            // this.billInformation = data.ticketPayableData;
-            // if(this.billInformation.price > 0) {
-            //     this.totalBill = (this.billInformation.price/100) + ' лв'
-            // } else {
-            //     this.totalBill = '0 лв';
-            // }
-            // this.isSelectEnabled = this.billInformation.isSelectEnabled;
-            // this.isShareEnabled = this.billInformation.isShareEnabled;
-            // this.isExpandEnabled = this.billInformation.isExpandEnabled;
-            // this.isDistributionSet = this.billInformation.isDistributionSet;
+            this.billList = data.ticketItems;
+            this.billInformation = data.ticketPayableData;
+            if(this.billInformation.price > 0) {
+                this.totalBill = (this.billInformation.price/100) + ' лв'
+            } else {
+                this.totalBill = '0 лв';
+            }
+            this.isSelectEnabled = this.billInformation.isSelectEnabled;
+            this.isShareEnabled = this.billInformation.isShareEnabled;
+            this.isExpandEnabled = this.billInformation.isExpandEnabled;
+            this.isDistributionSet = this.billInformation.isDistributionSet;
         });
 
-        this.billList = this.data.ticketItems;
-        this.billInformation = this.data.ticketPayableData;
-        if (this.billInformation.price > 0) {
-            this.totalBill = (this.billInformation.price / 100) + ' лв'
-        } else {
-            this.totalBill = '0 лв';
-        }
-        this.isSelectEnabled = this.billInformation.isSelectEnabled;
-        this.isShareEnabled = this.billInformation.isShareEnabled;
-        this.isExpandEnabled = this.billInformation.isExpandEnabled;
-        this.isDistributionSet = this.billInformation.isDistributionSet;
+        // this.billList = this.data.ticketItems;
+        // this.billInformation = this.data.ticketPayableData;
+        // if (this.billInformation.price > 0) {
+        //     this.totalBill = (this.billInformation.price / 100) + ' лв'
+        // } else {
+        //     this.totalBill = '0 лв';
+        // }
+        // this.isSelectEnabled = this.billInformation.isSelectEnabled;
+        // this.isShareEnabled = this.billInformation.isShareEnabled;
+        // this.isExpandEnabled = this.billInformation.isExpandEnabled;
+        // this.isDistributionSet = this.billInformation.isDistributionSet;
 
         //this.groupData(data);
     }

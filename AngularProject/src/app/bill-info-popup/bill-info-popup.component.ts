@@ -9,6 +9,7 @@ import {
 
 import {RestaurantListingService} from '../services/restaurant-listing.service';
 import {BillInformationService} from "../services/bill-information.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'bill-info-popup',
@@ -42,7 +43,7 @@ export class BillInfoPopupComponent implements OnInit {
     public userShareOption;
     public isShareActive = true;
 
-    constructor(public restaurantService: RestaurantListingService, public billInformationService: BillInformationService) {}
+    constructor(public restaurantService: RestaurantListingService, public billInformationService: BillInformationService, public router: Router) {}
 
     @HostListener('click', ['$event'])
     public onClick(event: any): void {
@@ -179,7 +180,7 @@ export class BillInfoPopupComponent implements OnInit {
             }
         } else if(this.isDistributionSet && this.canApply) {
             objectToSend = {
-                myParts: this.selectedOption.totalParts
+                myParts: this.selectedOption.number
             };
             switch (this.type) {
                 case 'main-screen':
@@ -197,5 +198,12 @@ export class BillInfoPopupComponent implements OnInit {
                     });
             }
         }
+    }
+
+    /***
+     * Change pay mode to true so we can show the payment buttons
+     */
+    public goToPayScreen(): void {
+        this.router.navigate([`/my-bill/${this.billSummary.id}`]);
     }
 }

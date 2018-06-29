@@ -84,7 +84,7 @@ export class BillInformationService {
      * @returns {Promise<any>}
      */
     public getBillSubtickets(id): Promise<any> {
-        return this.httpService.get(`"ticket/${id}/subtickets`);
+        return this.httpService.get(`ticket/${id}/subtickets`);
     }
 
     /**

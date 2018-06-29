@@ -20,11 +20,9 @@ export class TicketStep2Component implements OnInit {
     public routerSubscription: Subscription;
     public billId;
     public myBill: string = '24,5лв';
-    public isPayMode: boolean = false;
     public isModalOpened: boolean = false;
     public data;
     public currentUser;
-    public billInformation;
     public billSummary;
     public subticketId;
     public isInfoModalOpened = false;
@@ -63,13 +61,13 @@ export class TicketStep2Component implements OnInit {
             const currentBillId = params['id'];
             this.billId = currentBillId;
             if (currentBillId) {
-                this.getBillInformation(currentBillId);
+                this.getBillSubtickets();
+                //this.getBillInformation(currentBillId);
             }
         });
 
         this.getCurrentLoggedCustomer();
         this.getGeneralInformationForBill();
-        this.getBillSubtickets();
     }
 
     public openBillInfoModal() {
@@ -82,7 +80,6 @@ export class TicketStep2Component implements OnInit {
     public getBillInformation(currentId): void {
         this.billInformationService.getBillInformation(currentId).then((data) => {
            // this.billList = data.ticketItems;
-            //this.billInformation = data.ticketPayableData;
             console.log('billInfo', data);
         });
         this.billList = [
@@ -571,7 +568,7 @@ export class TicketStep2Component implements OnInit {
      */
     public getBillSubtickets() {
         this.billInformationService.getBillSubtickets(this.billId).then((data) => {
-            //this.billList = data;
+            this.billList = data;
         });
     }
 
@@ -581,27 +578,27 @@ export class TicketStep2Component implements OnInit {
      */
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.billId).then((data) => {
-           // this.billSummary = data;
+           this.billSummary = data;
         });
 
-        this.billSummary = {
-            "id": 1,
-            "password": "8839",
-            "participants": [
-                {
-                    "id": 2,
-                    "firstName": "Georgi",
-                    "lastName": "Vladimirov",
-                    "totalPrice": 882
-                },
-                {
-                    "id": 3,
-                    "firstName": "Aleksandar",
-                    "lastName": "Avramov",
-                    "totalPrice": 882
-                }
-            ]
-        };
+        // this.billSummary = {
+        //     "id": 1,
+        //     "password": "8839",
+        //     "participants": [
+        //         {
+        //             "id": 2,
+        //             "firstName": "Georgi",
+        //             "lastName": "Vladimirov",
+        //             "totalPrice": 882
+        //         },
+        //         {
+        //             "id": 3,
+        //             "firstName": "Aleksandar",
+        //             "lastName": "Avramov",
+        //             "totalPrice": 882
+        //         }
+        //     ]
+        // };
     }
 
     /**
@@ -609,16 +606,16 @@ export class TicketStep2Component implements OnInit {
      */
     public getCurrentLoggedCustomer(): void {
         this.restaurantService.getCurrentUser().then((data) => {
-            //this.currentUser = data;
+            this.currentUser = data;
         });
         //TODO delete
-        this.currentUser = {
-            "id": 3,
-            "firstName": "Aleksandar",
-            "lastName": "Avramov",
-            "email": "avramov@abv.bg",
-            "gender": "MALE"
-        };
+        // this.currentUser = {
+        //     "id": 3,
+        //     "firstName": "Aleksandar",
+        //     "lastName": "Avramov",
+        //     "email": "avramov@abv.bg",
+        //     "gender": "MALE"
+        // };
     }
 
     /**
