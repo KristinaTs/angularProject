@@ -27,6 +27,7 @@ export class TicketStep2Component implements OnInit {
     public subticketId;
     public isInfoModalOpened = false;
     public payableData;
+    public title = "";
 
     public restaurant = {
         id: 1,
@@ -639,6 +640,7 @@ export class TicketStep2Component implements OnInit {
     public openBillInformationPopup(index) {
         this.subticketId = this.billList[index].id;
         this.payableData = this.billList[index].payableData;
+        this.title = this.billList[index].title;
         this.isModalOpened = true;
     }
 

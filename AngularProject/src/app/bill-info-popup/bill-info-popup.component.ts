@@ -25,6 +25,7 @@ export class BillInfoPopupComponent implements OnInit {
     @Input('billSummary') billSummary;
     @Input('type') type;
     @Input('subticketId') subticketId = null;
+    @Input('title') title = "";
 
     public participants = [];
     public shares = [];
@@ -92,7 +93,7 @@ export class BillInfoPopupComponent implements OnInit {
      * Find current user in participants array and get total price
      */
     public getCurrentUserTotalBill(): void {
-        let participants = this.participants;
+        let participants = this.billSummary.participants;
         let indexOfCurrectUser = participants.map((user) => {
             return user.id;
         }).indexOf(this.currentUser.id);
@@ -102,7 +103,16 @@ export class BillInfoPopupComponent implements OnInit {
         } else {
             this.myBill = '0 лв';
         }
+    }
 
+    public getSelectedUserTotalBill(index): void {
+    let participants = this.billSummary.participants;
+        let price = participants[index].totalPrice;
+        if ( price && price > 0) {
+            this.myBill = (price / 100) + ' лв';
+        } else {
+            this.myBill = '0 лв';
+        }
     }
     /**
      * Select a participant
@@ -117,6 +127,8 @@ export class BillInfoPopupComponent implements OnInit {
             this.isShareActive = this.selectedUser.id == this.currentUser.id;
             this.getDistributionsAndShares();
         }
+//TODO
+        //this.getSelectedUserTotalBill(participantIndex);
     }
 
     /**

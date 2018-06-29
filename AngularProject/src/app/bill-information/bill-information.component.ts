@@ -343,7 +343,7 @@ export class BillInformationComponent implements OnInit {
     public initTicket(): void {
         if (this.isSelectEnabled) {
             let objectToSend = {
-                distributionsId: 0,
+                distributionId: 0,
                 myParts: 1
             };
             this.billInformationService.initNewTicket(this.currentBillId, objectToSend).then((data) => {
