@@ -37,12 +37,7 @@
         </div>
       </div>
       <div class="col col-12">
-        <div *ngIf="!isRequestSendForBill" class="green-button" (click)="sendRequestForBill()">
-          + Нова сметка
-        </div>
-        <div *ngIf="isRequestSendForBill" class="green-button" (click)="goToBillInformation()">
-          Сметката се създава ...
-        </div>
+       <loader initialLabel="Създай сметка" inProgressLabel="Сметката се създава..." loadedLabel="Сметката е създадена" (loaded)="test()"></loader>
       </div>
     </div>
   </div>

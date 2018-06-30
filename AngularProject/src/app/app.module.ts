@@ -30,6 +30,7 @@ import {InfoPopupComponent} from "./info-popup/info-popup.component";
 import {PayWithCardComponent} from "./pay-with-card/pay-with-card.component";
 import {SharedCommunicationService} from "./services/shared-communication.service";
 import {BillInformationService} from "./services/bill-information.service";
+import {LoaderComponent} from "./loader/loader.component";
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import {BillInformationService} from "./services/bill-information.service";
         TicketStep3Component,
         TopNavigationComponent,
         LoginComponent,
-        PayWithCardComponent
+        PayWithCardComponent,
+        LoaderComponent
     ],
     imports: [
         BrowserModule,

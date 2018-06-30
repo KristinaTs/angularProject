@@ -54,6 +54,9 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
         menuItems: []
     };
 
+    public test() {
+        console.log('Finished');
+    }
 
     public ngOnInit(): void {
         // here we get the information for the restaurant
