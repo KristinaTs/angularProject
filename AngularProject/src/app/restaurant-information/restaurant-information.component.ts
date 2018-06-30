@@ -19,7 +19,9 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
     public routerSubscription: Subscription;
     public isRequestSendForBill = false;
     public restaurantId: number;
-    public billCode = 'PIN';
+    public billCode;
+    public ticketId;
+    public isTicketConfirmed = false;
 
     constructor(
         private router: Router,
@@ -28,16 +30,21 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
         private webSocketService: WebSocketService,
         private billInformationService: BillInformationService
     ) {
-        let event = webSocketService.connect();
         webSocketService.onMessageEmitter.subscribe((data) => {
           console.log(data);
+            switch(data){
+                case 'TICKET_CONFIRMED':
+                    this.isTicketConfirmed = true;
+                    //this.goToBillInformation();
+
+            }
         });
     }
 
     public greeting = {
         welcome: 'Добре дошли!',
         description: 'Място за послание или топ промоция от ресторанта!'
-    }
+    };
 
     restaurant = {
         id: 1,
@@ -101,9 +108,12 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
         let objectToSend = {
             posId: this.restaurantId
         };
+
         this.billInformationService.createNewBill(objectToSend)
             .then((data) => {
                 this.billCode = data.id;
+                this.ticketId = data.ticketId;
+                this.webSocketService.connect(data.ticketId);
             })
             .catch(err => {
                 console.error(err);
@@ -114,7 +124,7 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
      * After the bill is loaded the button navigates us to the bill screen
      */
     public goToBillInformation() {
-        this.router.navigate([`bill-information/${this.billCode}`]);
+        this.router.navigate([`bill-information/${this.ticketId}`]);
     }
 
 }

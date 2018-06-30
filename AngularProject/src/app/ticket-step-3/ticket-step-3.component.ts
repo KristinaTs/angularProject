@@ -21,11 +21,13 @@ export class TicketStep3Component implements OnInit {
     public billId;
     public myBill: string = '24,5лв';
     public isPayMode: boolean = false;
-    public isModalOpened: boolean = false;
     public data;
     public currentUser;
     public billInformation;
     public billSummary;
+    public isInfoModalOpened = false;
+    public subticketId;
+    public title;
 
     public restaurant = {
         id: 1,
@@ -57,32 +59,29 @@ export class TicketStep3Component implements OnInit {
 
     public ngOnInit(): void {
         this.routerSubscription = this.activateRouter.params.subscribe(params => {
-            const currentBillId = params['id'];
-            this.billId = currentBillId;
-            if (currentBillId) {
-                this.getBillInformation(currentBillId);
+            this.billId = params['billId'];
+            this.subticketId =  params['subticketId'];
+            if (this.subticketId) {
+                this.getBillInformation(this.subticketId);
+                this.getCurrentLoggedCustomer();
+                this.getGeneralInformationForBill();
+                this.getBillSubtickets();
             }
         });
-
-        this.getCurrentLoggedCustomer();
-        this.getGeneralInformationForBill();
-        this.getBillSubtickets();
-    }
-
-    public openBillInfoModal() {
-        this.isModalOpened = !this.isModalOpened;
     }
 
     /**
      Get bill information/ products in bill/ shares
      */
     public getBillInformation(currentId): void {
-        this.billInformationService.getBillInformation(currentId).then((data) => {
+        this.billInformationService.getStep3Information(this.billId, currentId).then((data) => {
+            this.data = data;
             this.billList = data.ticketItems;
             this.billInformation = data.ticketPayableData;
+            this.title = data.title;
             console.log('billInfo', data);
         });
-        this.data = {
+        let data = {
             "id": 1,
             "ticketItems": [{
                 "id": 2,
@@ -287,12 +286,6 @@ export class TicketStep3Component implements OnInit {
         })
     }
 
-    public openBillInformationPopup(index) {
-        this.isModalOpened = true;
-        this.billInformation = this.billList[index].payableData;
-        console.log('tet');
-    }
-
     /**
      * Create array with separated elements
      * @param index
@@ -306,6 +299,6 @@ export class TicketStep3Component implements OnInit {
      * Change pay mode to true so we can show the payment buttons
      */
     public goToPayScreen(): void {
-        this.isPayMode = true;
+        this.router.navigate([`/my-bill/${this.billId}`]);
     }
 }

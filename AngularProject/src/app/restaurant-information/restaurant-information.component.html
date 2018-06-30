@@ -1,44 +1,52 @@
 <ng-template [ngIf]="restaurant">
-  <div class="restaurant-information-wrapper">
-    <div class="row information-row">
-      <div class="col col-12 image-container">
-        <img class="image" [src]="restaurant.logoUrl" alt="">
-      </div>
-      <div class="col col-12">
-        <div class="title">{{restaurant.name}}</div>
-      </div>
-      <div class="col col-12">
-        <div class="address text-gray">{{restaurant.address}}</div>
-      </div>
-      <div class="col col-12">
-        <div class="stat-wrapper row">
-          <div class="rating-container col col-4">
-            <div class="text-gray stats">Храна:</div>
-            <div class="rating">{{restaurant.rating.foodQuality / 10}}/5</div>
-          </div>
-          <div class="rating-container col col-4">
-            <div class="text-gray stats">Обстановка:</div>
-            <div class="rating">{{restaurant.rating.atmosphere / 10}}/5 </div>
-          </div>
-          <div class="rating-container col col-4">
-            <div class="text-gray stats">Обслужване:</div>
-            <div class="rating">{{restaurant.rating.serviceQuality / 10}}/5 </div>
-          </div>
+    <div class="restaurant-information-wrapper">
+        <div class="row information-row">
+            <div class="col col-12 image-container">
+                <img class="image" [src]="restaurant.logoUrl" alt="">
+            </div>
+            <div class="col col-12">
+                <div class="title">{{restaurant.name}}</div>
+            </div>
+            <div class="col col-12">
+                <div class="address text-gray">{{restaurant.address}}</div>
+            </div>
+            <div class="col col-12">
+                <div class="stat-wrapper row">
+                    <div class="rating-container col col-4">
+                        <div class="text-gray stats">Храна:</div>
+                        <div class="rating">{{restaurant.rating.foodQuality / 10}}/5</div>
+                    </div>
+                    <div class="rating-container col col-4">
+                        <div class="text-gray stats">Обстановка:</div>
+                        <div class="rating">{{restaurant.rating.atmosphere / 10}}/5</div>
+                    </div>
+                    <div class="rating-container col col-4">
+                        <div class="text-gray stats">Обслужване:</div>
+                        <div class="rating">{{restaurant.rating.serviceQuality / 10}}/5</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 description-container">
+                <div class="restaurant-description-box" *ngIf="!isRequestSendForBill">
+                    <div>{{greeting.welcome}}</div>
+                    <div>{{greeting.description}}</div>
+                </div>
+                <div class="restaurant-description-box bill-send" *ngIf="isRequestSendForBill">
+                    <div>Сподели този код със сервитьора:</div>
+                    <strong>PIN: {{billCode}}</strong>
+                </div>
+                <div class="col col-12">
+                    <!--<div *ngIf="isRequestSendForBill && !isTicketConfirmed" class="green-button">-->
+                        <!--Сметката се създава ...-->
+                    <!--</div>-->
+                    <!--<div *ngIf="isRequestSendForBill && isTicketConfirmed" class="green-button"-->
+                         <!--(click)="goToBillInformation()">-->
+                        <!--Сметката е потвърдена.-->
+                    <!--</div>-->
+                    <loader (click)="sendRequestForBill()" initialLabel="+ Нова сметка" inProgressLabel="Сметката се създава..."
+                            loadedLabel="Сметката е създадена" (loaded)="test()" [isBillCreated]="isTicketConfirmed"></loader>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col col-12 description-container">
-        <div class="restaurant-description-box" *ngIf="!isRequestSendForBill">
-          <div>{{greeting.welcome}}</div>
-          <div>{{greeting.description}}</div>
-        </div>
-        <div class="restaurant-description-box bill-send" *ngIf="isRequestSendForBill">
-          <div>Сподели този код със сервитьора: </div>
-          <strong>PIN: {{billCode}}</strong>
-        </div>
-      </div>
-      <div class="col col-12">
-       <loader initialLabel="Създай сметка" inProgressLabel="Сметката се създава..." loadedLabel="Сметката е създадена" (loaded)="test()"></loader>
-      </div>
     </div>
-  </div>
 </ng-template>

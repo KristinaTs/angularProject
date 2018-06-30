@@ -84,7 +84,7 @@ export class BillInformationService {
      * @returns {Promise<any>}
      */
     public getBillSubtickets(id): Promise<any> {
-        return this.httpService.get(`"ticket/${id}/subtickets`);
+        return this.httpService.get(`ticket/${id}/subtickets`);
     }
 
     /**
@@ -107,6 +107,19 @@ export class BillInformationService {
      */
     public updateSubticket(ticketId, subticketId, object): Promise<any> {
         return this.httpService.post(`/ticket/${ticketId}/subtickets/${subticketId}/update`, object);
+    }
+
+    /**
+     * Get current logged user bill for pay screen
+     * @param ticketId
+     * @returns {Promise<any>}
+     */
+    public getCurrentUserBill(ticketId): Promise<any> {
+        return this.httpService.get(`/ticket/${ticketId}/my-ticket`);
+    }
+
+    public getStep3Information(ticketId, subticketId): Promise<any> {
+        return this.httpService.get(`ticket/${ticketId}/subtickets/${subticketId}`);
     }
 
 }

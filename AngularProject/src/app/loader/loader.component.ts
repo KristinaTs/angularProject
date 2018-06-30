@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, Input, Output} from "@angular/core";
+import {Component, EventEmitter, HostListener, Input, Output, OnChanges} from "@angular/core";
 
 @Component({
     selector: 'loader',
@@ -11,11 +11,12 @@ import {Component, EventEmitter, HostListener, Input, Output} from "@angular/cor
             <div class="loader" *ngIf="!finished" [style.width]="currentWidth+'%'"></div>
         </div>`
 })
-export class LoaderComponent {
+export class LoaderComponent implements OnChanges{
 
     @Input('initialLabel') initialLabel;
     @Input('inProgressLabel') inProgressLabel;
     @Input('loadedLabel') loadedLabel;
+    @Input('isBillCreated') isBillCreated = false;
     @Output() loaded: EventEmitter<any> = new EventEmitter<any>();
 
     public currentWidth: number = 0;
@@ -28,15 +29,23 @@ export class LoaderComponent {
         this.increaseWidth();
     }
 
+    public ngOnChanges(): void {
+        this.finished = this.isBillCreated;
+    }
+
     public increaseWidth() {
-        if (this.currentWidth < 100) {
-            this.currentWidth++;
-            requestAnimationFrame(() => {
+        if(!this.finished) {
+            if (this.currentWidth < 100) {
+                this.currentWidth++;
+                requestAnimationFrame(() => {
+                    this.increaseWidth();
+                })
+            } else {
+                this.currentWidth = 0;
                 this.increaseWidth();
-            })
-        } else {
-            this.finished = true;
-            this.loaded.emit();
+                //this.finished = true;
+                //this.loaded.emit();
+            }
         }
     }
 

@@ -13,6 +13,7 @@ import {
 import {RestaurantListingService} from '../services/restaurant-listing.service';
 import {SharedCommunicationService} from "../services/shared-communication.service";
 import {BillInformationService} from "../services/bill-information.service";
+import {WebSocketService} from "../services/websocket.service";
 
 @Component({
     templateUrl: 'bill-information.component.html',
@@ -21,11 +22,8 @@ import {BillInformationService} from "../services/bill-information.service";
 
 export class BillInformationComponent implements OnInit {
     public routerSubscription: Subscription;
-    public billId;
     public myBill: string = '0 лв';
     public totalBill: string = null;
-    public isPayMode: boolean = false;
-    public isEditMode: boolean = false;
     public isModalOpened: boolean = false;
     public isInfoModalOpened: boolean = false;
     public currentBillId = null;
@@ -36,6 +34,126 @@ export class BillInformationComponent implements OnInit {
     public isShareEnabled: boolean = false;
     public isExpandEnabled: boolean = false;
     public isDistributionSet: boolean = false;
+
+
+    public data = {
+        "id": 1,
+        "ticketItems": [
+            {
+                "title": "САЛАТАМИКОНОС",
+                "quantity": 1,
+                "price": 869,
+                "totalPrice": 869
+            },
+            {
+                "title": "САЛАТАРАЗКОШ",
+                "quantity": 1,
+                "price": 849,
+                "totalPrice": 849
+            },
+            {
+                "title": "САЛАТАСЯГОДИ,СИРЕНАИЯДКИ",
+                "quantity": 1,
+                "price": 699,
+                "totalPrice": 699
+            },
+            {
+                "title": "САЛАТАХЕПИЦЕЗАР",
+                "quantity": 2,
+                "price": 899,
+                "totalPrice": 1798
+            },
+            {
+                "title": "СПАНАКСКИНОА",
+                "quantity": 2,
+                "price": 769,
+                "totalPrice": 1538
+            },
+            {
+                "title": "СРЕДИЗЕМНОМОРСКАСАЛАТА",
+                "quantity": 1,
+                "price": 749,
+                "totalPrice": 749
+            },
+            {
+                "title": "ЦЕЗАРСАЛАТА",
+                "quantity": 3,
+                "price": 869,
+                "totalPrice": 2607
+            },
+            {
+                "title": "ШЕФСКАСАЛАТА",
+                "quantity": 1,
+                "price": 679,
+                "totalPrice": 679
+            },
+            {
+                "title": "ШОПСКАСАЛАТА",
+                "quantity": 1,
+                "price": 569,
+                "totalPrice": 569
+            }
+        ],
+        "ticketPayableData": {
+            "price": 10357,
+            "isSelectEnabled": false,
+            "isShareEnabled": true,
+            "isExpandEnabled": false,
+            "isDistributionSet": true,
+            "participantDatas": [
+                {
+                    "id": 2,
+                    "shortName": "GV",
+                    "fullName": "GeorgiVladimirov",
+                    "isMe": true,
+                    "isIn": true,
+                    "distributions": [
+                        {
+                            "isSelectable": false,
+                            "totalParts": 3,
+                            "shares": [
+                                {
+                                    "number": 0,
+                                    "price": 0,
+                                    "isCurrent": true
+                                },
+                                {
+                                    "number": 1,
+                                    "price": 3452,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 2,
+                                    "price": 6904,
+                                    "isCurrent": false
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "shortName": "AA",
+                    "fullName": "AleksandarAvramov",
+                    "isMe": false,
+                    "isIn": true,
+                    "distributions": [
+                        {
+                            "isSelectable": false,
+                            "totalParts": 3,
+                            "shares": [
+                                {
+                                    "number": 1,
+                                    "price": 3453,
+                                    "isCurrent": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    };
 
     public restaurant = {
         id: 1,
@@ -57,6 +175,7 @@ export class BillInformationComponent implements OnInit {
         private restaurantService: RestaurantListingService,
         private activateRouter: ActivatedRoute,
         private billInformationService: BillInformationService,
+        private webSocketService: WebSocketService,
         private sharedCommunicationService: SharedCommunicationService
     ) {}
 
@@ -74,14 +193,20 @@ export class BillInformationComponent implements OnInit {
         this.routerSubscription = this.activateRouter.params.subscribe(params => {
             const currentBillId = params['id'];
             this.currentBillId = currentBillId;
-            this.billId = currentBillId;
             if (currentBillId) {
                 this.getBillInformation(currentBillId);
+                this.getGeneralInformationForBill();
+                this.webSocketService.connect(currentBillId);
             }
         });
-        this.getGeneralInformationForBill();
-        this.getCurrentLoggedCustomer();
-        this.getCurrentUserTotalBill();
+        this.webSocketService.onMessageEmitter.subscribe((data) => {
+            console.log(data)
+            switch(data){
+                case 'TICKET_UPDATED':
+                    this.getBillInformation(this.currentBillId);
+                    this.getGeneralInformationForBill();
+            }
+        });
 
     }
 
@@ -89,7 +214,7 @@ export class BillInformationComponent implements OnInit {
      * Show.hide modal
      */
     public openBillInfoModal() {
-        if(this.isShareEnabled) {
+        if (this.isShareEnabled) {
             this.isModalOpened = !this.isModalOpened;
         }
     }
@@ -105,17 +230,21 @@ export class BillInformationComponent implements OnInit {
      * Get current logged in user
      */
     public getCurrentLoggedCustomer(): void {
+        this.restaurantService.getCurrentUser().then((data) => {
+            this.currentUser = data;
+            this.getCurrentUserTotalBill();
+        });
+        // //TODO delete
+        // this.currentUser = {
+        //     "id": 3,
+        //     "shortName": "GV",
+        //     "fullName": "GeorgiVladimirov",
+        //     "isMe": true,
+        //     "isIn": false
+        // };
         // this.restaurantService.getCurrentUser().then((data) => {
         //    this.currentUser = data;
         // });
-        // TODO delete
-        this.currentUser = {
-            "id": 3,
-            "firstName": "Aleksandar",
-            "lastName": "Avramov",
-            "email": "avramov@abv.bg",
-            "gender": "MALE"
-        };
     }
 
     /**
@@ -124,28 +253,36 @@ export class BillInformationComponent implements OnInit {
      */
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
-            //this.billSummary = data;
-            //this.getCurrentUserTotalBill();
+            this.billSummary = data;
+            this.getCurrentLoggedCustomer();
+            this.getRestaurantInformation(data.posId);
         });
+        // this.billSummary = {
+        //     "id": 1,
+        //     "password": "1293",
+        //     "participants": [
+        //         // {
+        //         //     "shortName": "GV",
+        //         //     "fullName": "Georgi Vladimirov",
+        //         //     "isMe": true,
+        //         //     "totalPrice": 0,
+        //         //     id: 2
+        //         // },
+        //         {
+        //             "shortName": "AA",
+        //             "fullName": "Aleksandar Avramov",
+        //             "isMe": false,
+        //             "totalPrice": 0,
+        //             id: 3
+        //         }
+        //     ]
+        // }
+    }
 
-        this.billSummary = {
-            "id": 1,
-            "password": "8839",
-            "participants": [
-                {
-                    "id": 2,
-                    "firstName": "Georgi",
-                    "lastName": "Vladimirov",
-                    "totalPrice": 882
-                },
-                {
-                    "id": 3,
-                    "firstName": "Aleksandar",
-                    "lastName": "Avramov",
-                    "totalPrice": 882
-                }
-            ]
-        };
+    public close() {
+        this.isModalOpened = false;
+       // this.getBillInformation(this.currentBillId);
+        //this.getCurrentUserTotalBill();
     }
 
     /**
@@ -164,101 +301,12 @@ export class BillInformationComponent implements OnInit {
             // this.isShareEnabled = this.billInformation.isShareEnabled;
             // this.isExpandEnabled = this.billInformation.isExpandEnabled;
             // this.isDistributionSet = this.billInformation.isDistributionSet;
-            console.log('billInfo', data);
         });
-        let data = {
-            "id": 1,
-            "ticketItems": [
-                {
-                    "title": "ПИЛЕШКИ ПУРИЧКИ С ТОПЕНО СИРЕНЕ И ПЪРЖЕНИ КАРТОФИ",
-                    "quantity": 1,
-                    "price": 878,
-                    "totalPrice": 878
-                },
-                {
-                    "title": "КРЕХКО ПИЛЕ С ПЕЧЕНИ ЗЕЛЕНЧУЦИ",
-                    "quantity": 1,
-                    "price": 899,
-                    "totalPrice": 899
-                },
-                {
-                    "title": "ЦЕЗАР САЛАТА",
-                    "quantity": 1,
-                    "price": 869,
-                    "totalPrice": 869
-                }
-            ],
-            "ticketPayableData":
-                {
-                    "price": 2646,
-                    "isSelectEnabled": false,
-                    "isShareEnabled": true,
-                    "isExpandEnabled": false,
-                    "isDistributionSet": true,
-                    "distributions": [
-                        {
-                            "totalParts": 1,
-                            "values": [2646]
-                        },
-                        {
-                            "totalParts": 2,
-                            "values": [1323, 1323]
-                        },
-                        {
-                            "totalParts": 3,
-                            "values": [882, 882, 882]
-                        },
-                        {
-                            "totalParts": 4,
-                            "values": [662, 662, 661, 661]
-                        },
-                        {
-                            "totalParts": 5,
-                            "values": [530, 529, 529, 529, 529]
-                        },
-                        {
-                            "totalParts": 6,
-                            "values": [441, 441, 441, 441, 441, 441]
-                        },
-                        {
-                            "totalParts": 7,
-                            "values": [378, 378, 378, 378, 378, 378, 378]
-                        },
-                        {
-                            "totalParts": 8,
-                            "values": [331, 331, 331, 331, 331, 331, 330, 330]
-                        },
-                        {
-                            "totalParts": 9,
-                            "values": [294, 294, 294, 294, 294, 294, 294, 294, 294]
-                        },
-                        {
-                            "totalParts": 10,
-                            "values": [265, 265, 265, 265, 265, 265, 264, 264, 264, 264]
-                        }
-                    ],
-                    "selectedDistributionId": 3,
-                    "freeIds": [2],
-                    "shares": [
-                        {
-                            "id": 2,
-                            "firstName": "Georgi",
-                            "lastName": "Vladimirov",
-                            "takenIds": [1]
-                        },
-                        {
-                            "id": 3,
-                            "firstName": "Aleksandar",
-                            "lastName": "Avramov",
-                            "takenIds": [0]
-                        }]
-                }
-        };
 
-        this.billList = data.ticketItems;
-        this.billInformation = data.ticketPayableData;
-        if(this.billInformation.price > 0) {
-            this.totalBill = (this.billInformation.price/100) + ' лв'
+        this.billList = this.data.ticketItems;
+        this.billInformation = this.data.ticketPayableData;
+        if (this.billInformation.price > 0) {
+            this.totalBill = (this.billInformation.price / 100) + ' лв'
         } else {
             this.totalBill = '0 лв';
         }
@@ -266,40 +314,15 @@ export class BillInformationComponent implements OnInit {
         this.isShareEnabled = this.billInformation.isShareEnabled;
         this.isExpandEnabled = this.billInformation.isExpandEnabled;
         this.isDistributionSet = this.billInformation.isDistributionSet;
-        console.log('billInfo', data);
 
         //this.groupData(data);
     }
-
-    /**
-     * Create array with separated elements
-     * @param index
-     */
-    public goToEditModePerItem(index): void {
-        let item = this.billList[index];
-        let newDataPerItem = [];
-        let count = item.menuItem.count;
-        item.menuItem.count = 1;
-        for (let i = 0; i < count; i++) {
-            newDataPerItem.push(item);
-        }
-        this.billList = newDataPerItem;
-    }
-
 
     /***
      * Change pay mode to true so we can show the payment buttons
      */
     public goToPayScreen(): void {
-        this.isPayMode = true;
-    }
-
-    /**
-     * Delete enrty
-     * @param {number} index
-     */
-    public removeEntry(index: number): void {
-        this.billList.splice(index, 1);
+        this.router.navigate([`/my-bill/${this.currentBillId}`]);
     }
 
     /**
@@ -307,15 +330,14 @@ export class BillInformationComponent implements OnInit {
      */
     public navigateToSecondStepBill(): void {
         if (this.isExpandEnabled) {
-            this.isEditMode = true;
             if (this.currentBillId) {
                 this.navigateToTicketStep2(this.currentBillId);
             } else {
                 //TODO delete
-                this.navigateToTicketStep2(this.billId);
+                // this.navigateToTicketStep2(this.billId);
             }
         } else {
-           // console.error('Cannot expand bill!')
+            // console.error('Cannot expand bill!')
         }
     }
 
@@ -334,10 +356,10 @@ export class BillInformationComponent implements OnInit {
     public initTicket(): void {
         if (this.isSelectEnabled) {
             let objectToSend = {
-                totalParts: 1,
+                distributionId: 0,
                 myParts: 1
             };
-            this.billInformationService.initNewTicket(this.billId, objectToSend).then((data) => {
+            this.billInformationService.initNewTicket(this.currentBillId, objectToSend).then((data) => {
                 //TODO
                 console.log('SUCCESS')
             })
@@ -361,11 +383,24 @@ export class BillInformationComponent implements OnInit {
             return user.id;
         }).indexOf(this.currentUser.id);
         let price = participants[indexOfCurrectUser].totalPrice;
-        if ( price && price > 0) {
+        if (price && price > 0) {
             this.myBill = (price / 100) + ' лв';
         } else {
             this.myBill = '0 лв';
         }
+    }
 
+    /**
+     * Get all the information for the restaurant with the given id
+     * @param restaurantId
+     */
+    public getRestaurantInformation(restaurantId: any) {
+        this.restaurantService.getRestaurantInformation(restaurantId)
+            .then((response) => {
+                console.log(response);
+                this.restaurant = response;
+            }).catch((err) => {
+            console.error(err);
+        });
     }
 }

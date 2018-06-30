@@ -10,6 +10,7 @@ import {
 
 import {RestaurantListingService} from '../services/restaurant-listing.service';
 import {BillInformationService} from "../services/bill-information.service";
+import {WebSocketService} from "../services/websocket.service";
 
 @Component({
     templateUrl: 'ticket-step-2.component.html',
@@ -19,15 +20,15 @@ export class TicketStep2Component implements OnInit {
 
     public routerSubscription: Subscription;
     public billId;
-    public myBill: string = '24,5лв';
-    public isPayMode: boolean = false;
+    public myBill: string = '0 лв';
     public isModalOpened: boolean = false;
     public data;
     public currentUser;
-    public billInformation;
     public billSummary;
     public subticketId;
     public isInfoModalOpened = false;
+    public payableData;
+    public title = "";
 
     public restaurant = {
         id: 1,
@@ -47,7 +48,23 @@ export class TicketStep2Component implements OnInit {
     constructor(private router: Router,
                 private restaurantService: RestaurantListingService,
                 private billInformationService: BillInformationService,
-                private activateRouter: ActivatedRoute) {
+                private activateRouter: ActivatedRoute,
+                private webSocketService: WebSocketService) {
+
+    }
+
+    /**
+     * Get all the information for the restaurant with the given id
+     * @param restaurantId
+     */
+    public getRestaurantInformation(restaurantId: any) {
+        this.restaurantService.getRestaurantInformation(restaurantId)
+            .then((response) => {
+                console.log(response);
+                this.restaurant = response;
+            }).catch((err) => {
+            console.error(err);
+        });
     }
 
 
@@ -62,13 +79,21 @@ export class TicketStep2Component implements OnInit {
             const currentBillId = params['id'];
             this.billId = currentBillId;
             if (currentBillId) {
-                this.getBillInformation(currentBillId);
+                this.getBillSubtickets();
+                this.webSocketService.connect(currentBillId);
+                //this.getBillInformation(currentBillId);
+                this.getGeneralInformationForBill();
             }
-        });
+            this.webSocketService.onMessageEmitter.subscribe((data) => {
+                console.log(data);
+                switch(data) {
+                    case 'TICKET_UPDATED':
+                        this.getBillSubtickets();
+                        this.getGeneralInformationForBill();
 
-        this.getCurrentLoggedCustomer();
-        this.getGeneralInformationForBill();
-        this.getBillSubtickets();
+                }
+            });
+        });
     }
 
     public openBillInfoModal() {
@@ -80,144 +105,488 @@ export class TicketStep2Component implements OnInit {
      */
     public getBillInformation(currentId): void {
         this.billInformationService.getBillInformation(currentId).then((data) => {
-           // this.billList = data.ticketItems;
-            this.billInformation = data.ticketPayableData;
+            this.billList = data.ticketItems;
             console.log('billInfo', data);
         });
-        this.data = {
-            "id": 1,
-            "ticketItems": [{
-                "id": 2,
-                "title": "Група 1",
+        let billList = [
+            {
+                "id": 1,
+                "title": "Група1",
                 "description": "",
                 "payableData": {
-                    "price": 2646,
+                    "price": 10357,
                     "isSelectEnabled": false,
                     "isShareEnabled": true,
                     "isExpandEnabled": true,
-                    "isDistributionSet": true,
-                    "distributions": [{"totalParts": 1, "values": [2646]}, {
-                        "totalParts": 2,
-                        "values": [1323, 1323]
-                    }, {"totalParts": 3, "values": [882, 882, 882]}, {
-                        "totalParts": 4,
-                        "values": [662, 662, 661, 661]
-                    }, {"totalParts": 5, "values": [530, 529, 529, 529, 529]}, {
-                        "totalParts": 6,
-                        "values": [441, 441, 441, 441, 441, 441]
-                    }, {"totalParts": 7, "values": [378, 378, 378, 378, 378, 378, 378]}, {
-                        "totalParts": 8,
-                        "values": [331, 331, 331, 331, 331, 331, 330, 330]
-                    }, {"totalParts": 9, "values": [294, 294, 294, 294, 294, 294, 294, 294, 294]}, {
-                        "totalParts": 10,
-                        "values": [265, 265, 265, 265, 265, 265, 264, 264, 264, 264]
-                    }],
-                    "selectedDistributionId": 3,
-                    "freeIds": [2],
-                    "shares": [{"id": 2, "firstName": "Georgi", "lastName": "Vladimirov", "takenIds": [1]}, {
-                        "id": 3,
-                        "firstName": "Aleksandar",
-                        "lastName": "Avramov",
-                        "takenIds": [0]
-                    }]
-                }
-            }, {
-                "id": 4,
-                "title": "КЪСЧЕТА С ТОПЕНО СИРЕНЕ",
-                "description": "1 x 949",
-                "payableData": {
-                    "price": 949,
-                    "isSelectEnabled": true,
-                    "isShareEnabled": true,
-                    "isExpandEnabled": false,
-                    "isDistributionSet": false,
-                    "distributions": [{"totalParts": 1, "values": [949]}, {
-                        "totalParts": 2,
-                        "values": [475, 474]
-                    }, {"totalParts": 3, "values": [317, 316, 316]}, {
-                        "totalParts": 4,
-                        "values": [238, 237, 237, 237]
-                    }, {"totalParts": 5, "values": [190, 190, 190, 190, 189]}, {
-                        "totalParts": 6,
-                        "values": [159, 158, 158, 158, 158, 158]
-                    }, {"totalParts": 7, "values": [136, 136, 136, 136, 135, 135, 135]}, {
-                        "totalParts": 8,
-                        "values": [119, 119, 119, 119, 119, 118, 118, 118]
-                    }, {"totalParts": 9, "values": [106, 106, 106, 106, 105, 105, 105, 105, 105]}, {
-                        "totalParts": 10,
-                        "values": [95, 95, 95, 95, 95, 95, 95, 95, 95, 94]
-                    }],
-                    "selectedDistributionId": 0,
-                    "freeIds": [],
-                    "shares": []
-                }
-            }],
-            "ticketPayableData":
-                {
-                    "price": 2646,
-                    "isSelectEnabled": false,
-                    "isShareEnabled": true,
-                    "isExpandEnabled": false,
-                    "isDistributionSet": true,
-                    "distributions": [
-                        {
-                            "totalParts": 1,
-                            "values": [2646]
-                        },
-                        {
-                            "totalParts": 2,
-                            "values": [1323, 1323]
-                        },
-                        {
-                            "totalParts": 3,
-                            "values": [882, 882, 882]
-                        },
-                        {
-                            "totalParts": 4,
-                            "values": [662, 662, 661, 661]
-                        },
-                        {
-                            "totalParts": 5,
-                            "values": [530, 529, 529, 529, 529]
-                        },
-                        {
-                            "totalParts": 6,
-                            "values": [441, 441, 441, 441, 441, 441]
-                        },
-                        {
-                            "totalParts": 7,
-                            "values": [378, 378, 378, 378, 378, 378, 378]
-                        },
-                        {
-                            "totalParts": 8,
-                            "values": [331, 331, 331, 331, 331, 331, 330, 330]
-                        },
-                        {
-                            "totalParts": 9,
-                            "values": [294, 294, 294, 294, 294, 294, 294, 294, 294]
-                        },
-                        {
-                            "totalParts": 10,
-                            "values": [265, 265, 265, 265, 265, 265, 264, 264, 264, 264]
-                        }
-                    ],
-                    "selectedDistributionId": 3,
-                    "freeIds": [2],
-                    "shares": [
+                    "participantDatas": [
                         {
                             "id": 2,
-                            "firstName": "Georgi",
-                            "lastName": "Vladimirov",
-                            "takenIds": [1]
+                            "shortName": "GV",
+                            "fullName": "GeorgiVladimirov",
+                            "isMe": true,
+                            "isIn": false,
+                            "distributions": [
+                                {
+                                    "isSelectable": false,
+                                    "totalParts": 3,
+                                    "shares": [
+                                        {
+                                            "number": 0,
+                                            "price": 0,
+                                            "isCurrent": true
+                                        },
+                                        {
+                                            "number": 1,
+                                            "price": 3452,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 2,
+                                            "price": 6904,
+                                            "isCurrent": false
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                         {
                             "id": 3,
-                            "firstName": "Aleksandar",
-                            "lastName": "Avramov",
-                            "takenIds": [0]
-                        }]
+                            "shortName": "AA",
+                            "fullName": "AleksandarAvramov",
+                            "isMe": false,
+                            "isIn": true,
+                            "distributions": [
+                                {
+                                    "isSelectable": false,
+                                    "totalParts": 3,
+                                    "shares": [
+                                        {
+                                            "number": 1,
+                                            "price": 3453,
+                                            "isCurrent": true
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
-        }
+            },
+            {
+                "id": 14,
+                "title": "УАКАМЕ",
+                "description": "1x699",
+                "payableData": {
+                    "price": 699,
+                    "isSelectEnabled": true,
+                    "isShareEnabled": true,
+                    "isExpandEnabled": false,
+                    "participantDatas": [
+                        {
+                            "id": 2,
+                            "shortName": "GV",
+                            "fullName": "GeorgiVladimirov",
+                            "isMe": true,
+                            "isIn": false,
+                            "distributions": [
+                                {
+                                    "isSelectable": true,
+                                    "totalParts": 1,
+                                    "shares": [
+                                        {
+                                            "number": 0,
+                                            "price": 0,
+                                            "isCurrent": true
+                                        },
+                                        {
+                                            "number": 1,
+                                            "price": 699,
+                                            "isCurrent": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "isSelectable": true,
+                                    "totalParts": 2,
+                                    "shares": [
+                                        {
+                                            "number": 0,
+                                            "price": 0,
+                                            "isCurrent": true
+                                        },
+                                        {
+                                            "number": 1,
+                                            "price": 350,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 2,
+                                            "price": 699,
+                                            "isCurrent": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "isSelectable": true,
+                                    "totalParts": 3,
+                                    "shares": [
+                                        {
+                                            "number": 0,
+                                            "price": 0,
+                                            "isCurrent": true
+                                        },
+                                        {
+                                            "number": 1,
+                                            "price": 233,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 2,
+                                            "price": 466,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 3,
+                                            "price": 699,
+                                            "isCurrent": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "isSelectable": true,
+                                    "totalParts": 4,
+                                    "shares": [
+                                        {
+                                            "number": 0,
+                                            "price": 0,
+                                            "isCurrent": true
+                                        },
+                                        {
+                                            "number": 1,
+                                            "price": 175,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 2,
+                                            "price": 350,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 3,
+                                            "price": 525,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 4,
+                                            "price": 699,
+                                            "isCurrent": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "isSelectable": true,
+                                    "totalParts": 5,
+                                    "shares": [
+                                        {
+                                            "number": 0,
+                                            "price": 0,
+                                            "isCurrent": true
+                                        },
+                                        {
+                                            "number": 1,
+                                            "price": 140,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 2,
+                                            "price": 280,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 3,
+                                            "price": 420,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 4,
+                                            "price": 560,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 5,
+                                            "price": 699,
+                                            "isCurrent": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "isSelectable": true,
+                                    "totalParts": 6,
+                                    "shares": [
+                                        {
+                                            "number": 0,
+                                            "price": 0,
+                                            "isCurrent": true
+                                        },
+                                        {
+                                            "number": 1,
+                                            "price": 117,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 2,
+                                            "price": 234,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 3,
+                                            "price": 351,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 4,
+                                            "price": 467,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 5,
+                                            "price": 583,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 6,
+                                            "price": 699,
+                                            "isCurrent": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "isSelectable": true,
+                                    "totalParts": 7,
+                                    "shares": [
+                                        {
+                                            "number": 0,
+                                            "price": 0,
+                                            "isCurrent": true
+                                        },
+                                        {
+                                            "number": 1,
+                                            "price": 100,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 2,
+                                            "price": 200,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 3,
+                                            "price": 300,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 4,
+                                            "price": 400,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 5,
+                                            "price": 500,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 6,
+                                            "price": 600,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 7,
+                                            "price": 699,
+                                            "isCurrent": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "isSelectable": true,
+                                    "totalParts": 8,
+                                    "shares": [
+                                        {
+                                            "number": 0,
+                                            "price": 0,
+                                            "isCurrent": true
+                                        },
+                                        {
+                                            "number": 1,
+                                            "price": 88,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 2,
+                                            "price": 176,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 3,
+                                            "price": 264,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 4,
+                                            "price": 351,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 5,
+                                            "price": 438,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 6,
+                                            "price": 525,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 7,
+                                            "price": 612,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 8,
+                                            "price": 699,
+                                            "isCurrent": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "isSelectable": true,
+                                    "totalParts": 9,
+                                    "shares": [
+                                        {
+                                            "number": 0,
+                                            "price": 0,
+                                            "isCurrent": true
+                                        },
+                                        {
+                                            "number": 1,
+                                            "price": 78,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 2,
+                                            "price": 156,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 3,
+                                            "price": 234,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 4,
+                                            "price": 312,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 5,
+                                            "price": 390,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 6,
+                                            "price": 468,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 7,
+                                            "price": 545,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 8,
+                                            "price": 622,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 9,
+                                            "price": 699,
+                                            "isCurrent": false
+                                        }
+                                    ]
+                                },
+                                {
+                                    "isSelectable": true,
+                                    "totalParts": 10,
+                                    "shares": [
+                                        {
+                                            "number": 0,
+                                            "price": 0,
+                                            "isCurrent": true
+                                        },
+                                        {
+                                            "number": 1,
+                                            "price": 70,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 2,
+                                            "price": 140,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 3,
+                                            "price": 210,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 4,
+                                            "price": 280,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 5,
+                                            "price": 350,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 6,
+                                            "price": 420,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 7,
+                                            "price": 490,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 8,
+                                            "price": 560,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 9,
+                                            "price": 630,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 10,
+                                            "price": 699,
+                                            "isCurrent": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+
+    /**
+     * Show.hide modal
+     */
+    public openInfoPopup() {
+        this.isInfoModalOpened = !this.isInfoModalOpened;
     }
 
     /**
@@ -235,7 +604,9 @@ export class TicketStep2Component implements OnInit {
      */
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.billId).then((data) => {
-            this.billSummary = data;
+           this.billSummary = data;
+           this.getRestaurantInformation(data.posId);
+           this.getCurrentLoggedCustomer();
         });
 
         // this.billSummary = {
@@ -264,6 +635,7 @@ export class TicketStep2Component implements OnInit {
     public getCurrentLoggedCustomer(): void {
         this.restaurantService.getCurrentUser().then((data) => {
             this.currentUser = data;
+            this.getCurrentUserTotalBill();
         });
         //TODO delete
         // this.currentUser = {
@@ -295,7 +667,8 @@ export class TicketStep2Component implements OnInit {
      */
     public openBillInformationPopup(index) {
         this.subticketId = this.billList[index].id;
-        this.billInformation = this.billList[index].payableData;
+        this.payableData = this.billList[index].payableData;
+        this.title = this.billList[index].title;
         this.isModalOpened = true;
     }
 
@@ -304,14 +677,30 @@ export class TicketStep2Component implements OnInit {
      * @param index
      */
     public goToEditModePerItem(id): void {
-        this.router.navigate([`./ticket-step-3/${id}`])
+        this.router.navigate([`./ticket-step-3/${this.billId}/${id}`])
     }
-
 
     /***
      * Change pay mode to true so we can show the payment buttons
      */
     public goToPayScreen(): void {
-        this.isPayMode = true;
+        this.router.navigate([`/my-bill/${this.billId}`]);
+    }
+
+
+    /**
+     * Find current user in participants array and get total price
+     */
+    public getCurrentUserTotalBill(): void {
+        let participants = this.billSummary.participants;
+        let indexOfCurrectUser = participants.map((user) => {
+            return user.id;
+        }).indexOf(this.currentUser.id);
+        let price = participants[indexOfCurrectUser].totalPrice;
+        if (price && price > 0) {
+            this.myBill = (price / 100) + ' лв';
+        } else {
+            this.myBill = '0 лв';
+        }
     }
 }

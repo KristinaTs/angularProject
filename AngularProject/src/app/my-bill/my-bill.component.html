@@ -1,0 +1,53 @@
+<info-popup *ngIf="isInfoModalOpened" (closeModal)="isInfoModalOpened = false" [billSummary]="billSummary"
+            [currentUser]="currentUser"></info-popup>
+<div class="bill-information-wrapper row">
+    <div class="col col-6 restaurant-image tx-center bill-information-top-image">
+        <img class="image" [src]="restaurant.image" alt="">
+    </div>
+    <div class="col col-6 bill-image tx-center bill-information-top-image">
+        <img class="image smetka-image" alt="" (click)="openInfoPopup()">
+    </div>
+    <div class="table-wrapper paymode">
+        <table class="table table-striped bill-table">
+            <tbody>
+            <tr *ngFor="let item of billList; let i = index">
+                <td>
+                    <div *ngIf="item.unit">
+                        {{item.title}} {{item.quantity}}{{item.unit}}
+                    </div>
+                    <div class="menu-item-title" *ngIf="!item.unit">
+                        {{item.title}}
+                    </div>
+                    <span>
+         {{(item.payableData.price/100)}} лв.
+        </span>
+                </td>
+                <td class="remove-container">
+                    <div class="remove-button" (click)="removeEntry(i)">Премахни</div>
+                </td>
+                <td class="entry-total-price">{{calculatePrice(item)}} лв.
+                </td>
+                <td class="info-icon-container"><span class="info-icon"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12 paymode-buttons">
+        <div class="clearfix bill-information-pay-screen">
+            <div class="half-width">
+                <div>Бакшиш:</div>
+                <div>
+                    <input type="text" class="tip-input" placeholder="00,00лв">
+                </div>
+            </div>
+            <div class="half-width">
+                <div>Общо:</div>
+                <strong>{{myBill}}</strong>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="button green-button payment-method-button float-left">В БРОЙ</div>
+            <div class="button blue-button payment-method-button float-left">С КАРТА</div>
+        </div>
+    </div>
+</div>

@@ -30,6 +30,7 @@ import {InfoPopupComponent} from "./info-popup/info-popup.component";
 import {PayWithCardComponent} from "./pay-with-card/pay-with-card.component";
 import {SharedCommunicationService} from "./services/shared-communication.service";
 import {BillInformationService} from "./services/bill-information.service";
+import {MyBillComponent} from "./my-bill/my-bill.component";
 import {LoaderComponent} from "./loader/loader.component";
 
 
@@ -45,6 +46,7 @@ import {LoaderComponent} from "./loader/loader.component";
         TicketStep3Component,
         TopNavigationComponent,
         LoginComponent,
+        MyBillComponent,
         PayWithCardComponent,
         LoaderComponent
     ],

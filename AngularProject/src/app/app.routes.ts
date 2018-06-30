@@ -5,7 +5,9 @@ import {BillInformationComponent} from './bill-information/bill-information.comp
 import {LoginComponent} from "./login-screen/login.component";
 import {TicketStep2Component} from "./ticket-step-2/ticket-step-2.component";
 import {TicketStep3Component} from "./ticket-step-3/ticket-step-3.component";
+import {MyBillComponent} from "./my-bill/my-bill.component";
 import {PayWithCardComponent} from "./pay-with-card/pay-with-card.component";
+
 
 
 /*
@@ -34,7 +36,7 @@ export const routes: Routes = [
         component: TicketStep2Component
     },
     {
-        path: 'ticket-step-3/:id',
+        path: 'ticket-step-3/:billId/:subticketId',
         component: TicketStep3Component
     },
     {
@@ -42,6 +44,11 @@ export const routes: Routes = [
         component: LoginComponent
     },
     {
+        path: 'my-bill/:id',
+        component: MyBillComponent
+    },
+    {
+
         path: 'pay-with-card',
         component: PayWithCardComponent
     }
