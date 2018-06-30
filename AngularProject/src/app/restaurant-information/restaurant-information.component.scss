@@ -9,7 +9,9 @@
     height: calc(100vh - 75px);
   }
   .title {
-    color: #F0000F;
+    color: $redColor;
+    font-weight: bold;
+    font-size: 15pt;
   }
   .image-container {
     background-image: url("./assets/restaurant-background.png");
@@ -17,17 +19,17 @@
     background-size: cover;
     height: 150px;
     position: relative;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     background-clip: content-box;
     img {
       position: absolute;
-      bottom: -15px;
+      bottom: -23px;
       right: 0;
       left: 0;
-      width: 110px;
-      height: 110px;
+      width: 115px;
+      height: 115px;
       margin: auto;
-      border: 1.5px solid rgba(255,255,255,0.7);
+      border: 1.5px solid rgba(255, 255, 255, 0.7);
     }
   }
 
@@ -36,34 +38,73 @@
     background-repeat: no-repeat;
     background-size: cover;
   }
-    .stat-wrapper {
-       margin-top: 2rem;
-    }
+  .stat-wrapper {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
 
+  .stats {
+    position: absolute;
+    left: -10px;
+    &.food {
+      left: 7px
+    }
+  }
   .rating {
     width: 40px;
     height: 40px;
     line-height: 40px;
-    display: inline-block;
     padding: 0;
+    margin-top: 20px;
+    font-size: 13px;
+    background-color: $ratingColor;
   }
 
+  .address {
+    position: relative;
+  }
+
+  .address:after {
+    content: "";
+    position: absolute;
+    left: 20%;
+    bottom: -10px;
+    width: 60%;
+    height: 1px;
+    background: lightgray;
+  }
   .rating-container {
+    position: relative;
     text-align: center;
+    width: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
   .restaurant-description-box {
+    position: relative;
     width: 84%;
-    height: 100px;
+    height: 127px;
     border-radius: 25px;
-    padding: 20px;
+    padding: 20px 150px 20px 20px;
     margin: auto;
     margin-top: 40px;
     margin-bottom: 20px;
-    background-color: #e43324;
+    background-color: $redColor;
     color: white;
-  }
 
+    .greeting-image {
+      position: absolute;
+      right: 14px;
+      bottom: 0;
+      width: 140px;
+      height: 180px;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-image: url('./assets/images/chick.png');
+    }
+  }
 
   .white-color {
     color: white;
@@ -72,5 +113,9 @@
 
   .description-container {
     text-align: center;
+    margin-top: 14px;
+    font-size: 14px;
   }
+
+
 }
