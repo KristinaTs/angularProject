@@ -40,8 +40,11 @@
         <div *ngIf="!isRequestSendForBill" class="green-button" (click)="sendRequestForBill()">
           + Нова сметка
         </div>
-        <div *ngIf="isRequestSendForBill" class="green-button" (click)="goToBillInformation()">
+        <div *ngIf="isRequestSendForBill && !isTicketConfirmed" class="green-button">
           Сметката се създава ...
+        </div>
+        <div *ngIf="isRequestSendForBill && isTicketConfirmed" class="green-button" (click)="goToBillInformation()">
+          Сметката е потвърдена.
         </div>
       </div>
     </div>

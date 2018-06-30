@@ -34,7 +34,7 @@ export const routes: Routes = [
         component: TicketStep2Component
     },
     {
-        path: 'ticket-step-3/:id',
+        path: 'ticket-step-3/:billId/:subticketId',
         component: TicketStep3Component
     },
     {

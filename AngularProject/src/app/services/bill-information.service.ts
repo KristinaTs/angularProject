@@ -118,4 +118,8 @@ export class BillInformationService {
         return this.httpService.get(`/ticket/${ticketId}/my-ticket`);
     }
 
+    public getStep3Information(ticketId, subticketId): Promise<any> {
+        return this.httpService.get(`ticket/${ticketId}/subtickets/${subticketId}`);
+    }
+
 }

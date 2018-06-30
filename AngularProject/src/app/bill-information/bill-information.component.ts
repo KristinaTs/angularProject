@@ -12,6 +12,7 @@ import {
 
 import {RestaurantListingService} from '../services/restaurant-listing.service';
 import {BillInformationService} from "../services/bill-information.service";
+import {WebSocketService} from "../services/websocket.service";
 
 @Component({
     templateUrl: 'bill-information.component.html',
@@ -154,25 +155,26 @@ export class BillInformationComponent implements OnInit {
     };
 
     public restaurant = {
-        id: 1,
-        name: 'Red Rooster Restaurant',
-        image: 'https://beebom-redkapmedia.netdna-ssl.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg',
-        address: 'ул. Цар Калоян 1А',
-        rating: '4/5',
-        ratingStats: {
-            food: '5/5',
-            place: '3/5',
-            staff: '5/5'
-        },
-        welcome: 'Добре дошли!',
-        description: 'Място за послание или топ промоция от ресторанта!'
+        // id: 1,
+        // name: 'Red Rooster Restaurant',
+        // image: 'https://beebom-redkapmedia.netdna-ssl.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg',
+        // address: 'ул. Цар Калоян 1А',
+        // rating: '4/5',
+        // ratingStats: {
+        //     food: '5/5',
+        //     place: '3/5',
+        //     staff: '5/5'
+        // },
+        // welcome: 'Добре дошли!',
+        // description: 'Място за послание или топ промоция от ресторанта!'
     };
 
     constructor(
         private router: Router,
         private restaurantService: RestaurantListingService,
         private billInformationService: BillInformationService,
-        private activateRouter: ActivatedRoute
+        private activateRouter: ActivatedRoute,
+        private webSocketService: WebSocketService
     ) {}
 
 
@@ -191,11 +193,18 @@ export class BillInformationComponent implements OnInit {
             this.currentBillId = currentBillId;
             if (currentBillId) {
                 this.getBillInformation(currentBillId);
+                this.getGeneralInformationForBill();
+                this.webSocketService.connect(currentBillId);
             }
         });
-        this.getGeneralInformationForBill();
-        this.getCurrentLoggedCustomer();
-        this.getCurrentUserTotalBill();
+        this.webSocketService.onMessageEmitter.subscribe((data) => {
+            console.log(data)
+            switch(data){
+                case 'TICKET_UPDATED':
+                    this.getBillInformation(this.currentBillId);
+                    this.getGeneralInformationForBill();
+            }
+        });
 
     }
 
@@ -221,6 +230,7 @@ export class BillInformationComponent implements OnInit {
     public getCurrentLoggedCustomer(): void {
         this.restaurantService.getCurrentUser().then((data) => {
             this.currentUser = data;
+            this.getCurrentUserTotalBill();
         });
         // //TODO delete
         // this.currentUser = {
@@ -239,7 +249,8 @@ export class BillInformationComponent implements OnInit {
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
             this.billSummary = data;
-            this.getCurrentUserTotalBill();
+            this.getCurrentLoggedCustomer();
+            this.getRestaurantInformation(data.posId);
         });
 
         // this.billSummary = {
@@ -267,8 +278,6 @@ export class BillInformationComponent implements OnInit {
     public close() {
         this.isModalOpened = false;
         this.getBillInformation(this.currentBillId);
-        this.getCurrentLoggedCustomer();
-        this.getGeneralInformationForBill();
         //this.getCurrentUserTotalBill();
     }
 
@@ -370,5 +379,19 @@ export class BillInformationComponent implements OnInit {
         } else {
             this.myBill = '0 лв';
         }
+    }
+
+    /**
+     * Get all the information for the restaurant with the given id
+     * @param restaurantId
+     */
+    public getRestaurantInformation(restaurantId: any) {
+        this.restaurantService.getRestaurantInformation(restaurantId)
+            .then((response) => {
+                console.log(response);
+                this.restaurant = response;
+            }).catch((err) => {
+            console.error(err);
+        });
     }
 }

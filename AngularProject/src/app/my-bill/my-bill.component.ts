@@ -65,8 +65,6 @@ export class MyBillComponent implements OnInit {
             if (currentBillId) {
                 this.getBillInformation(currentBillId);
                 this.getGeneralInformationForBill();
-                this.getCurrentLoggedCustomer();
-                this.getCurrentUserTotalBill();
             }
         });
     }
@@ -83,16 +81,17 @@ export class MyBillComponent implements OnInit {
      */
     public getCurrentLoggedCustomer(): void {
         this.restaurantService.getCurrentUser().then((data) => {
-            //this.currentUser = data;
+            this.currentUser = data;
+            this.getCurrentUserTotalBill();
         });
         //TODO delete
-        this.currentUser = {
-            "id": 1,
-            "firstName": "Aleksandar",
-            "lastName": "Avramov",
-            "email": "avramov@abv.bg",
-            "gender": "MALE"
-        };
+        // this.currentUser = {
+        //     "id": 1,
+        //     "firstName": "Aleksandar",
+        //     "lastName": "Avramov",
+        //     "email": "avramov@abv.bg",
+        //     "gender": "MALE"
+        // };
     }
 
     /**
@@ -101,30 +100,30 @@ export class MyBillComponent implements OnInit {
      */
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
-            //this.billSummary = data;
-            //this.getCurrentUserTotalBill();
+            this.billSummary = data;
+            this.getCurrentLoggedCustomer();
         });
 
-        this.billSummary = {
-            "id": 1,
-            "password": "1293",
-            "participants": [
-                {
-                    "shortName": "GV",
-                    "fullName": "Georgi Vladimirov",
-                    "isMe": true,
-                    "totalPrice": 0,
-                    id:1
-                },
-                {
-                    "shortName": "AA",
-                    "fullName": "Aleksandar Avramov",
-                    "isMe": false,
-                    "totalPrice": 0,
-                    id:2
-                }
-            ]
-        }
+        // this.billSummary = {
+        //     "id": 1,
+        //     "password": "1293",
+        //     "participants": [
+        //         {
+        //             "shortName": "GV",
+        //             "fullName": "Georgi Vladimirov",
+        //             "isMe": true,
+        //             "totalPrice": 0,
+        //             id:1
+        //         },
+        //         {
+        //             "shortName": "AA",
+        //             "fullName": "Aleksandar Avramov",
+        //             "isMe": false,
+        //             "totalPrice": 0,
+        //             id:2
+        //         }
+        //     ]
+        // }
     }
 
     /**
@@ -132,7 +131,7 @@ export class MyBillComponent implements OnInit {
      */
     public getBillInformation(currentId): void {
         this.billInformationService.getCurrentUserBill(currentId).then((data) => {
-            // this.billList = data.ticketItems;
+            this.billList = data;
             // if(this.billInformation.price > 0) {
             //     this.totalBill = (this.billInformation.price/100) + ' лв'
             // } else {
@@ -140,34 +139,45 @@ export class MyBillComponent implements OnInit {
             // }
             console.log('billInfo', data);
         });
-        let data = {
-            "id": 1,
-            "ticketItems": [
-                {
-                    "title": "ПИЛЕШКИ ПУРИЧКИ С ТОПЕНО СИРЕНЕ И ПЪРЖЕНИ КАРТОФИ",
-                    "quantity": 1,
-                    "price": 878,
-                    "totalPrice": 878
-                },
-                {
-                    "title": "КРЕХКО ПИЛЕ С ПЕЧЕНИ ЗЕЛЕНЧУЦИ",
-                    "quantity": 1,
-                    "price": 899,
-                    "totalPrice": 899
-                },
-                {
-                    "title": "ЦЕЗАР САЛАТА",
-                    "quantity": 1,
-                    "price": 869,
-                    "totalPrice": 869
-                }
-            ]
-        };
+        // let data = {
+        //     "id": 1,
+        //     "ticketItems": [
+        //         {
+        //             "title": "ПИЛЕШКИ ПУРИЧКИ С ТОПЕНО СИРЕНЕ И ПЪРЖЕНИ КАРТОФИ",
+        //             "quantity": 1,
+        //             "price": 878,
+        //             "totalPrice": 878
+        //         },
+        //         {
+        //             "title": "КРЕХКО ПИЛЕ С ПЕЧЕНИ ЗЕЛЕНЧУЦИ",
+        //             "quantity": 1,
+        //             "price": 899,
+        //             "totalPrice": 899
+        //         },
+        //         {
+        //             "title": "ЦЕЗАР САЛАТА",
+        //             "quantity": 1,
+        //             "price": 869,
+        //             "totalPrice": 869
+        //         }
+        //     ]
+        // };
 
-        this.billList = data.ticketItems;
-        console.log('billInfo', data);
+        //this.billList = data.ticketItems;
+      //  console.log('billInfo', data);
 
         //this.groupData(data);
+    }
+
+    public calculatePrice(item) {
+        let price;
+        let shares = item.payableData.participantDatas[0].distributions[0].shares;
+        shares.forEach(share => {
+            if(share.isCurrent) {
+                price = (share.price / 100);
+                return price;
+            }
+        });
     }
 
     /**

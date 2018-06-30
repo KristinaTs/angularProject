@@ -19,13 +19,13 @@
                         {{item.title}}
                     </div>
                     <span>
-          {{item.quantity}} x {{(item.price/100) | number: '1.2'}} лв.
+         {{(item.payableData.price/100)}} лв.
         </span>
                 </td>
                 <td class="remove-container">
                     <div class="remove-button" (click)="removeEntry(i)">Премахни</div>
                 </td>
-                <td class="entry-total-price">{{(item.totalPrice/100)}} лв.
+                <td class="entry-total-price">{{calculatePrice(item)}} лв.
                 </td>
                 <td class="info-icon-container"><span class="info-icon"></span></td>
             </tr>

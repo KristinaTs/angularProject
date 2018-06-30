@@ -14,10 +14,10 @@
         <table class="table table-striped bill-table">
             <tbody>
             <tr *ngFor="let item of billList; let i = index">
-                <td class="button confirm-pay pink-button" [class.disabled]="!item.isSelectEnabled"
+                <td class="button confirm-pay pink-button" [class.disabled]="!item.payableData.isSelectEnabled"
                     (click)="initSubticketPerItem(item.id)"><span
                         class="white-check"></span></td>
-                <td [class.blue-mode]="item.isShareEnabled" [class.disabled]="!item.isShareEnabled" (click)="openBillInformationPopup(i)">
+                <td [class.blue-mode]="item.payableData.isShareEnabled" [class.disabled]="!item.payableData.isShareEnabled" (click)="openBillInformationPopup(i)">
                     <div *ngIf="item.unit">
                         {{item.title}} {{item.quantity}}{{item.unit}}
                     </div>
@@ -26,9 +26,9 @@
                     </div>
                     <span>{{item.description}}</span>
                 </td>
-                <td class="entry-total-price blue-mode">{{(item.payableData.price / 100)}} лв.</td>
+                <td class="entry-total-price" [class.blue-mode]="item.payableData.isShareEnabled"  [class.disabled]="!item.payableData.isShareEnabled">{{(item.payableData.price / 100)}} лв.</td>
                 <td (click)="goToEditModePerItem(item.id)" class="button confirm-pay pink-button"
-                    [class.disalbed]="!item.isExpandEnabled">
+                    [class.disabled]="!item.payableData.isExpandEnabled">
                     <span class="white-arrow-right"></span>
                 </td>
             </tr>

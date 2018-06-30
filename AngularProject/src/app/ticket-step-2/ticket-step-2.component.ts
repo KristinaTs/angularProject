@@ -10,6 +10,7 @@ import {
 
 import {RestaurantListingService} from '../services/restaurant-listing.service';
 import {BillInformationService} from "../services/bill-information.service";
+import {WebSocketService} from "../services/websocket.service";
 
 @Component({
     templateUrl: 'ticket-step-2.component.html',
@@ -19,7 +20,7 @@ export class TicketStep2Component implements OnInit {
 
     public routerSubscription: Subscription;
     public billId;
-    public myBill: string = '24,5лв';
+    public myBill: string = '0 лв';
     public isModalOpened: boolean = false;
     public data;
     public currentUser;
@@ -47,7 +48,23 @@ export class TicketStep2Component implements OnInit {
     constructor(private router: Router,
                 private restaurantService: RestaurantListingService,
                 private billInformationService: BillInformationService,
-                private activateRouter: ActivatedRoute) {
+                private activateRouter: ActivatedRoute,
+                private webSocketService: WebSocketService) {
+
+    }
+
+    /**
+     * Get all the information for the restaurant with the given id
+     * @param restaurantId
+     */
+    public getRestaurantInformation(restaurantId: any) {
+        this.restaurantService.getRestaurantInformation(restaurantId)
+            .then((response) => {
+                console.log(response);
+                this.restaurant = response;
+            }).catch((err) => {
+            console.error(err);
+        });
     }
 
 
@@ -63,12 +80,20 @@ export class TicketStep2Component implements OnInit {
             this.billId = currentBillId;
             if (currentBillId) {
                 this.getBillSubtickets();
+                this.webSocketService.connect(currentBillId);
                 //this.getBillInformation(currentBillId);
+                this.getGeneralInformationForBill();
             }
-        });
+            this.webSocketService.onMessageEmitter.subscribe((data) => {
+                console.log(data);
+                switch(data) {
+                    case 'TICKET_UPDATED':
+                        this.getBillSubtickets();
+                        this.getGeneralInformationForBill();
 
-        this.getCurrentLoggedCustomer();
-        this.getGeneralInformationForBill();
+                }
+            });
+        });
     }
 
     public openBillInfoModal() {
@@ -80,10 +105,10 @@ export class TicketStep2Component implements OnInit {
      */
     public getBillInformation(currentId): void {
         this.billInformationService.getBillInformation(currentId).then((data) => {
-           // this.billList = data.ticketItems;
+            this.billList = data.ticketItems;
             console.log('billInfo', data);
         });
-        this.billList = [
+        let billList = [
             {
                 "id": 1,
                 "title": "Група1",
@@ -580,6 +605,8 @@ export class TicketStep2Component implements OnInit {
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.billId).then((data) => {
            this.billSummary = data;
+           this.getRestaurantInformation(data.posId);
+           this.getCurrentLoggedCustomer();
         });
 
         // this.billSummary = {
@@ -608,6 +635,7 @@ export class TicketStep2Component implements OnInit {
     public getCurrentLoggedCustomer(): void {
         this.restaurantService.getCurrentUser().then((data) => {
             this.currentUser = data;
+            this.getCurrentUserTotalBill();
         });
         //TODO delete
         // this.currentUser = {
@@ -649,7 +677,7 @@ export class TicketStep2Component implements OnInit {
      * @param index
      */
     public goToEditModePerItem(id): void {
-        this.router.navigate([`./ticket-step-3/${id}`])
+        this.router.navigate([`./ticket-step-3/${this.billId}/${id}`])
     }
 
     /***
@@ -657,5 +685,22 @@ export class TicketStep2Component implements OnInit {
      */
     public goToPayScreen(): void {
         this.router.navigate([`/my-bill/${this.billId}`]);
+    }
+
+
+    /**
+     * Find current user in participants array and get total price
+     */
+    public getCurrentUserTotalBill(): void {
+        let participants = this.billSummary.participants;
+        let indexOfCurrectUser = participants.map((user) => {
+            return user.id;
+        }).indexOf(this.currentUser.id);
+        let price = participants[indexOfCurrectUser].totalPrice;
+        if (price && price > 0) {
+            this.myBill = (price / 100) + ' лв';
+        } else {
+            this.myBill = '0 лв';
+        }
     }
 }

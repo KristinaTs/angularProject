@@ -76,6 +76,9 @@ export class BillInfoPopupComponent implements OnInit {
             return person.id;
         }).indexOf(this.selectedUser.id);
         this.distributions = this.ticketPayableData.participantDatas[indexForDistribution].distributions;
+        this.distributions.forEach((share, index) => {
+            share['selected'] = false;
+        });
         this.distributions[0].selected = true;
         //always start from the first element
         this.shares = this.distributions[0].shares;
@@ -183,6 +186,7 @@ export class BillInfoPopupComponent implements OnInit {
                     });
                     break;
                 case 'step-2':
+                    console.log(objectToSend);
                     this.billInformationService.initNewSubticketTicket(this.billSummary.id, this.subticketId, objectToSend).then((data) => {
                         //TODO
                         this.closeModal.emit();
@@ -192,6 +196,7 @@ export class BillInfoPopupComponent implements OnInit {
             }
         } else if(this.isDistributionSet && this.canApply) {
             objectToSend = {
+                distributionId: this.selectedDistirbutionId,
                 myParts: this.selectedOption.number
             };
             switch (this.type) {
