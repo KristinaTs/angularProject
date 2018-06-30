@@ -11,6 +11,8 @@ $lightGreen: #afe069;
     max-width: 100%;
     border: none;
     height: 40px;
+    outline: none;
+    padding: 0 10px;
   }
   .confirm-button {
     position: absolute;
@@ -50,6 +52,13 @@ $lightGreen: #afe069;
     padding-bottom: 20px;
   }
 
+  .image-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 90px;
+    margin: 0 15px;
+  }
   .restaurant-wrapper:hover {
     background-color: rgba(105, 224, 144, 0.2);
   }
@@ -64,6 +73,23 @@ $lightGreen: #afe069;
     border-bottom: 1px solid $greyBorder;
   }
 
+  .stat-wrapper {
+    margin-top: 10px;
+  }
+
+
+  .rating {
+    display: inline-block;
+    height: 33px;
+    width: 33px;
+    line-height: 20px;
+    padding: 7px;
+    margin-left: 5px;
+    background-color: #afe069;
+    border-radius: 50%;
+    font-weight: 600;
+    color: white;
+  }
   .right-arrow {
     background-image: url('https://www.rentgreatplace.com/assets/images/arrow-right-gray.png');
     width: 30px;
@@ -73,12 +99,17 @@ $lightGreen: #afe069;
   }
 
   .restaurant-main-info{
-    padding-left: 35px;
+    line-height: initial;
+    width: calc( 100% - (90px + 15px + 15px + 30px));
   }
 
   .right-arrow-wrapper {
     display: flex;
     align-items: center;
+  }
+
+  .address {
+    font-size: 13px;
   }
 }
 

@@ -1,0 +1,43 @@
+<div class="pay-with-card-container">
+    <div class="info-wrapper">
+        <div class="card-payment-wrapper">
+            <div class="card-icon visa "></div>
+            <div class="card-icon mastercard"></div>
+            <div class="card-icon american-express"></div>
+            <div class="card-icon discover"></div>
+        </div>
+        <p>Payment amount</p>
+        <div class="row-container">
+            <span class="total-bill">{{totalBill}}</span>
+            <button class="edit-button float-right">Edit</button>
+        </div>
+        <div class="row-container">
+            <p>Name on card</p>
+            <input type="text">
+        </div>
+        <div class="row-container">
+            <p>Card number</p>
+            <input type="text">
+        </div>
+        <div class="row-container clearfix">
+            <span class="half-width float-left ">
+                <p>Expiry date</p>
+                    <input type="text " class="left-border-input ">
+            </span>
+            <span class="half-width float-left">
+                <p>Security code</p>
+                <span class="tooltip-input">
+                    <input type="text " class="right-border-input" title="Кодът от задната страна на картата.">
+                </span>
+            </span>
+        </div>
+        <div class="row-container">
+            <p>ZIP / Postal code</p>
+            <span class="tooltip-input" >
+                <input type="text" title="Пощенски код">
+            </span>
+        </div>
+
+    </div>
+    <button class="submit-payment">Плащане</button>
+</div>

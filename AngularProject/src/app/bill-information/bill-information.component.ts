@@ -11,6 +11,7 @@ import {
 } from '@angular/router';
 
 import {RestaurantListingService} from '../services/restaurant-listing.service';
+import {SharedCommunicationService} from "../services/shared-communication.service";
 import {BillInformationService} from "../services/bill-information.service";
 import {WebSocketService} from "../services/websocket.service";
 
@@ -155,26 +156,27 @@ export class BillInformationComponent implements OnInit {
     };
 
     public restaurant = {
-        // id: 1,
-        // name: 'Red Rooster Restaurant',
-        // image: 'https://beebom-redkapmedia.netdna-ssl.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg',
-        // address: 'ул. Цар Калоян 1А',
-        // rating: '4/5',
-        // ratingStats: {
-        //     food: '5/5',
-        //     place: '3/5',
-        //     staff: '5/5'
-        // },
-        // welcome: 'Добре дошли!',
-        // description: 'Място за послание или топ промоция от ресторанта!'
+        id: 1,
+        name: 'Red Rooster Restaurant',
+        image: 'https://beebom-redkapmedia.netdna-ssl.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg',
+        address: 'ул. Цар Калоян 1А',
+        rating: '4/5',
+        ratingStats: {
+            food: '5/5',
+            place: '3/5',
+            staff: '5/5'
+        },
+        welcome: 'Добре дошли!',
+        description: 'Място за послание или топ промоция от ресторанта!'
     };
 
     constructor(
         private router: Router,
         private restaurantService: RestaurantListingService,
-        private billInformationService: BillInformationService,
         private activateRouter: ActivatedRoute,
-        private webSocketService: WebSocketService
+        private billInformationService: BillInformationService,
+        private webSocketService: WebSocketService,
+        private sharedCommunicationService: SharedCommunicationService
     ) {}
 
 
@@ -240,6 +242,9 @@ export class BillInformationComponent implements OnInit {
         //     "isMe": true,
         //     "isIn": false
         // };
+        // this.restaurantService.getCurrentUser().then((data) => {
+        //    this.currentUser = data;
+        // });
     }
 
     /**
@@ -252,7 +257,6 @@ export class BillInformationComponent implements OnInit {
             this.getCurrentLoggedCustomer();
             this.getRestaurantInformation(data.posId);
         });
-
         // this.billSummary = {
         //     "id": 1,
         //     "password": "1293",
@@ -277,7 +281,7 @@ export class BillInformationComponent implements OnInit {
 
     public close() {
         this.isModalOpened = false;
-        this.getBillInformation(this.currentBillId);
+       // this.getBillInformation(this.currentBillId);
         //this.getCurrentUserTotalBill();
     }
 
@@ -286,30 +290,30 @@ export class BillInformationComponent implements OnInit {
      */
     public getBillInformation(currentId): void {
         this.billInformationService.getBillInformation(currentId).then((data) => {
-            this.billList = data.ticketItems;
-            this.billInformation = data.ticketPayableData;
-            if(this.billInformation.price > 0) {
-                this.totalBill = (this.billInformation.price/100) + ' лв'
-            } else {
-                this.totalBill = '0 лв';
-            }
-            this.isSelectEnabled = this.billInformation.isSelectEnabled;
-            this.isShareEnabled = this.billInformation.isShareEnabled;
-            this.isExpandEnabled = this.billInformation.isExpandEnabled;
-            this.isDistributionSet = this.billInformation.isDistributionSet;
+            // this.billList = data.ticketItems;
+            // this.billInformation = data.ticketPayableData;
+            // if(this.billInformation.price > 0) {
+            //     this.totalBill = (this.billInformation.price/100) + ' лв'
+            // } else {
+            //     this.totalBill = '0 лв';
+            // }
+            // this.isSelectEnabled = this.billInformation.isSelectEnabled;
+            // this.isShareEnabled = this.billInformation.isShareEnabled;
+            // this.isExpandEnabled = this.billInformation.isExpandEnabled;
+            // this.isDistributionSet = this.billInformation.isDistributionSet;
         });
 
-        // this.billList = this.data.ticketItems;
-        // this.billInformation = this.data.ticketPayableData;
-        // if (this.billInformation.price > 0) {
-        //     this.totalBill = (this.billInformation.price / 100) + ' лв'
-        // } else {
-        //     this.totalBill = '0 лв';
-        // }
-        // this.isSelectEnabled = this.billInformation.isSelectEnabled;
-        // this.isShareEnabled = this.billInformation.isShareEnabled;
-        // this.isExpandEnabled = this.billInformation.isExpandEnabled;
-        // this.isDistributionSet = this.billInformation.isDistributionSet;
+        this.billList = this.data.ticketItems;
+        this.billInformation = this.data.ticketPayableData;
+        if (this.billInformation.price > 0) {
+            this.totalBill = (this.billInformation.price / 100) + ' лв'
+        } else {
+            this.totalBill = '0 лв';
+        }
+        this.isSelectEnabled = this.billInformation.isSelectEnabled;
+        this.isShareEnabled = this.billInformation.isShareEnabled;
+        this.isExpandEnabled = this.billInformation.isExpandEnabled;
+        this.isDistributionSet = this.billInformation.isDistributionSet;
 
         //this.groupData(data);
     }
@@ -363,6 +367,11 @@ export class BillInformationComponent implements OnInit {
             //TODO
             console.error('Cannot send init!')
         }
+    }
+
+    public goToPayWithCard(): void {
+        this.sharedCommunicationService.setState({totalBill: this.totalBill});
+        this.router.navigate(['/pay-with-card']);
     }
 
     /**

@@ -6,6 +6,8 @@ import {LoginComponent} from "./login-screen/login.component";
 import {TicketStep2Component} from "./ticket-step-2/ticket-step-2.component";
 import {TicketStep3Component} from "./ticket-step-3/ticket-step-3.component";
 import {MyBillComponent} from "./my-bill/my-bill.component";
+import {PayWithCardComponent} from "./pay-with-card/pay-with-card.component";
+
 
 
 /*
@@ -44,6 +46,11 @@ export const routes: Routes = [
     {
         path: 'my-bill/:id',
         component: MyBillComponent
+    },
+    {
+
+        path: 'pay-with-card',
+        component: PayWithCardComponent
     }
 
 ];

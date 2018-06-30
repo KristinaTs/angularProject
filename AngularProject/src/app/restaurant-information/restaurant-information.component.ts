@@ -31,7 +31,7 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
         private billInformationService: BillInformationService
     ) {
         webSocketService.onMessageEmitter.subscribe((data) => {
-          console.log(data)
+          console.log(data);
             switch(data){
                 case 'TICKET_CONFIRMED':
                     this.isTicketConfirmed = true;
@@ -61,6 +61,9 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
         menuItems: []
     };
 
+    public test() {
+        console.log('Finished');
+    }
 
     public ngOnInit(): void {
         // here we get the information for the restaurant
@@ -105,6 +108,7 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
         let objectToSend = {
             posId: this.restaurantId
         };
+
         this.billInformationService.createNewBill(objectToSend)
             .then((data) => {
                 this.billCode = data.id;
