@@ -32,12 +32,6 @@
       border: 1.5px solid rgba(255, 255, 255, 0.7);
     }
   }
-
-  .bill-send {
-    background-image: url("./assets/pin-background.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
   .stat-wrapper {
     margin-top: 8px;
     display: flex;
@@ -93,6 +87,19 @@
     margin-bottom: 20px;
     background-color: $redColor;
     color: white;
+    &.bill-send {
+      background-image: url("./assets/pin-background.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+      padding: 20px 20px 20px 20px;
+      .share {
+        font-size: 21px;
+      }
+      .pin {
+        font-size: 35px;
+        font-weight: bold;
+      }
+    }
 
     .greeting-image {
       position: absolute;
@@ -116,6 +123,5 @@
     margin-top: 14px;
     font-size: 14px;
   }
-
 
 }

@@ -290,30 +290,30 @@ export class BillInformationComponent implements OnInit {
      */
     public getBillInformation(currentId): void {
         this.billInformationService.getBillInformation(currentId).then((data) => {
-            // this.billList = data.ticketItems;
-            // this.billInformation = data.ticketPayableData;
-            // if(this.billInformation.price > 0) {
-            //     this.totalBill = (this.billInformation.price/100) + ' лв'
-            // } else {
-            //     this.totalBill = '0 лв';
-            // }
-            // this.isSelectEnabled = this.billInformation.isSelectEnabled;
-            // this.isShareEnabled = this.billInformation.isShareEnabled;
-            // this.isExpandEnabled = this.billInformation.isExpandEnabled;
-            // this.isDistributionSet = this.billInformation.isDistributionSet;
+            this.billList = data.ticketItems;
+            this.billInformation = data.ticketPayableData;
+            if(this.billInformation.price > 0) {
+                this.totalBill = (this.billInformation.price/100) + ' лв'
+            } else {
+                this.totalBill = '0 лв';
+            }
+            this.isSelectEnabled = this.billInformation.isSelectEnabled;
+            this.isShareEnabled = this.billInformation.isShareEnabled;
+            this.isExpandEnabled = this.billInformation.isExpandEnabled;
+            this.isDistributionSet = this.billInformation.isDistributionSet;
         });
 
-        this.billList = this.data.ticketItems;
-        this.billInformation = this.data.ticketPayableData;
-        if (this.billInformation.price > 0) {
-            this.totalBill = (this.billInformation.price / 100) + ' лв'
-        } else {
-            this.totalBill = '0 лв';
-        }
-        this.isSelectEnabled = this.billInformation.isSelectEnabled;
-        this.isShareEnabled = this.billInformation.isShareEnabled;
-        this.isExpandEnabled = this.billInformation.isExpandEnabled;
-        this.isDistributionSet = this.billInformation.isDistributionSet;
+        // this.billList = this.data.ticketItems;
+        // this.billInformation = this.data.ticketPayableData;
+        // if (this.billInformation.price > 0) {
+        //     this.totalBill = (this.billInformation.price / 100) + ' лв'
+        // } else {
+        //     this.totalBill = '0 лв';
+        // }
+        // this.isSelectEnabled = this.billInformation.isSelectEnabled;
+        // this.isShareEnabled = this.billInformation.isShareEnabled;
+        // this.isExpandEnabled = this.billInformation.isExpandEnabled;
+        // this.isDistributionSet = this.billInformation.isDistributionSet;
 
         //this.groupData(data);
     }

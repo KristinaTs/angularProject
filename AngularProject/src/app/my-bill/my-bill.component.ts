@@ -203,4 +203,8 @@ export class MyBillComponent implements OnInit {
             this.myBill = '0 лв';
         }
     }
+
+    public navigateToPayWithCard() {
+        this.router.navigate(['/pay-with-card']);
+    }
 }

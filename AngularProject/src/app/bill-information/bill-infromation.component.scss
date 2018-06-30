@@ -11,7 +11,7 @@ $buttonBlue: #6bc7f0;
 
 }
 .smetka-image {
-  background-image: url("./assets/login-logo.png");
+  background-image: url("./assets/images/bill-image.png");
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -129,6 +129,7 @@ $buttonBlue: #6bc7f0;
 }
 
 .bill-information-top-image {
+  max-height: 100px;
   padding: 20px;
   img {
     width: 60px;

@@ -19,9 +19,9 @@
           <div class="title">{{restaurant.name}}</div>
           <div class="address text-gray">{{restaurant.address}}</div>
           <div class="row stat-wrapper">
-            <div class="col-5 rating-container">
+            <div class="col-5 rating-container rating-number">
               <span class="text-gray stats">Рейтинг:</span>
-              <span class="rating">{{restaurant.rating.foodQuality}}</span>
+              <span class="rating">{{restaurant.rating.foodQuality / 10}}/5</span>
             </div>
             <ul class="col-7 rating-container description-list">
               <li class="text-gray stats"><span>Храна:</span><span> {{restaurant.rating.foodQuality}}</span></li>
