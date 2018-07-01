@@ -81,7 +81,7 @@ export class RestaurantListComponent implements OnInit {
             ]
         },
 
-        ];
+    ];
     public restaurantList = null;
 
     public ngOnInit(): void {
@@ -110,7 +110,7 @@ export class RestaurantListComponent implements OnInit {
         //     this.restaurantList = data;
         // });
 
-       this.restaurantList = this.forTesting;
+        this.restaurantList = this.forTesting;
     }
 
     /**
