@@ -230,18 +230,18 @@ export class BillInformationComponent implements OnInit {
      * Get current logged in user
      */
     public getCurrentLoggedCustomer(): void {
-        this.restaurantService.getCurrentUser().then((data) => {
-            this.currentUser = data;
-            this.getCurrentUserTotalBill();
-        });
+        // this.restaurantService.getCurrentUser().then((data) => {
+        //     this.currentUser = data;
+        //     this.getCurrentUserTotalBill();
+        // });
         // //TODO delete
-        // this.currentUser = {
-        //     "id": 3,
-        //     "shortName": "GV",
-        //     "fullName": "GeorgiVladimirov",
-        //     "isMe": true,
-        //     "isIn": false
-        // };
+        this.currentUser = {
+            "id": 3,
+            "shortName": "GV",
+            "fullName": "GeorgiVladimirov",
+            "isMe": true,
+            "isIn": false
+        };
         // this.restaurantService.getCurrentUser().then((data) => {
         //    this.currentUser = data;
         // });
@@ -252,31 +252,32 @@ export class BillInformationComponent implements OnInit {
      * {id, password, participants}
      */
     public getGeneralInformationForBill(): void {
-        this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
-            this.billSummary = data;
-            this.getCurrentLoggedCustomer();
-            this.getRestaurantInformation(data.posId);
-        });
-        // this.billSummary = {
-        //     "id": 1,
-        //     "password": "1293",
-        //     "participants": [
-        //         // {
-        //         //     "shortName": "GV",
-        //         //     "fullName": "Georgi Vladimirov",
-        //         //     "isMe": true,
-        //         //     "totalPrice": 0,
-        //         //     id: 2
-        //         // },
-        //         {
-        //             "shortName": "AA",
-        //             "fullName": "Aleksandar Avramov",
-        //             "isMe": false,
-        //             "totalPrice": 0,
-        //             id: 3
-        //         }
-        //     ]
-        // }
+        // this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
+        //     this.billSummary = data;
+        //     this.getCurrentLoggedCustomer();
+        //     this.getRestaurantInformation(data.posId);
+        // });
+        this.billSummary = {
+            "id": 1,
+            "password": "1293",
+            "participants": [
+                {
+                    "shortName": "GV",
+                    "fullName": "Georgi Vladimirov",
+                    "isMe": true,
+                    "totalPrice": 0,
+                    id: 2
+                },
+                {
+                    "shortName": "AA",
+                    "fullName": "Aleksandar Avramov",
+                    "isMe": false,
+                    "totalPrice": 0,
+                    id: 3
+                }
+            ]
+        }
+        this.getCurrentLoggedCustomer();
     }
 
     public close() {
