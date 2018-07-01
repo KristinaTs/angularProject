@@ -17,6 +17,11 @@
     }
   }
 
+  .login-button {
+    appearance: none;
+    background: unset;
+    border: none;
+  }
   button {
     width: 100%;
     margin: 5px 0px!important;
