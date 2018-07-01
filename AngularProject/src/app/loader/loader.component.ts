@@ -37,7 +37,7 @@ export class LoaderComponent implements OnChanges{
     public increaseWidth() {
         if(!this.finished) {
             if (this.currentWidth < 100) {
-                this.currentWidth++;
+                this.currentWidth+=0.5;
                 requestAnimationFrame(() => {
                     this.increaseWidth();
                 })
