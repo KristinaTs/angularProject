@@ -5,17 +5,28 @@
 @import './app/bill-information/bill-infromation.component';
 @import './app/top-navigation/top-navigation.component';
 @import './app/login-screen/login.component';
-
+@import './app/pay-with-card/pay-with-card.component';
 
 body {
   font-family: 'Roboto', sans-serif;
   background-image: url('./assets/images/background.png');
-  background-position-y: -145px ;
+  background-position-y: -145px;
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: vertical;
   flex-direction: column;
   box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  max-width: unset !important;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px !important;
+  }
 }
 
 .text-gray {
@@ -94,7 +105,6 @@ button:disabled {
 .disabled {
   background-color: #C4C4C4;
 }
-
 
 .right-arrow-white {
   background-image: url('./assets/images/white-arrow.png');
