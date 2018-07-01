@@ -80,6 +80,7 @@ export class BillInfoPopupComponent implements OnInit {
             share['selected'] = false;
         });
         this.distributions[0].selected = true;
+        this.selectedDistirbutionId = this.distributions[0].id;
         //always start from the first element
         this.shares = this.distributions[0].shares;
         this.userShareOption = this.shares.filter((share) => {

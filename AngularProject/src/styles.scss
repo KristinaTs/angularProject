@@ -6,6 +6,7 @@
 @import './app/top-navigation/top-navigation.component';
 @import './app/login-screen/login.component';
 @import './app/pay-with-card/pay-with-card.component';
+@import './app/my-bill/my-bill.component';
 
 body {
   font-family: 'Roboto', sans-serif;
@@ -120,6 +121,10 @@ button:disabled {
   background-size: 26px 16px;
   background-repeat: no-repeat;
   transform: rotate(-90deg);
+}
+
+.no-padding {
+  padding: 0 !important;
 }
 
 .white-border {
