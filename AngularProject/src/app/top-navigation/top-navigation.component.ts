@@ -1,24 +1,48 @@
 import {
-  Component,
-  OnInit
+    Component,
+    OnInit
 } from '@angular/core';
-import {Router} from "@angular/router";
-
+import {NavigationEnd, Router} from "@angular/router";
+import {Location} from "@angular/common";
 
 
 @Component({
-  templateUrl: 'top-navigation.component.html',
-  selector: 'top-navigation'
+    templateUrl: 'top-navigation.component.html',
+    selector: 'top-navigation'
 })
-export class TopNavigationComponent{
-  public expandVisible: boolean = false;
+export class TopNavigationComponent {
 
-  constructor(public router: Router) {
-    this.router = router;
-  }
 
-  public toggleTopNavigation() : void {
-    this.expandVisible = !this.expandVisible;
-  }
+    public routerEventsSub = null;
+    public showGpsSearchInput = false;
+
+    ngOnInit() {
+        this.routerEventsSub = this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.showGpsSearchInput = event.urlAfterRedirects === '/restaurant-listing';
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        if (this.routerEventsSub) {
+            this.routerEventsSub.unsubscribe();
+        }
+    }
+
+    public expandVisible: boolean = false;
+
+    constructor(public router: Router,
+                public location: Location) {
+        this.router = router;
+    }
+
+    public goBack() {
+        this.location.back();
+    }
+
+    public toggleTopNavigation(): void {
+        this.expandVisible = !this.expandVisible;
+    }
 
 }
