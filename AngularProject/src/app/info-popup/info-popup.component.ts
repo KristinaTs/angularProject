@@ -64,7 +64,7 @@ export class InfoPopupComponent implements OnInit {
      */
     public ngOnInit(): void {
         this.data = this.billSummary;
-        console.log(this.billSummary);
+        console.log("Here: ",this.currentUser);
         this.selectedUserID = this.currentUser.id;
         this.toggleSelectedParticipant(0);
     }
