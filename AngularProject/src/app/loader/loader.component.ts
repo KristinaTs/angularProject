@@ -8,6 +8,7 @@ import {Component, EventEmitter, HostListener, Input, Output, OnChanges} from "@
             <span *ngIf="!started">{{initialLabel}}</span>
             <span class="color-white" *ngIf="started && !finished">{{inProgressLabel}}</span>
             <span *ngIf="finished">{{loadedLabel}}</span>
+            <span *ngIf="finished" class="right-arrow-white"></span>
             <div class="loader" *ngIf="!finished" [style.width]="currentWidth+'%'"></div>
         </div>`
 })

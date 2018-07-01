@@ -99,6 +99,14 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
         });
     }
 
+    public loaderClickHandler() {
+        if (!this.isRequestSendForBill) {
+            this.sendRequestForBill();
+        } else {
+            this.goToBillInformation();
+        }
+    }
+
     /**
      * Request for new bill (+Нова сметка)
      */

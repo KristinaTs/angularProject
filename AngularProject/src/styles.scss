@@ -96,3 +96,13 @@ button:disabled {
 }
 
 
+.right-arrow-white {
+  background-image: url('./assets/images/white-arrow.png');
+  width: 26px;
+  display: inline-block;
+  height: 13px;
+  background-size: 26px 16px;
+  background-repeat: no-repeat;
+  transform: rotate(-90deg);
+}
+
