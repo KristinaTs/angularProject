@@ -12,6 +12,7 @@ import {
 
 import {RestaurantListingService} from '../services/restaurant-listing.service';
 import {BillInformationService} from "../services/bill-information.service";
+import {WebSocketService} from "../services/websocket.service";
 
 @Component({
     templateUrl: 'my-bill.component.html',
@@ -52,8 +53,18 @@ export class MyBillComponent implements OnInit {
         private router: Router,
         private restaurantService: RestaurantListingService,
         private billInformationService: BillInformationService,
-        private activateRouter: ActivatedRoute
-    ) {}
+        private activateRouter: ActivatedRoute,
+        private webSocketService: WebSocketService
+    ) {
+        this.webSocketService.onMessageEmitter.subscribe((data) => {
+            console.log(data)
+            switch(data){
+                case 'TICKET_UPDATED':
+                    this.getBillInformation(this.currentBillId);
+                    this.getGeneralInformationForBill();
+            }
+        });
+    }
 
     /**
      * On init we get the id of the current bill from the URL
@@ -63,6 +74,7 @@ export class MyBillComponent implements OnInit {
             const currentBillId = params['id'];
             this.currentBillId = currentBillId;
             if (currentBillId) {
+                this.webSocketService.connect(this.currentBillId);
                 this.getBillInformation(currentBillId);
                 this.getGeneralInformationForBill();
             }
@@ -185,6 +197,11 @@ export class MyBillComponent implements OnInit {
      * @param {number} index
      */
     public removeEntry(index: number): void {
+        this.billInformationService.updateSubticket(this.currentBillId, this.billList[index].id, {myParts: 0}).then(() =>{
+
+        }).catch(err => {
+            console.error(err);
+        });
         this.billList.splice(index, 1);
     }
 

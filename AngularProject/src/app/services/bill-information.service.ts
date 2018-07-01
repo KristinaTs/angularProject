@@ -95,7 +95,7 @@ export class BillInformationService {
      * @returns {Promise<any>}
      */
     public initNewSubticketTicket(ticketId, subticketId, object): Promise<any> {
-        return this.httpService.post(`/ticket/${ticketId}/subtickets/${subticketId}/init`, object);
+        return this.httpService.post(`ticket/${ticketId}/subtickets/${subticketId}/init`, object);
     }
 
     /**
