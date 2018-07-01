@@ -37,8 +37,8 @@
                     <div class="greeting-image"></div>
                 </div>
                 <div class="restaurant-description-box bill-send" *ngIf="isRequestSendForBill">
-                    <div class="share">Сподели този код със сервитьора:</div>
-                    <div class="pin">PIN: {{billCode}}</div>
+                    <div class="share">Код на сметка:{{billCode}}</div>
+                    <div class="pin">Парола: {{password}}</div>
                 </div>
                 <div>
                     <!--<div *ngIf="isRequestSendForBill && !isTicketConfirmed" class="green-button">-->
@@ -48,7 +48,7 @@
                          <!--(click)="goToBillInformation()">-->
                         <!--Сметката е потвърдена.-->
                     <!--</div>-->
-                    <loader (click)="sendRequestForBill()" initialLabel="+ Нова сметка" inProgressLabel="Сметката се създава..."
+                    <loader (click)="loaderClickHandler()" initialLabel="+ Нова сметка" inProgressLabel="Сметката се създава..."
                             loadedLabel="Сметката е създадена" (loaded)="test()" [isBillCreated]="isTicketConfirmed"></loader>
                 </div>
             </div>
