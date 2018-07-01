@@ -51,12 +51,13 @@ export class TicketStep3Component implements OnInit {
         description: 'Място за послание или топ промоция от ресторанта!'
     };
 
-    constructor (
+    constructor(
         private router: Router,
         private restaurantService: RestaurantListingService,
         private billInformationService: BillInformationService,
         private activateRouter: ActivatedRoute,
-        private webSocketService: WebSocketService) {}
+        private webSocketService: WebSocketService) {
+    }
 
 
     /**
@@ -106,15 +107,15 @@ export class TicketStep3Component implements OnInit {
      */
     public getBillInformation(currentId): void {
         this.billInformationService.getStep3Information(this.billId, currentId).then((data) => {
-            // this.data = data;
-            // this.billList = data.ticketItemRaws;
-            // this.billInformation = data.payableData;
-            // this.title = data.title;
-            // this.isSelectEnabled = this.billInformation.isSelectEnabled;
-            //     this.isShareEnabled = this.billInformation.isShareEnabled;
-            //     this.isExpandEnabled = this.billInformation.isExpandEnabled;
-            //     this.isDistributionSet = this.billInformation.isDistributionSet;
-            // this.totalBill = this.billInformation.price/10;
+            this.data = data;
+            this.billList = data.ticketItemRaws;
+            this.billInformation = data.payableData;
+            this.title = data.title;
+            this.isSelectEnabled = this.billInformation.isSelectEnabled;
+            this.isShareEnabled = this.billInformation.isShareEnabled;
+            this.isExpandEnabled = this.billInformation.isExpandEnabled;
+            this.isDistributionSet = this.billInformation.isDistributionSet;
+            this.totalBill = this.billInformation.price / 100 + " лв";
             console.log('billInfo', data);
 
         });
@@ -199,16 +200,16 @@ export class TicketStep3Component implements OnInit {
                 }
             ]
         }
-
-        this.data = data;
-        this.billList = data.ticketItemRaws;
-        this.billInformation = data.payableData;
-        this.title = data.title;
-        this.isSelectEnabled = this.billInformation.isSelectEnabled;
-        this.isShareEnabled = this.billInformation.isShareEnabled;
-        this.isExpandEnabled = this.billInformation.isExpandEnabled;
-        this.isDistributionSet = this.billInformation.isDistributionSet;
-        this.totalBill = this.billInformation.price / 100 + " лв";
+        //
+        // this.data = data;
+        // this.billList = data.ticketItemRaws;
+        // this.billInformation = data.payableData;
+        // this.title = data.title;
+        // this.isSelectEnabled = this.billInformation.isSelectEnabled;
+        // this.isShareEnabled = this.billInformation.isShareEnabled;
+        // this.isExpandEnabled = this.billInformation.isExpandEnabled;
+        // this.isDistributionSet = this.billInformation.isDistributionSet;
+        // this.totalBill = this.billInformation.price / 100 + " лв";
     }
 
     public getBillSubtickets() {
@@ -230,33 +231,33 @@ export class TicketStep3Component implements OnInit {
      */
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.billId).then((data) => {
-            // this.billSummary = data;
-            //  this.getCurrentLoggedCustomer();
-            //this.getRestaurantInformation(data.posId);
-            //
+            this.billSummary = data;
+             this.getCurrentLoggedCustomer();
+            this.getRestaurantInformation(data.posId);
+
         });
 
-        this.billSummary = {
-            "id": 1,
-            "password": "1293",
-            "participants": [
-                // {
-                //     "shortName": "GV",
-                //     "fullName": "Georgi Vladimirov",
-                //     "isMe": true,
-                //     "totalPrice": 0,
-                //     id: 2
-                // },
-                {
-                    "shortName": "AA",
-                    "fullName": "Aleksandar Avramov",
-                    "isMe": false,
-                    "totalPrice": 0,
-                    id: 3
-                }
-            ]
-        }
-        this.getCurrentLoggedCustomer();
+        // this.billSummary = {
+        //     "id": 1,
+        //     "password": "1293",
+        //     "participants": [
+        //         // {
+        //         //     "shortName": "GV",
+        //         //     "fullName": "Georgi Vladimirov",
+        //         //     "isMe": true,
+        //         //     "totalPrice": 0,
+        //         //     id: 2
+        //         // },
+        //         {
+        //             "shortName": "AA",
+        //             "fullName": "Aleksandar Avramov",
+        //             "isMe": false,
+        //             "totalPrice": 0,
+        //             id: 3
+        //         }
+        //     ]
+        // }
+        // this.getCurrentLoggedCustomer();
     }
 
     /**
@@ -264,18 +265,18 @@ export class TicketStep3Component implements OnInit {
      */
     public getCurrentLoggedCustomer(): void {
         this.restaurantService.getCurrentUser().then((data) => {
-            // this.currentUser = data;
-            //this.getCurrentUserTotalBill();
+            this.currentUser = data;
+            this.getCurrentUserTotalBill();
         });
-        //TODO delete
-        this.currentUser = {
-            "id": 3,
-            "firstName": "Aleksandar",
-            "lastName": "Avramov",
-            "email": "avramov@abv.bg",
-            "gender": "MALE"
-        };
-        this.getCurrentUserTotalBill();
+        // //TODO delete
+        // this.currentUser = {
+        //     "id": 3,
+        //     "firstName": "Aleksandar",
+        //     "lastName": "Avramov",
+        //     "email": "avramov@abv.bg",
+        //     "gender": "MALE"
+        // };
+        // this.getCurrentUserTotalBill();
     }
 
     /**

@@ -93,17 +93,17 @@ export class MyBillComponent implements OnInit {
      */
     public getCurrentLoggedCustomer(): void {
         this.restaurantService.getCurrentUser().then((data) => {
-           // this.currentUser = data;
-            //this.getCurrentUserTotalBill();
+           this.currentUser = data;
+            this.getCurrentUserTotalBill();
         });
-        //TODO delete
-        this.currentUser = {
-            "id": 1,
-            "firstName": "Aleksandar",
-            "lastName": "Avramov",
-            "email": "avramov@abv.bg",
-            "gender": "MALE"
-        };
+        // //TODO delete
+        // this.currentUser = {
+        //     "id": 1,
+        //     "firstName": "Aleksandar",
+        //     "lastName": "Avramov",
+        //     "email": "avramov@abv.bg",
+        //     "gender": "MALE"
+        // };
     }
 
     /**
@@ -112,30 +112,30 @@ export class MyBillComponent implements OnInit {
      */
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
-            //this.billSummary = data;
-            //this.getCurrentLoggedCustomer();
+            this.billSummary = data;
+            this.getCurrentLoggedCustomer();
         });
 
-        this.billSummary = {
-            "id": 1,
-            "password": "1293",
-            "participants": [
-                {
-                    "shortName": "GV",
-                    "fullName": "Georgi Vladimirov",
-                    "isMe": true,
-                    "totalPrice": 0,
-                    id:1
-                },
-                {
-                    "shortName": "AA",
-                    "fullName": "Aleksandar Avramov",
-                    "isMe": false,
-                    "totalPrice": 0,
-                    id:2
-                }
-            ]
-        }
+        // this.billSummary = {
+        //     "id": 1,
+        //     "password": "1293",
+        //     "participants": [
+        //         {
+        //             "shortName": "GV",
+        //             "fullName": "Georgi Vladimirov",
+        //             "isMe": true,
+        //             "totalPrice": 0,
+        //             id:1
+        //         },
+        //         {
+        //             "shortName": "AA",
+        //             "fullName": "Aleksandar Avramov",
+        //             "isMe": false,
+        //             "totalPrice": 0,
+        //             id:2
+        //         }
+        //     ]
+        // }
     }
 
     /**
@@ -143,12 +143,12 @@ export class MyBillComponent implements OnInit {
      */
     public getBillInformation(currentId): void {
         this.billInformationService.getCurrentUserBill(currentId).then((data) => {
-           // this.billList = data;
-            // if(this.billInformation.price > 0) {
-            //     this.totalBill = (this.billInformation.price/100) + ' лв'
-            // } else {
-            //     this.totalBill = '0 лв';
-            // }
+           this.billList = data;
+            if(this.billInformation.price > 0) {
+                this.totalBill = (this.billInformation.price/100) + ' лв'
+            } else {
+                this.totalBill = '0 лв';
+            }
             console.log('billInfo', data);
         });
         let data = [
@@ -257,7 +257,7 @@ export class MyBillComponent implements OnInit {
             }
         ];
 
-        this.billList = data;
+       // this.billList = data;
       //  console.log('billInfo', data);
 
         //this.groupData(data);

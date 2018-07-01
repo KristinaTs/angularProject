@@ -67,16 +67,14 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
-        // here we get the information for the restaurant
-        // this.routerSubscription = this.activateRouter.params.subscribe(params => {
-        //     const currentRestaurantId = params['id'];
-        //     this.restaurantId = currentRestaurantId;
-        //     if (currentRestaurantId) {
-        //         this.getRestaurantInformation(currentRestaurantId);
-        //     }
-        // });
-
-
+        //here we get the information for the restaurant
+        this.routerSubscription = this.activateRouter.params.subscribe(params => {
+            const currentRestaurantId = params['id'];
+            this.restaurantId = currentRestaurantId;
+            if (currentRestaurantId) {
+                this.getRestaurantInformation(currentRestaurantId);
+            }
+        });
     }
 
     /**
