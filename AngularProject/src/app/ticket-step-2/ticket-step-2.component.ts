@@ -86,7 +86,7 @@ export class TicketStep2Component implements OnInit {
             }
             this.webSocketService.onMessageEmitter.subscribe((data) => {
                 console.log(data);
-                switch(data) {
+                switch (data) {
                     case 'TICKET_UPDATED':
                         this.getBillSubtickets();
                         this.getGeneralInformationForBill();
@@ -604,9 +604,9 @@ export class TicketStep2Component implements OnInit {
      */
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.billId).then((data) => {
-           this.billSummary = data;
-           this.getRestaurantInformation(data.posId);
-           this.getCurrentLoggedCustomer();
+            this.billSummary = data;
+            this.getRestaurantInformation(data.posId);
+            this.getCurrentLoggedCustomer();
         });
 
         // this.billSummary = {
@@ -651,33 +651,39 @@ export class TicketStep2Component implements OnInit {
      * init subticket
      * @param id
      */
-    public initSubticketPerItem(id) {
-        let objectToSend = {
-            distributionId: 1,
-            myParts:1
-        };
-        this.billInformationService.initSubticketPerGroup(this.billId, id, objectToSend).then((data) => {
-            console.log(data);
-        })
+    public initSubticketPerItem(item, id) {
+        if (item.payableData.isSelectEnabled) {
+            let objectToSend = {
+                distributionId: 1,
+                myParts: 1
+            };
+            this.billInformationService.initSubticketPerGroup(this.billId, id, objectToSend).then((data) => {
+                console.log(data);
+            })
+        }
     }
 
     /**
      * Open bill information popup
      * @param index
      */
-    public openBillInformationPopup(index) {
-        this.subticketId = this.billList[index].id;
-        this.payableData = this.billList[index].payableData;
-        this.title = this.billList[index].title;
-        this.isModalOpened = true;
+    public openBillInformationPopup(item, index) {
+        if (item.payableData.isShareEnabled) {
+            this.subticketId = this.billList[index].id;
+            this.payableData = this.billList[index].payableData;
+            this.title = this.billList[index].title;
+            this.isModalOpened = true;
+        }
     }
 
     /**
      * Create array with separated elements
      * @param index
      */
-    public goToEditModePerItem(id): void {
-        this.router.navigate([`./ticket-step-3/${this.billId}/${id}`])
+    public goToEditModePerItem(item, id): void {
+        if (item.payableData.isExpandEnabled) {
+            this.router.navigate([`./ticket-step-3/${this.billId}/${id}`]);
+        }
     }
 
     /***

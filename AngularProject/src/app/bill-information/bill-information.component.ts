@@ -252,32 +252,34 @@ export class BillInformationComponent implements OnInit {
      * {id, password, participants}
      */
     public getGeneralInformationForBill(): void {
-        // this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
-        //     this.billSummary = data;
-        //     this.getCurrentLoggedCustomer();
-        //     this.getRestaurantInformation(data.posId);
-        // });
-        this.billSummary = {
-            "id": 1,
-            "password": "1293",
-            "participants": [
-                {
-                    "shortName": "GV",
-                    "fullName": "Georgi Vladimirov",
-                    "isMe": true,
-                    "totalPrice": 0,
-                    id: 2
-                },
-                {
-                    "shortName": "AA",
-                    "fullName": "Aleksandar Avramov",
-                    "isMe": false,
-                    "totalPrice": 0,
-                    id: 3
-                }
-            ]
-        }
-        this.getCurrentLoggedCustomer();
+        this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
+            this.billSummary = data;
+            this.getCurrentLoggedCustomer();
+            this.getRestaurantInformation(data.posId);
+        });
+        // this.billSummary = {
+        //     "id": 1,
+        //     "password": "1293",
+        //     "participants": [
+        //         // {
+        //         //     "shortName": "GV",
+        //         //     "fullName": "Georgi Vladimirov",
+        //         //     "isMe": true,
+        //         //     "totalPrice": 0,
+        //         //     id: 2
+        //         // },
+        //         {
+        //             "shortName": "AA",
+        //             "fullName": "Aleksandar Avramov",
+        //             "isMe": false,
+        //             "totalPrice": 0,
+        //             id: 3
+        //         }
+        //     ]
+        // }
+
+        //this.getCurrentLoggedCustomer();
+        //this.getRestaurantInformation(data.posId);
     }
 
     public close() {
@@ -290,31 +292,31 @@ export class BillInformationComponent implements OnInit {
      Get bill information/ products in bill/ shares
      */
     public getBillInformation(currentId): void {
-        // this.billInformationService.getBillInformation(currentId).then((data) => {
-        //     this.billList = data.ticketItems;
-        //     this.billInformation = data.ticketPayableData;
-        //     if(this.billInformation.price > 0) {
-        //         this.totalBill = (this.billInformation.price/100) + ' лв'
-        //     } else {
-        //         this.totalBill = '0 лв';
-        //     }
-        //     this.isSelectEnabled = this.billInformation.isSelectEnabled;
-        //     this.isShareEnabled = this.billInformation.isShareEnabled;
-        //     this.isExpandEnabled = this.billInformation.isExpandEnabled;
-        //     this.isDistributionSet = this.billInformation.isDistributionSet;
-        // });
+        this.billInformationService.getBillInformation(currentId).then((data) => {
+            this.billList = data.ticketItems;
+            this.billInformation = data.ticketPayableData;
+            if(this.billInformation.price > 0) {
+                this.totalBill = (this.billInformation.price/100) + ' лв'
+            } else {
+                this.totalBill = '0 лв';
+            }
+            this.isSelectEnabled = this.billInformation.isSelectEnabled;
+            this.isShareEnabled = this.billInformation.isShareEnabled;
+            this.isExpandEnabled = this.billInformation.isExpandEnabled;
+            this.isDistributionSet = this.billInformation.isDistributionSet;
+        });
 
-        this.billList = this.data.ticketItems;
-        this.billInformation = this.data.ticketPayableData;
-        if (this.billInformation.price > 0) {
-            this.totalBill = (this.billInformation.price / 100) + ' лв'
-        } else {
-            this.totalBill = '0 лв';
-        }
-        this.isSelectEnabled = this.billInformation.isSelectEnabled;
-        this.isShareEnabled = this.billInformation.isShareEnabled;
-        this.isExpandEnabled = this.billInformation.isExpandEnabled;
-        this.isDistributionSet = this.billInformation.isDistributionSet;
+        // this.billList = this.data.ticketItems;
+        // this.billInformation = this.data.ticketPayableData;
+        // if (this.billInformation.price > 0) {
+        //     this.totalBill = (this.billInformation.price / 100) + ' лв'
+        // } else {
+        //     this.totalBill = '0 лв';
+        // }
+        // this.isSelectEnabled = this.billInformation.isSelectEnabled;
+        // this.isShareEnabled = this.billInformation.isShareEnabled;
+        // this.isExpandEnabled = this.billInformation.isExpandEnabled;
+        // this.isDistributionSet = this.billInformation.isDistributionSet;
 
         // this.groupData(data);
     }

@@ -93,17 +93,17 @@ export class MyBillComponent implements OnInit {
      */
     public getCurrentLoggedCustomer(): void {
         this.restaurantService.getCurrentUser().then((data) => {
-            this.currentUser = data;
-            this.getCurrentUserTotalBill();
+           // this.currentUser = data;
+            //this.getCurrentUserTotalBill();
         });
         //TODO delete
-        // this.currentUser = {
-        //     "id": 1,
-        //     "firstName": "Aleksandar",
-        //     "lastName": "Avramov",
-        //     "email": "avramov@abv.bg",
-        //     "gender": "MALE"
-        // };
+        this.currentUser = {
+            "id": 1,
+            "firstName": "Aleksandar",
+            "lastName": "Avramov",
+            "email": "avramov@abv.bg",
+            "gender": "MALE"
+        };
     }
 
     /**
@@ -112,30 +112,30 @@ export class MyBillComponent implements OnInit {
      */
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
-            this.billSummary = data;
-            this.getCurrentLoggedCustomer();
+            //this.billSummary = data;
+            //this.getCurrentLoggedCustomer();
         });
 
-        // this.billSummary = {
-        //     "id": 1,
-        //     "password": "1293",
-        //     "participants": [
-        //         {
-        //             "shortName": "GV",
-        //             "fullName": "Georgi Vladimirov",
-        //             "isMe": true,
-        //             "totalPrice": 0,
-        //             id:1
-        //         },
-        //         {
-        //             "shortName": "AA",
-        //             "fullName": "Aleksandar Avramov",
-        //             "isMe": false,
-        //             "totalPrice": 0,
-        //             id:2
-        //         }
-        //     ]
-        // }
+        this.billSummary = {
+            "id": 1,
+            "password": "1293",
+            "participants": [
+                {
+                    "shortName": "GV",
+                    "fullName": "Georgi Vladimirov",
+                    "isMe": true,
+                    "totalPrice": 0,
+                    id:1
+                },
+                {
+                    "shortName": "AA",
+                    "fullName": "Aleksandar Avramov",
+                    "isMe": false,
+                    "totalPrice": 0,
+                    id:2
+                }
+            ]
+        }
     }
 
     /**
@@ -143,7 +143,7 @@ export class MyBillComponent implements OnInit {
      */
     public getBillInformation(currentId): void {
         this.billInformationService.getCurrentUserBill(currentId).then((data) => {
-            this.billList = data;
+           // this.billList = data;
             // if(this.billInformation.price > 0) {
             //     this.totalBill = (this.billInformation.price/100) + ' лв'
             // } else {
@@ -151,31 +151,113 @@ export class MyBillComponent implements OnInit {
             // }
             console.log('billInfo', data);
         });
-        // let data = {
-        //     "id": 1,
-        //     "ticketItems": [
-        //         {
-        //             "title": "ПИЛЕШКИ ПУРИЧКИ С ТОПЕНО СИРЕНЕ И ПЪРЖЕНИ КАРТОФИ",
-        //             "quantity": 1,
-        //             "price": 878,
-        //             "totalPrice": 878
-        //         },
-        //         {
-        //             "title": "КРЕХКО ПИЛЕ С ПЕЧЕНИ ЗЕЛЕНЧУЦИ",
-        //             "quantity": 1,
-        //             "price": 899,
-        //             "totalPrice": 899
-        //         },
-        //         {
-        //             "title": "ЦЕЗАР САЛАТА",
-        //             "quantity": 1,
-        //             "price": 869,
-        //             "totalPrice": 869
-        //         }
-        //     ]
-        // };
+        let data = [
+            {
+                "id": 1,
+                "title": "Група 1",
+                "description": "",
+                "payableData": {
+                    "price": 1438,
+                    "isSelectEnabled": false,
+                    "isShareEnabled": true,
+                    "isExpandEnabled": true,
+                    "isDistributionSet": true,
+                    "participantDatas": [
+                        {
+                            "id": 3,
+                            "shortName": "AA",
+                            "fullName": "Aleksandar Avramov",
+                            "isMe": true,
+                            "isIn": true,
+                            "distributions": [
+                                {
+                                    "isSelectable": false,
+                                    "totalParts": 3,
+                                    "shares": [
+                                        {
+                                            "number": 0,
+                                            "price": 0,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 1,
+                                            "price": 480,
+                                            "isCurrent": true
+                                        },
+                                        {
+                                            "number": 2,
+                                            "price": 959,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 3,
+                                            "price": 1438,
+                                            "isCurrent": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "id": 3,
+                "title": "СПАНАК С КИНОА",
+                "description": "1 x 769",
+                "payableData": {
+                    "price": 769,
+                    "isSelectEnabled": false,
+                    "isShareEnabled": true,
+                    "isExpandEnabled": false,
+                    "isDistributionSet": true,
+                    "participantDatas": [
+                        {
+                            "id": 3,
+                            "shortName": "AA",
+                            "fullName": "Aleksandar Avramov",
+                            "isMe": true,
+                            "isIn": true,
+                            "distributions": [
+                                {
+                                    "isSelectable": false,
+                                    "totalParts": 4,
+                                    "shares": [
+                                        {
+                                            "number": 0,
+                                            "price": 0,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 1,
+                                            "price": 193,
+                                            "isCurrent": true
+                                        },
+                                        {
+                                            "number": 2,
+                                            "price": 385,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 3,
+                                            "price": 577,
+                                            "isCurrent": false
+                                        },
+                                        {
+                                            "number": 4,
+                                            "price": 769,
+                                            "isCurrent": false
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        ];
 
-        //this.billList = data.ticketItems;
+        this.billList = data;
       //  console.log('billInfo', data);
 
         //this.groupData(data);
@@ -186,10 +268,21 @@ export class MyBillComponent implements OnInit {
         let shares = item.payableData.participantDatas[0].distributions[0].shares;
         shares.forEach(share => {
             if(share.isCurrent) {
-                price = (share.price / 100);
+                price = (share.price / 100) + " лв";
                 return price;
             }
         });
+
+    }
+
+    /**
+     * Navigate to step 3 if the option is enabled
+     * @param item
+     */
+    public navigateToStep3(item) {
+       // if (item.payableData.isExpandEnabled) {
+            this.router.navigate([`./ticket-step-3/${this.currentBillId}/${item.id}`]);
+        //}
     }
 
     /**
