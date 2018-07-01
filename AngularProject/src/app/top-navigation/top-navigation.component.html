@@ -1,6 +1,9 @@
 <div class="row" *ngIf="this.router.url != '/login'">
     <div class="col-12 top-navigation-wrapper">
-        <input class="location-input" type="text" placeholder="Заведения по GPS">
+        <div *ngIf="!showGpsSearchInput" class="back-button-wrapper">
+            <div  (click)="goBack()" class="right-arrow-white"></div>
+        </div>
+        <input *ngIf="showGpsSearchInput" class="location-input" type="text" placeholder="Заведения по GPS">
         <div class="search navigation-icon pointer"></div>
         <div class="expand-navigation-icon navigation-icon pointer" (click)="toggleTopNavigation()"></div>
         <div class="expand-side-navigation navigation-icon pointer"></div>

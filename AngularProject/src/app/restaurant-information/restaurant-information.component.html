@@ -16,15 +16,15 @@
                 <div class="stat-wrapper row">
                     <div class="rating-container">
                         <div class="text-gray stats food">Храна:</div>
-                        <div class="rating">{{restaurant.rating.foodQuality / 10}}/5</div>
+                        <div class="rating">{{restaurant.rating.foodQuality | ratingPipe}}</div>
                     </div>
                     <div class="rating-container">
                         <div class="text-gray stats">Обстановка:</div>
-                        <div class="rating">{{restaurant.rating.atmosphere / 10}}/5</div>
+                        <div class="rating">{{restaurant.rating.atmosphere | ratingPipe}}</div>
                     </div>
                     <div class="rating-container">
                         <div class="text-gray stats">Обслужване:</div>
-                        <div class="rating">{{restaurant.rating.serviceQuality / 10}}/5</div>
+                        <div class="rating">{{restaurant.rating.serviceQuality | ratingPipe}}</div>
                     </div>
                 </div>
             </div>
