@@ -235,13 +235,13 @@ export class BillInformationComponent implements OnInit {
             this.getCurrentUserTotalBill();
         });
         // //TODO delete
-        // this.currentUser = {
-        //     "id": 3,
-        //     "shortName": "GV",
-        //     "fullName": "GeorgiVladimirov",
-        //     "isMe": true,
-        //     "isIn": false
-        // };
+        this.currentUser = {
+            "id": 3,
+            "shortName": "GV",
+            "fullName": "GeorgiVladimirov",
+            "isMe": true,
+            "isIn": false
+        };
         // this.restaurantService.getCurrentUser().then((data) => {
         //    this.currentUser = data;
         // });
@@ -253,30 +253,33 @@ export class BillInformationComponent implements OnInit {
      */
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
-            this.billSummary = data;
-            this.getCurrentLoggedCustomer();
-            this.getRestaurantInformation(data.posId);
+            //this.billSummary = data;
+            //this.getCurrentLoggedCustomer();
+            //this.getRestaurantInformation(data.posId);
         });
-        // this.billSummary = {
-        //     "id": 1,
-        //     "password": "1293",
-        //     "participants": [
-        //         // {
-        //         //     "shortName": "GV",
-        //         //     "fullName": "Georgi Vladimirov",
-        //         //     "isMe": true,
-        //         //     "totalPrice": 0,
-        //         //     id: 2
-        //         // },
-        //         {
-        //             "shortName": "AA",
-        //             "fullName": "Aleksandar Avramov",
-        //             "isMe": false,
-        //             "totalPrice": 0,
-        //             id: 3
-        //         }
-        //     ]
-        // }
+        this.billSummary = {
+            "id": 1,
+            "password": "1293",
+            "participants": [
+                // {
+                //     "shortName": "GV",
+                //     "fullName": "Georgi Vladimirov",
+                //     "isMe": true,
+                //     "totalPrice": 0,
+                //     id: 2
+                // },
+                {
+                    "shortName": "AA",
+                    "fullName": "Aleksandar Avramov",
+                    "isMe": false,
+                    "totalPrice": 0,
+                    id: 3
+                }
+            ]
+        }
+
+        this.getCurrentLoggedCustomer();
+        //this.getRestaurantInformation(data.posId);
     }
 
     public close() {

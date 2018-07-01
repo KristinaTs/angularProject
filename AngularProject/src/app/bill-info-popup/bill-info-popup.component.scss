@@ -68,12 +68,16 @@
   left: calc(50% - 2.5px);
 }
 
+.label-share-popup {
+  width: 103px;
+}
+
 .widget-container {
   padding: 20px 0;
   display: flex;
   color: #838383;
   align-items: center;
-  justify-content: space-between;
+  //justify-content: space-between;
 }
 
 .share-options-wrapper {

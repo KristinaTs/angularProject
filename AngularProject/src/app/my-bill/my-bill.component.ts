@@ -268,10 +268,11 @@ export class MyBillComponent implements OnInit {
         let shares = item.payableData.participantDatas[0].distributions[0].shares;
         shares.forEach(share => {
             if(share.isCurrent) {
-                price = (share.price / 100);
+                price = (share.price / 100) + " лв";
                 return price;
             }
         });
+
     }
 
     /**
