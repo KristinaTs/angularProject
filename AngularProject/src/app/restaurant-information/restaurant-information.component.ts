@@ -22,6 +22,7 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
     public billCode;
     public ticketId;
     public isTicketConfirmed = false;
+    public password = "";
 
     constructor(
         private router: Router,
@@ -125,6 +126,7 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
         this.billInformationService.createNewBill(objectToSend)
             .then((data) => {
                 this.billCode = data.id;
+                this.password = data.password;
                 this.ticketId = data.ticketId;
                 this.webSocketService.connect(data.ticketId);
             })

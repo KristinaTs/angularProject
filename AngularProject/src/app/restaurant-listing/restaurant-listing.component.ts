@@ -124,10 +124,11 @@ export class RestaurantListComponent implements OnInit {
         if (id != '' && password != '') {
             this.billInformationService.sendJoinRequest(id, password).then((data) => {
                 console.log('DONE');
-                if (data.success) {
                     //Navigate to bill if succesful
+                if(data.state == "SUCCESS") {
                     this.router.navigate([`bill-information/${id}`]);
                 }
+
             });
         } else {
             console.error('Invalid data for bill request to join!')

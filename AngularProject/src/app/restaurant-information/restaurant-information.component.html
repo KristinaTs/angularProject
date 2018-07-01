@@ -31,14 +31,14 @@
             <div class="col col-2">
             </div>
             <div class="col col-12 description-container">
-                <div class="restaurant-description-box" *ngIf="!isTicketConfirmed">
+                <div class="restaurant-description-box" *ngIf="!isRequestSendForBill">
                     <div>{{greeting.welcome}}</div>
                     <div>{{greeting.description}}</div>
                     <div class="greeting-image"></div>
                 </div>
-                <div class="restaurant-description-box bill-send" *ngIf="isTicketConfirmed">
+                <div class="restaurant-description-box bill-send" *ngIf="isRequestSendForBill">
                     <div class="share">Код на сметка:{{billCode}}</div>
-                    <div class="pin">Парола: {{'не знам как се връща'}}</div>
+                    <div class="pin">Парола: {{password}}</div>
                 </div>
                 <div>
                     <!--<div *ngIf="isRequestSendForBill && !isTicketConfirmed" class="green-button">-->
