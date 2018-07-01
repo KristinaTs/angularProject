@@ -32,6 +32,7 @@ import {SharedCommunicationService} from "./services/shared-communication.servic
 import {BillInformationService} from "./services/bill-information.service";
 import {MyBillComponent} from "./my-bill/my-bill.component";
 import {LoaderComponent} from "./loader/loader.component";
+import {RatingPipe} from "./pipes/rating.pipe";
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {LoaderComponent} from "./loader/loader.component";
         LoginComponent,
         MyBillComponent,
         PayWithCardComponent,
-        LoaderComponent
+        LoaderComponent,
+        RatingPipe
     ],
     imports: [
         BrowserModule,
