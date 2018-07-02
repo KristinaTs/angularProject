@@ -10,6 +10,7 @@ import {
 
 import {RestaurantListingService} from '../services/restaurant-listing.service';
 import {BillInformationService} from "../services/bill-information.service";
+import {WebSocketService} from "../services/websocket.service";
 
 @Component({
     templateUrl: 'ticket-step-3.component.html',
@@ -19,7 +20,7 @@ export class TicketStep3Component implements OnInit {
 
     public routerSubscription: Subscription;
     public billId;
-    public myBill: string = '24,5лв';
+    public myBill: string = '';
     public isPayMode: boolean = false;
     public data;
     public currentUser;
@@ -28,6 +29,12 @@ export class TicketStep3Component implements OnInit {
     public isInfoModalOpened = false;
     public subticketId;
     public title;
+    public isSelectEnabled: boolean = false;
+    public isShareEnabled: boolean = false;
+    public isExpandEnabled: boolean = false;
+    public isDistributionSet: boolean = false;
+    public isModalOpened: boolean = false;
+    public totalBill = "0 лв";
 
     public restaurant = {
         id: 1,
@@ -44,10 +51,12 @@ export class TicketStep3Component implements OnInit {
         description: 'Място за послание или топ промоция от ресторанта!'
     };
 
-    constructor(private router: Router,
-                private restaurantService: RestaurantListingService,
-                private billInformationService: BillInformationService,
-                private activateRouter: ActivatedRoute) {
+    constructor(
+        private router: Router,
+        private restaurantService: RestaurantListingService,
+        private billInformationService: BillInformationService,
+        private activateRouter: ActivatedRoute,
+        private webSocketService: WebSocketService) {
     }
 
 
@@ -60,13 +69,36 @@ export class TicketStep3Component implements OnInit {
     public ngOnInit(): void {
         this.routerSubscription = this.activateRouter.params.subscribe(params => {
             this.billId = params['billId'];
-            this.subticketId =  params['subticketId'];
+            this.subticketId = params['subticketId'];
             if (this.subticketId) {
                 this.getBillInformation(this.subticketId);
-                this.getCurrentLoggedCustomer();
                 this.getGeneralInformationForBill();
                 this.getBillSubtickets();
+                this.webSocketService.connect(this.subticketId);
             }
+        });
+
+        this.webSocketService.onMessageEmitter.subscribe((data) => {
+            console.log(data)
+            switch (data) {
+                case 'TICKET_UPDATED':
+                    this.getBillInformation(this.subticketId);
+                    this.getGeneralInformationForBill();
+            }
+        });
+    }
+
+    /**
+     * Get all the information for the restaurant with the given id
+     * @param restaurantId
+     */
+    public getRestaurantInformation(restaurantId: any) {
+        this.restaurantService.getRestaurantInformation(restaurantId)
+            .then((response) => {
+                console.log(response);
+                this.restaurant = response;
+            }).catch((err) => {
+            console.error(err);
         });
     }
 
@@ -76,145 +108,108 @@ export class TicketStep3Component implements OnInit {
     public getBillInformation(currentId): void {
         this.billInformationService.getStep3Information(this.billId, currentId).then((data) => {
             this.data = data;
-            this.billList = data.ticketItems;
-            this.billInformation = data.ticketPayableData;
+            this.billList = data.ticketItemRaws;
+            this.billInformation = data.payableData;
             this.title = data.title;
+            this.isSelectEnabled = this.billInformation.isSelectEnabled;
+            this.isShareEnabled = this.billInformation.isShareEnabled;
+            this.isExpandEnabled = this.billInformation.isExpandEnabled;
+            this.isDistributionSet = this.billInformation.isDistributionSet;
+            this.totalBill = this.billInformation.price / 100 + " лв";
             console.log('billInfo', data);
+
         });
         let data = {
             "id": 1,
-            "ticketItems": [{
-                "id": 2,
-                "title": "Група 1",
-                "description": "",
-                "payableData": {
-                    "price": 2646,
-                    "isSelectEnabled": false,
-                    "isShareEnabled": true,
-                    "isExpandEnabled": true,
-                    "isDistributionSet": true,
-                    "distributions": [{"totalParts": 1, "values": [2646]}, {
-                        "totalParts": 2,
-                        "values": [1323, 1323]
-                    }, {"totalParts": 3, "values": [882, 882, 882]}, {
-                        "totalParts": 4,
-                        "values": [662, 662, 661, 661]
-                    }, {"totalParts": 5, "values": [530, 529, 529, 529, 529]}, {
-                        "totalParts": 6,
-                        "values": [441, 441, 441, 441, 441, 441]
-                    }, {"totalParts": 7, "values": [378, 378, 378, 378, 378, 378, 378]}, {
-                        "totalParts": 8,
-                        "values": [331, 331, 331, 331, 331, 331, 330, 330]
-                    }, {"totalParts": 9, "values": [294, 294, 294, 294, 294, 294, 294, 294, 294]}, {
-                        "totalParts": 10,
-                        "values": [265, 265, 265, 265, 265, 265, 264, 264, 264, 264]
-                    }],
-                    "selectedDistributionId": 3,
-                    "freeIds": [2],
-                    "shares": [{"id": 2, "firstName": "Georgi", "lastName": "Vladimirov", "takenIds": [1]}, {
+            "title": "Група 1",
+            "description": "",
+            "payableData": {
+                "price": 6132,
+                "isSelectEnabled": false,
+                "isShareEnabled": true,
+                "isExpandEnabled": false,
+                "isDistributionSet": true,
+                "participantDatas": [
+                    {
                         "id": 3,
-                        "firstName": "Aleksandar",
-                        "lastName": "Avramov",
-                        "takenIds": [0]
-                    }]
-                }
-            }, {
-                "id": 4,
-                "title": "КЪСЧЕТА С ТОПЕНО СИРЕНЕ",
-                "description": "1 x 949",
-                "payableData": {
-                    "price": 949,
-                    "isSelectEnabled": true,
-                    "isShareEnabled": true,
-                    "isExpandEnabled": false,
-                    "isDistributionSet": false,
-                    "distributions": [{"totalParts": 1, "values": [949]}, {
-                        "totalParts": 2,
-                        "values": [475, 474]
-                    }, {"totalParts": 3, "values": [317, 316, 316]}, {
-                        "totalParts": 4,
-                        "values": [238, 237, 237, 237]
-                    }, {"totalParts": 5, "values": [190, 190, 190, 190, 189]}, {
-                        "totalParts": 6,
-                        "values": [159, 158, 158, 158, 158, 158]
-                    }, {"totalParts": 7, "values": [136, 136, 136, 136, 135, 135, 135]}, {
-                        "totalParts": 8,
-                        "values": [119, 119, 119, 119, 119, 118, 118, 118]
-                    }, {"totalParts": 9, "values": [106, 106, 106, 106, 105, 105, 105, 105, 105]}, {
-                        "totalParts": 10,
-                        "values": [95, 95, 95, 95, 95, 95, 95, 95, 95, 94]
-                    }],
-                    "selectedDistributionId": 0,
-                    "freeIds": [],
-                    "shares": []
-                }
-            }],
-            "ticketPayableData":
+                        "shortName": "AA",
+                        "fullName": "Aleksandar Avramov",
+                        "isMe": true,
+                        "isIn": true,
+                        "distributions": [
+                            {
+                                "isSelectable": false,
+                                "totalParts": 3,
+                                "shares": [
+                                    {
+                                        "number": 0,
+                                        "price": 0,
+                                        "isCurrent": false
+                                    },
+                                    {
+                                        "number": 1,
+                                        "price": 2044,
+                                        "isCurrent": true
+                                    },
+                                    {
+                                        "number": 2,
+                                        "price": 4088,
+                                        "isCurrent": false
+                                    },
+                                    {
+                                        "number": 3,
+                                        "price": 6132,
+                                        "isCurrent": false
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "ticketItemRaws": [
                 {
-                    "price": 2646,
-                    "isSelectEnabled": false,
-                    "isShareEnabled": true,
-                    "isExpandEnabled": false,
-                    "isDistributionSet": true,
-                    "distributions": [
-                        {
-                            "totalParts": 1,
-                            "values": [2646]
-                        },
-                        {
-                            "totalParts": 2,
-                            "values": [1323, 1323]
-                        },
-                        {
-                            "totalParts": 3,
-                            "values": [882, 882, 882]
-                        },
-                        {
-                            "totalParts": 4,
-                            "values": [662, 662, 661, 661]
-                        },
-                        {
-                            "totalParts": 5,
-                            "values": [530, 529, 529, 529, 529]
-                        },
-                        {
-                            "totalParts": 6,
-                            "values": [441, 441, 441, 441, 441, 441]
-                        },
-                        {
-                            "totalParts": 7,
-                            "values": [378, 378, 378, 378, 378, 378, 378]
-                        },
-                        {
-                            "totalParts": 8,
-                            "values": [331, 331, 331, 331, 331, 331, 330, 330]
-                        },
-                        {
-                            "totalParts": 9,
-                            "values": [294, 294, 294, 294, 294, 294, 294, 294, 294]
-                        },
-                        {
-                            "totalParts": 10,
-                            "values": [265, 265, 265, 265, 265, 265, 264, 264, 264, 264]
-                        }
-                    ],
-                    "selectedDistributionId": 3,
-                    "freeIds": [2],
-                    "shares": [
-                        {
-                            "id": 2,
-                            "firstName": "Georgi",
-                            "lastName": "Vladimirov",
-                            "takenIds": [1]
-                        },
-                        {
-                            "id": 3,
-                            "firstName": "Aleksandar",
-                            "lastName": "Avramov",
-                            "takenIds": [0]
-                        }]
+                    "title": "ГРЪЦКА САЛАТА",
+                    "quantity": 2,
+                    "price": 629,
+                    "totalPrice": 1258
+                },
+                {
+                    "title": "САЛАТА МИКОНОС",
+                    "quantity": 1,
+                    "price": 869,
+                    "totalPrice": 869
+                },
+                {
+                    "title": "САЛАТА РАЗКОШ",
+                    "quantity": 1,
+                    "price": 849,
+                    "totalPrice": 849
+                },
+                {
+                    "title": "САЛАТА С КИНОА И БЯЛА РИБА",
+                    "quantity": 1,
+                    "price": 849,
+                    "totalPrice": 849
+                },
+                {
+                    "title": "СПАНАК С КИНОА",
+                    "quantity": 3,
+                    "price": 769,
+                    "totalPrice": 2307
                 }
+            ]
         }
+        //
+        // this.data = data;
+        // this.billList = data.ticketItemRaws;
+        // this.billInformation = data.payableData;
+        // this.title = data.title;
+        // this.isSelectEnabled = this.billInformation.isSelectEnabled;
+        // this.isShareEnabled = this.billInformation.isShareEnabled;
+        // this.isExpandEnabled = this.billInformation.isExpandEnabled;
+        // this.isDistributionSet = this.billInformation.isDistributionSet;
+        // this.totalBill = this.billInformation.price / 100 + " лв";
     }
 
     public getBillSubtickets() {
@@ -226,6 +221,10 @@ export class TicketStep3Component implements OnInit {
         });
     }
 
+    public close() {
+        this.isModalOpened = false;
+    }
+
     /**
      * Request for general information about bill
      * {id, password, participants}
@@ -233,26 +232,32 @@ export class TicketStep3Component implements OnInit {
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.billId).then((data) => {
             this.billSummary = data;
+             this.getCurrentLoggedCustomer();
+            this.getRestaurantInformation(data.posId);
+
         });
 
         // this.billSummary = {
         //     "id": 1,
-        //     "password": "8839",
+        //     "password": "1293",
         //     "participants": [
+        //         // {
+        //         //     "shortName": "GV",
+        //         //     "fullName": "Georgi Vladimirov",
+        //         //     "isMe": true,
+        //         //     "totalPrice": 0,
+        //         //     id: 2
+        //         // },
         //         {
-        //             "id": 2,
-        //             "firstName": "Georgi",
-        //             "lastName": "Vladimirov",
-        //             "totalPrice": 882
-        //         },
-        //         {
-        //             "id": 3,
-        //             "firstName": "Aleksandar",
-        //             "lastName": "Avramov",
-        //             "totalPrice": 882
+        //             "shortName": "AA",
+        //             "fullName": "Aleksandar Avramov",
+        //             "isMe": false,
+        //             "totalPrice": 0,
+        //             id: 3
         //         }
         //     ]
-        // };
+        // }
+        // this.getCurrentLoggedCustomer();
     }
 
     /**
@@ -261,8 +266,9 @@ export class TicketStep3Component implements OnInit {
     public getCurrentLoggedCustomer(): void {
         this.restaurantService.getCurrentUser().then((data) => {
             this.currentUser = data;
+            this.getCurrentUserTotalBill();
         });
-        //TODO delete
+        // //TODO delete
         // this.currentUser = {
         //     "id": 3,
         //     "firstName": "Aleksandar",
@@ -270,6 +276,7 @@ export class TicketStep3Component implements OnInit {
         //     "email": "avramov@abv.bg",
         //     "gender": "MALE"
         // };
+        // this.getCurrentUserTotalBill();
     }
 
     /**
@@ -279,19 +286,11 @@ export class TicketStep3Component implements OnInit {
     public initSubticketPerItem(id) {
         let objectToSend = {
             distributionId: 1,
-            myParts:1
+            myParts: 1
         }
         this.billInformationService.initSubticketPerGroup(this.billId, id, objectToSend).then((data) => {
             console.log(data);
         })
-    }
-
-    /**
-     * Create array with separated elements
-     * @param index
-     */
-    public goToEditModePerItem(id): void {
-        this.router.navigate([`./ticket-step-3/${id}`])
     }
 
 
@@ -300,5 +299,37 @@ export class TicketStep3Component implements OnInit {
      */
     public goToPayScreen(): void {
         this.router.navigate([`/my-bill/${this.billId}`]);
+    }
+
+    /**
+     * Show.hide modal
+     */
+    public openInfoPopup() {
+        this.isInfoModalOpened = !this.isInfoModalOpened;
+    }
+
+    /**
+     * Show.hide modal
+     */
+    public openBillInfoModal() {
+        if (this.isShareEnabled) {
+            this.isModalOpened = !this.isModalOpened;
+        }
+    }
+
+    /**
+     * Find current user in participants array and get total price
+     */
+    public getCurrentUserTotalBill(): void {
+        let participants = this.billSummary.participants;
+        let indexOfCurrectUser = participants.map((user) => {
+            return user.id;
+        }).indexOf(this.currentUser.id);
+        let price = participants[indexOfCurrectUser].totalPrice;
+        if (price && price > 0) {
+            this.myBill = (price / 100) + ' лв';
+        } else {
+            this.myBill = '0 лв';
+        }
     }
 }

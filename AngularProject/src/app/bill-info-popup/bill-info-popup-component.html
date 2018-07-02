@@ -2,7 +2,7 @@
     <div class="bill-info-wrapper">
         <div class="dash-bt-border header"> {{title}} {{totalBill}}</div>
         <div class="widget-container dash-bt-border">
-            Участници:
+            <div class="label-share-popup">Участници:</div>
             <div class="participants-container">
                 <div class="participant"
                      [class.self]="participant.isMe"
@@ -16,13 +16,14 @@
             </div>
         </div>
         <div class="widget-container dash-bt-border">
-            Дялове:
+            <div class="label-share-popup">Дялове:</div>
             <div class="shares-container">
                 <div  *ngFor="let distribution of distributions; let i = index"
                       class="share"
                      [class.self]="distribution.self"
                      [class.selected]="distribution.selected"
                      [class.disabled] = "!distribution.isSelectable"
+                      [class.selectable] =  "distribution.isSelectable"
                      (click)="toggleSelectedDistibutionCount(i)"
                 >
                     {{distribution.totalParts}}
@@ -50,7 +51,7 @@
             <span class="white-check"></span>
         </div>
         <div class="button blue-button float-left price-image">
-            Сметка: {{totalPriceString}}
+            {{totalPriceString}}
         </div>
     </div>
     <div class="col-12 button pay-button float-left">

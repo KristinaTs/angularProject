@@ -80,6 +80,7 @@ export class BillInfoPopupComponent implements OnInit {
             share['selected'] = false;
         });
         this.distributions[0].selected = true;
+        this.selectedDistirbutionId = this.distributions[0].id;
         //always start from the first element
         this.shares = this.distributions[0].shares;
         this.userShareOption = this.shares.filter((share) => {
@@ -108,14 +109,12 @@ export class BillInfoPopupComponent implements OnInit {
         }
     }
 
-    public getSelectedUserTotalBill(index): void {
-    let participants = this.billSummary.participants;
-        let price = participants[index].totalPrice;
-        if ( price && price > 0) {
-            this.myBill = (price / 100) + ' лв';
-        } else {
-            this.myBill = '0 лв';
-        }
+    public getSelectedUserTotalBill(): void {
+        let participantDatas = this.ticketPayableData.participantDatas;
+        let userIndex = participantDatas.map((user) => user.id).indexOf(this.selectedUser.id);
+        console.log(participantDatas[userIndex]);
+        let shares = participantDatas[userIndex].distributions[0].shares.filter(share => share.isCurrent);
+        this.totalPriceString = "Дялове за " + this.selectedUser.fullName +  " " + (shares[0].price/100) + " лв";
     }
     /**
      * Select a participant
@@ -129,9 +128,10 @@ export class BillInfoPopupComponent implements OnInit {
             this.selectedUser = this.participants[participantIndex];
             this.isShareActive = this.selectedUser.id == this.currentUser.id;
             this.getDistributionsAndShares();
+            this.getSelectedUserTotalBill();
         }
 //TODO
-        //this.getSelectedUserTotalBill(participantIndex);
+
     }
 
     /**
@@ -163,7 +163,7 @@ export class BillInfoPopupComponent implements OnInit {
                 this.canApply = false;
             }
             this.selectedOption = this.shares[shareIndex];
-            this.totalPriceString = (this.selectedOption.price / 100) + ' лв';
+            this.totalPriceString = "Дялове за: " + this.selectedUser.fullName + " " + (this.selectedOption.price / 100) + ' лв';
         }
     }
 

@@ -67,16 +67,14 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
-        // here we get the information for the restaurant
-        // this.routerSubscription = this.activateRouter.params.subscribe(params => {
-        //     const currentRestaurantId = params['id'];
-        //     this.restaurantId = currentRestaurantId;
-        //     if (currentRestaurantId) {
-        //         this.getRestaurantInformation(currentRestaurantId);
-        //     }
-        // });
-
-
+        //here we get the information for the restaurant
+        this.routerSubscription = this.activateRouter.params.subscribe(params => {
+            const currentRestaurantId = params['id'];
+            this.restaurantId = currentRestaurantId;
+            if (currentRestaurantId) {
+                this.getRestaurantInformation(currentRestaurantId);
+            }
+        });
     }
 
     /**
@@ -96,7 +94,7 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
         this.restaurantService.getRestaurantInformation(restaurantId)
             .then((response) => {
                 console.log(response);
-                this.restaurant = response;
+               this.restaurant = response;
             }).catch((err) => {
             console.error(err);
         });
@@ -120,9 +118,9 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
             posId: this.restaurantId
         };
 
-        setTimeout(() => {
-            this.isTicketConfirmed = true;
-        }, 5000)
+        // setTimeout(() => {
+        //     this.isTicketConfirmed = true;
+        // }, 5000)
         this.billInformationService.createNewBill(objectToSend)
             .then((data) => {
                 this.billCode = data.id;
