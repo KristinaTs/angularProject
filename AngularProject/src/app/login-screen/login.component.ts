@@ -24,14 +24,14 @@ export class LoginComponent {
         let form = {
             username: this.username,
             password: this.password
-        }  ;
+        };
 
-        this.router.navigate(['/restaurant-listing']);
+        //this.router.navigate(['/restaurant-listing']);
 
-        // this.loginService.login(form).then(data => {
-        //     this.router.navigate(['/restaurant-listing']);
-        // }).catch((err) => {
-        //     console.log(err);
-        // });
+        this.loginService.login(form).then(data => {
+            this.router.navigate(['/restaurant-listing']);
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 }

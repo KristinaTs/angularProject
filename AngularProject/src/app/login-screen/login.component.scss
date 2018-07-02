@@ -19,8 +19,14 @@
 
   .login-button {
     appearance: none;
-    background: unset;
+    //background: unset;
     border: none;
+    margin-top: 40px;
+    color: red;
+    background-color: white;
+    text-align: center;
+    height: 55px;
+    line-height: 55px;
   }
   button {
     width: 100%;

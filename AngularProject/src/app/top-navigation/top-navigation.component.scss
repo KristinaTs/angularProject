@@ -80,16 +80,17 @@
   }
 }
 
-.top-navigation-expand {
-  font-size: 14px;
+
   .top-container {
     height: 75px;
     background-color: $darkGreen;
+    font-size: 14px;
   }
   .bottom-container {
     position: relative;
     height: 75px;
     background-color: $lightGreen;
+    font-size: 14px;
   }
 
   .filter {
@@ -106,4 +107,3 @@
     border: none;
   }
 
-}

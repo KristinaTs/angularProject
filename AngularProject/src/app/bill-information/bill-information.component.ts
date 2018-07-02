@@ -596,9 +596,9 @@ export class BillInformationComponent implements OnInit {
      */
     public getGeneralInformationForBill(): void {
         this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
-            this.billSummary = data;
-            this.getCurrentLoggedCustomer();
-            this.getRestaurantInformation(data.posId);
+           this.billSummary = data;
+           this.getCurrentLoggedCustomer();
+           this.getRestaurantInformation(data.posId);
         });
         // this.billSummary = {
         //     "id": 1,
@@ -620,8 +620,8 @@ export class BillInformationComponent implements OnInit {
         //         }
         //     ]
         // }
-
-        this.getCurrentLoggedCustomer();
+        //
+        // this.getCurrentLoggedCustomer();
         //this.getRestaurantInformation(data.posId);
     }
 

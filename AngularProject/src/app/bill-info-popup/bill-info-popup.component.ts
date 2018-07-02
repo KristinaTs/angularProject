@@ -79,6 +79,10 @@ export class BillInfoPopupComponent implements OnInit {
         this.distributions.forEach((share, index) => {
             share['selected'] = false;
         });
+        this.participants.forEach((participant, index) => {
+            participant['selected'] = false;
+        });
+        this.participants[0].selected = true;
         this.distributions[0].selected = true;
         this.selectedDistirbutionId = this.distributions[0].id;
         //always start from the first element

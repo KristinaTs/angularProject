@@ -8,8 +8,7 @@
         <div class="expand-navigation-icon navigation-icon pointer" (click)="toggleTopNavigation()"></div>
         <div class="expand-side-navigation navigation-icon pointer"></div>
     </div>
-    <div *ngIf="expandVisible" class="top-navigation-expand row">
-        <div class="top-container col-12">
+        <div  *ngIf="expandVisible" class="top-container col-12">
             <div class="filter">Филтрирай по:</div>
             <div class="filter">
                 <span>Локация</span>
@@ -17,7 +16,7 @@
                 <span>Рейтинг на приятели</span>
             </div>
         </div>
-        <div class="bottom-container col-12">
+        <div *ngIf="expandVisible" class="bottom-container col-12">
             <div class="star-image navigation-icon"></div>
             <div class="filter">Филтрирай по най-често посещение:</div>
             <div class="filter">
@@ -25,5 +24,4 @@
                 <span>От приятели</span>
             </div>
         </div>
-    </div>
 </div>

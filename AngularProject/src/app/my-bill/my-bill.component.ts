@@ -143,7 +143,7 @@ export class MyBillComponent implements OnInit {
      */
     public getBillInformation(currentId): void {
         this.billInformationService.getCurrentUserBill(currentId).then((data) => {
-           this.billList = data;
+           //this.billList = data;
             console.log('billInfo', data);
         });
         let data = [
@@ -252,7 +252,7 @@ export class MyBillComponent implements OnInit {
             }
         ];
 
-       // this.billList = data;
+        this.billList = data;
       //  console.log('billInfo', data);
 
         //this.groupData(data);
@@ -264,9 +264,9 @@ export class MyBillComponent implements OnInit {
         shares.forEach(share => {
             if(share.isCurrent) {
                 price = (share.price / 100) + " лв";
-                return price;
             }
         });
+        return price;
 
     }
 

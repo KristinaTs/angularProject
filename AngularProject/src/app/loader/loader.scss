@@ -12,13 +12,13 @@ $buttonGreen: #9ab956;
 
   span {
     line-height: 40px;
+    border: none !important;
   }
   &.initial {
     color: #000;
     border: 2px solid $buttonGreen;
     background-color: white;
   }
-
 }
 
 .loader {
