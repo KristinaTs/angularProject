@@ -87,7 +87,7 @@
   min-width: 103px;
 }
 
-.share.selected:before {
+.share.selected span {
   content: '';
   position: absolute;
   top: -15px;

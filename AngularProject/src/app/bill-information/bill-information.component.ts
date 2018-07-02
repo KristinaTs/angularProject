@@ -573,18 +573,18 @@ export class BillInformationComponent implements OnInit {
      * Get current logged in user
      */
     public getCurrentLoggedCustomer(): void {
-        // this.restaurantService.getCurrentUser().then((data) => {
-        //     this.currentUser = data;
-        //     this.getCurrentUserTotalBill();
-        // });
+        this.restaurantService.getCurrentUser().then((data) => {
+            this.currentUser = data;
+            this.getCurrentUserTotalBill();
+        });
         // //TODO delete
-        this.currentUser = {
-            "id": 3,
-            "shortName": "GV",
-            "fullName": "GeorgiVladimirov",
-            "isMe": true,
-            "isIn": false
-        };
+        // this.currentUser = {
+        //     "id": 3,
+        //     "shortName": "GV",
+        //     "fullName": "GeorgiVladimirov",
+        //     "isMe": true,
+        //     "isIn": false
+        // };
         // this.restaurantService.getCurrentUser().then((data) => {
         //    this.currentUser = data;
         // });
@@ -621,7 +621,7 @@ export class BillInformationComponent implements OnInit {
         //     ]
         // }
 
-        //this.getCurrentLoggedCustomer();
+        this.getCurrentLoggedCustomer();
         //this.getRestaurantInformation(data.posId);
     }
 
@@ -648,7 +648,7 @@ export class BillInformationComponent implements OnInit {
             this.isExpandEnabled = this.billInformation.isExpandEnabled;
             this.isDistributionSet = this.billInformation.isDistributionSet;
         });
-
+        //
         // this.billList = this.data.ticketItems;
         // this.billInformation = this.data.ticketPayableData;
         // if (this.billInformation.price > 0) {
