@@ -108,7 +108,7 @@ export class TicketStep3Component implements OnInit {
     public getBillInformation(currentId): void {
         this.billInformationService.getStep3Information(this.billId, currentId).then((data) => {
             this.data = data;
-            this.billList = data.ticketItemRaws;
+            this.billList = data.ticketItems;
             this.billInformation = data.payableData;
             this.title = data.title;
             this.isSelectEnabled = this.billInformation.isSelectEnabled;

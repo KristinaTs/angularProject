@@ -39,13 +39,15 @@
                 <input type="text" class="tip-input" placeholder="00,00лв">
             </div>
         </div>
-        <div class="half-width">
-            <div>Общо:</div>
-            <strong>{{myBill}}</strong>
+        <div class="half-width ">
+            <div class="my-bill-price" style="float: right">
+                <div>Общо:</div>
+                <strong>{{myBill}}</strong>
+            </div>
         </div>
     </div>
     <div class="col-12 no-padding">
-        <div class="button green-button payment-method-button float-left">В БРОЙ</div>
-        <div class="button blue-button payment-method-button float-left" (click)="navigateToPayWithCard()">С КАРТА</div>
+        <div class="button green-button payment-method-button float-left"><span class="dollar-image">$</span>В БРОЙ</div>
+        <div class="button blue-button payment-method-button float-left card-button" (click)="navigateToPayWithCard()"><span class="card-image"></span>С КАРТА</div>
     </div>
 </div>

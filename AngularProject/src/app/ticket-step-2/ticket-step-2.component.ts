@@ -85,7 +85,7 @@ export class TicketStep2Component implements OnInit {
                 this.getGeneralInformationForBill();
             }
             this.webSocketService.onMessageEmitter.subscribe((data) => {
-                console.log(data);
+                console.log("Update");
                 switch (data) {
                     case 'TICKET_UPDATED':
                         this.getBillSubtickets();

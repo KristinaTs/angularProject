@@ -58,8 +58,8 @@
          (click)="navigateToSecondStepBill()">
         <span class="white-arrow-right"></span>
     </div>
-    <div class="col-12 button pay-button float-left">
+    <div class="col-12 button pay-button float-left" (click)="goToPayScreen()">
         <div class="margin-left-10 float-left">Мoята сметка: {{myBill}}</div>
-        <div (click)="goToPayScreen()" class="float-right margin-right-10">ПЛАТИ</div>
+        <div class="float-right margin-right-10">ПЛАТИ</div>
     </div>
 </div>

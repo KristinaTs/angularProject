@@ -35,18 +35,18 @@ export class MyBillComponent implements OnInit {
     public billList: Array<any> = [];
 
     public restaurant = {
-        id: 1,
-        name: 'Red Rooster Restaurant',
-        image: 'https://beebom-redkapmedia.netdna-ssl.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg',
-        address: 'ул. Цар Калоян 1А',
-        rating: '4/5',
-        ratingStats: {
-            food: '5/5',
-            place: '3/5',
-            staff: '5/5'
-        },
-        welcome: 'Добре дошли!',
-        description: 'Място за послание или топ промоция от ресторанта!'
+        // id: 1,
+        // name: 'Red Rooster Restaurant',
+        // image: 'https://beebom-redkapmedia.netdna-ssl.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg',
+        // address: 'ул. Цар Калоян 1А',
+        // rating: '4/5',
+        // ratingStats: {
+        //     food: '5/5',
+        //     place: '3/5',
+        //     staff: '5/5'
+        // },
+        // welcome: 'Добре дошли!',
+        // description: 'Място за послание или топ промоция от ресторанта!'
     };
 
     constructor(
@@ -114,6 +114,7 @@ export class MyBillComponent implements OnInit {
         this.billInformationService.getBillSummary(this.currentBillId).then((data) => {
             this.billSummary = data;
             this.getCurrentLoggedCustomer();
+            this.getRestaurantInformation(data.posId);
         });
 
         // this.billSummary = {
@@ -139,11 +140,25 @@ export class MyBillComponent implements OnInit {
     }
 
     /**
+     * Get all the information for the restaurant with the given id
+     * @param restaurantId
+     */
+    public getRestaurantInformation(restaurantId: any) {
+        this.restaurantService.getRestaurantInformation(restaurantId)
+            .then((response) => {
+                console.log(response);
+                this.restaurant = response;
+            }).catch((err) => {
+            console.error(err);
+        });
+    }
+
+    /**
      Get bill information/ products in bill/ shares
      */
     public getBillInformation(currentId): void {
         this.billInformationService.getCurrentUserBill(currentId).then((data) => {
-           //this.billList = data;
+           this.billList = data;
             console.log('billInfo', data);
         });
         let data = [
@@ -252,7 +267,7 @@ export class MyBillComponent implements OnInit {
             }
         ];
 
-        this.billList = data;
+        //this.billList = data;
       //  console.log('billInfo', data);
 
         //this.groupData(data);

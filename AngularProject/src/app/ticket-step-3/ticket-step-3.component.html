@@ -7,7 +7,7 @@
         <img class="image" [src]="restaurant.image" alt="">
     </div>
     <div class="col col-6 bill-image tx-center bill-information-top-image">
-        <img class="image smetka-image" alt="" (click)="openInfoPopup()">
+        <div class="image smetka-image" alt="" (click)="openInfoPopup()"></div>
     </div>
     <div class="table-wrapper">
         <table class="table table-striped bill-table">
@@ -33,8 +33,8 @@
     </div>
     <div class="col-2 button  white-border confirm-pay pink-button float-left" [class.disabled]="!isExpandEnabled">
         <span class="white-arrow-right"></span></div>
-    <div class="col-12 button pay-button float-left">
+    <div class="col-12 button pay-button float-left" (click)="goToPayScreen()">
         <div class="margin-left-10 float-left">Мoята сметка: {{myBill}}</div>
-        <div (click)="goToPayScreen()" class="float-right margin-right-10">ПЛАТИ</div>
+        <div class="float-right margin-right-10">ПЛАТИ</div>
     </div>
 </div>

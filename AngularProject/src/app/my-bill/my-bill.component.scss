@@ -1,7 +1,39 @@
 .my-bill-wrapper-table {
   height: calc(100vh - 306px);
+
+  td {
+    vertical-align: bottom !important;
+    &.info-icon-container {
+      vertical-align: top !important;
+    }
+  }
 }
 
 .no-padding {
   padding: 0;
+}
+
+.my-bill-price {
+  text-align: left;
+  padding-right: 10px;
+}
+
+.card-image {
+  background-image: url("./assets/images/card.png");
+  width: 27px;
+  height: 18px;
+  background-size: contain;
+  position: absolute;
+  top: 32%;
+  background-repeat: no-repeat;
+  left: 19px;
+}
+
+.dollar-image {
+  position: absolute;
+  left: 27px;
+}
+
+.card-button {
+  position: relative;
 }
