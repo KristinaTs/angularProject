@@ -6,7 +6,7 @@
             <div class="participants-container">
                 <div class="participant"
                      [class.self]="participant.isMe"
-                     [class.selected]="participant.selected"
+                     [class.selected]="participant.id == selectedUser.id"
                      [ngClass]="participant.isIn ? 'participant-has-shares': 'participant-no-shares'"
                      *ngFor="let participant of participants; let i = index"
                      (click)="toggleSelectedParticipant(i)"
@@ -30,10 +30,10 @@
                 </div>
             </div>
         </div>
-        <div class="header">Дялове за мен:</div>
+        <div class="header">{{selectedUser.id == currentUser.id ? 'Дялове за мен:' : 'Дялове за ' + selectedUser.fullName}}</div>
         <div class="test">
             <div class="share-slider-container">
-                <div class="slider" [class.disabled]="!isShareActive"></div>
+                <div class="slider"></div>
             </div>
         </div>
         <div class="share-options-wrapper">

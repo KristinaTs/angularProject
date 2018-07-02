@@ -84,7 +84,7 @@ export class BillInfoPopupComponent implements OnInit {
         });
         this.participants[0].selected = true;
         this.distributions[0].selected = true;
-        this.selectedDistirbutionId = this.distributions[0].id;
+        this.selectedDistirbutionId = 0;
         //always start from the first element
         this.shares = this.distributions[0].shares;
         this.userShareOption = this.shares.filter((share) => {
@@ -118,16 +118,16 @@ export class BillInfoPopupComponent implements OnInit {
         let userIndex = participantDatas.map((user) => user.id).indexOf(this.selectedUser.id);
         console.log(participantDatas[userIndex]);
         let shares = participantDatas[userIndex].distributions[0].shares.filter(share => share.isCurrent);
-        this.totalPriceString = "Дялове за " + this.selectedUser.fullName +  " " + (shares[0].price/100) + " лв";
+        this.totalPriceString = (shares[0].price/100) + " лв";
     }
     /**
      * Select a participant
      * @param {number} participantIndex
      */
     public toggleSelectedParticipant(participantIndex: number): void {
-        this.participants.forEach((participant, index) => {
-            participant['selected'] = participantIndex === index;
-        });
+        for(let i =0; i < this.participants.length; i++) {
+            this.participants[i].selected = participantIndex === i;
+        }
         if(this.selectedUser.id != this.participants[participantIndex].id) {
             this.selectedUser = this.participants[participantIndex];
             this.isShareActive = this.selectedUser.id == this.currentUser.id;
@@ -167,7 +167,7 @@ export class BillInfoPopupComponent implements OnInit {
                 this.canApply = false;
             }
             this.selectedOption = this.shares[shareIndex];
-            this.totalPriceString = "Дялове за: " + this.selectedUser.fullName + " " + (this.selectedOption.price / 100) + ' лв';
+            this.totalPriceString = (this.selectedOption.price / 100) + ' лв';
         }
     }
 
@@ -181,6 +181,7 @@ export class BillInfoPopupComponent implements OnInit {
                 distributionId: this.selectedDistirbutionId,
                 myParts: this.selectedOption.number
             };
+            console.log(objectToSend);
             switch (this.type) {
                 case 'main-screen':
                     this.billInformationService.initNewTicket(this.billSummary.id, objectToSend).then((data) => {

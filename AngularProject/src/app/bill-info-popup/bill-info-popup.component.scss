@@ -48,19 +48,41 @@
     //}
     &.selected:before {
       content: '';
-      display: block;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background-color: #9ED8EA;
       position: absolute;
-      top: -10px;
-      left: calc(50% - 2.5px);
+      top: -15px;
+      right: 0;
+      margin: auto;
+      display: block;
+      width: 0;
+      height: 0;
+      border-radius: 0 !important;
+      background-color: transparent !important;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid #AED078;
+      left: calc(50% - 21.5px) !important;
+    }
+    &.disabled {
+      background-color: #C4C4C4;
+    }
+    &.disabled:before {
+      content: '';
+      position: absolute;
+      top: -15px;
+      right: 0;
+      margin: auto;
+      display: none;
+      width: 0;
+      height: 0;
     }
     &.self.participant-no-shares {
       background-color: white;
       color: #AED078;
       border: 1px solid #AED078;
+    }
+    &.self.participant-has-shares  {
+      background-color: #AED078 !important;
+      color: white;
     }
   }
 }
@@ -88,25 +110,25 @@
   min-width: 103px;
 }
 
-.share {
-  &.selected:before {
-    content: '';
-    position: absolute;
-    top: -15px;
-    right: 0;
-    left: 0;
-    margin: auto;
-    display: block;
-    width: 0;
-    height: 0;
-    border-radius: 0 !important;
-    background-color: transparent !important;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid #AED078;
-    left: calc(50% - 21.5px) !important;
-  }
-}
+//.share {
+//  &.selected:before {
+//    content: '';
+//    position: absolute;
+//    top: -15px;
+//    right: 0;
+//    left: 0;
+//    margin: auto;
+//    display: block;
+//    width: 0;
+//    height: 0;
+//    border-radius: 0 !important;
+//    background-color: transparent !important;
+//    border-left: 10px solid transparent;
+//    border-right: 10px solid transparent;
+//    border-top: 10px solid #AED078;
+//    left: calc(50% - 21.5px) !important;
+//  }
+//}
 
 .widget-container {
   padding: 20px 0;

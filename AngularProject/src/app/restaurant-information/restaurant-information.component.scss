@@ -90,7 +90,8 @@
     &.bill-send {
       background-image: url("./assets/pin-background.png");
       background-repeat: no-repeat;
-      background-size: cover;
+      background-size: 700px 198px;
+      background-position-x: -10px;
       padding: 20px 20px 20px 20px;
       .share {
         font-size: 21px;
@@ -122,6 +123,11 @@
     text-align: center;
     margin-top: 14px;
     font-size: 14px;
+  }
+
+  .code {
+    font-size: 27px;
+    font-weight: bold;
   }
 
 }

@@ -36,9 +36,13 @@
                     <div>{{greeting.description}}</div>
                     <div class="greeting-image"></div>
                 </div>
-                <div class="restaurant-description-box bill-send" *ngIf="isRequestSendForBill">
-                    <div class="share">Код на сметка:{{billCode}}</div>
-                    <div class="pin">Парола: {{password}}</div>
+                <div class="restaurant-description-box bill-send" *ngIf="isRequestSendForBill && !isTicketConfirmed">
+                    <div class="share">Сподели този код със сервитьора</div>
+                    <div class="pin">PIN: {{billCode}}</div>
+                </div>
+                <div class="restaurant-description-box bill-send" *ngIf="isRequestSendForBill && isTicketConfirmed">
+                    <div class="code">Код на сметка: {{billCode}}</div>
+                    <div class="code">Парола: {{password}}</div>
                 </div>
                 <div>
                     <!--<div *ngIf="isRequestSendForBill && !isTicketConfirmed" class="green-button">-->
