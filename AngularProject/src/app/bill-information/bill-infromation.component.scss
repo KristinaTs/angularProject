@@ -164,20 +164,20 @@ $buttonBlue: #6bc7f0;
     background: transparent;
     box-shadow: none;
   }
-  &::after {
-    content: '';
-    position: fixed;
-    bottom: 100px;
-    left: 0;
-    z-index: 1;
-    display: block;
-    max-width: 768px;
-    margin: 0 auto;
-    right: 0;
-    height: 130px;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 1) 90%);
-    pointer-events: none;
-  }
+  //&::after {
+  //  content: '';
+  //  position: fixed;
+  //  bottom: 100px;
+  //  left: 0;
+  //  z-index: 1;
+  //  display: block;
+  //  max-width: 768px;
+  //  margin: 0 auto;
+  //  right: 0;
+  //  height: 130px;
+  //  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 1) 90%);
+  //  pointer-events: none;
+  //}
 
   &.single-row-buttons::after {
     bottom: 50px;
@@ -191,6 +191,20 @@ $buttonBlue: #6bc7f0;
   outline: none;
   background-color: transparent;
   box-shadow: 0 -5px 5px -5px #333;
+  &::after {
+    content: '';
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    z-index: 1;
+    display: block;
+    max-width: 768px;
+    margin: 0 auto;
+    right: 0;
+    height: 130px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 1) 90%);
+    pointer-events: none;
+  }
 }
 
 .bill-information-top-image {

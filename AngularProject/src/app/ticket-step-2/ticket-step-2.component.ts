@@ -81,7 +81,7 @@ export class TicketStep2Component implements OnInit {
             if (currentBillId) {
                 this.getBillSubtickets();
                 this.webSocketService.connect(currentBillId);
-                //this.getBillInformation(currentBillId);
+                this.getBillInformation(currentBillId);
                 this.getGeneralInformationForBill();
             }
             this.webSocketService.onMessageEmitter.subscribe((data) => {
@@ -104,10 +104,10 @@ export class TicketStep2Component implements OnInit {
      Get bill information/ products in bill/ shares
      */
     public getBillInformation(currentId): void {
-        this.billInformationService.getBillInformation(currentId).then((data) => {
-            this.billList = data.ticketItems;
-            console.log('billInfo', data);
-        });
+        // this.billInformationService.getBillInformation(currentId).then((data) => {
+        //     this.billList = data.ticketItems;
+        //     console.log('billInfo', data);
+        // });
         let billList = [
             {
                 "id": 1,
@@ -580,6 +580,7 @@ export class TicketStep2Component implements OnInit {
                 }
             }
         ]
+        this.billList = billList;
     }
 
     /**
