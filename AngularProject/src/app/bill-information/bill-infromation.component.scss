@@ -222,9 +222,10 @@ $buttonBlue: #6bc7f0;
   display: inline-block;
   width: 23px;
   height: 23px;
-  background-image: url("./assets/images/white-check.png");
-  background-size: cover;
+  background-image: url("./assets/images/check.png");
   vertical-align: middle;
+  background-size: 300%;
+  background-position: center;
   cursor: pointer;
 }
 
