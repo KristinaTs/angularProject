@@ -158,6 +158,9 @@ $buttonBlue: #6bc7f0;
 
 .menu-item-title {
   font-size: 14px;
+  @media (max-width: 360px){
+    font-size: 12px;
+  }
 }
 
 .top-images-container {
@@ -184,6 +187,9 @@ $buttonBlue: #6bc7f0;
   vertical-align: bottom !important;
   font-weight: bold;
   text-align: right;
+  @media (max-width: 360px){
+    font-size: 14px;
+  }
 }
 
 .info-icon {
