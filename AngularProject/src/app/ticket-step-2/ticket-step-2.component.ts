@@ -81,7 +81,7 @@ export class TicketStep2Component implements OnInit {
             if (currentBillId) {
                 this.getBillSubtickets();
                 this.webSocketService.connect(currentBillId);
-                //this.getBillInformation(currentBillId);
+                this.getBillInformation(currentBillId);
                 this.getGeneralInformationForBill();
             }
             this.webSocketService.onMessageEmitter.subscribe((data) => {
@@ -104,10 +104,10 @@ export class TicketStep2Component implements OnInit {
      Get bill information/ products in bill/ shares
      */
     public getBillInformation(currentId): void {
-        this.billInformationService.getBillInformation(currentId).then((data) => {
-            this.billList = data.ticketItems;
-            console.log('billInfo', data);
-        });
+        // this.billInformationService.getBillInformation(currentId).then((data) => {
+        //     this.billList = data.ticketItems;
+        //     console.log('billInfo', data);
+        // });
         let billList = [
             {
                 "id": 1,
@@ -580,6 +580,7 @@ export class TicketStep2Component implements OnInit {
                 }
             }
         ]
+        this.billList = billList;
     }
 
     /**
@@ -603,48 +604,48 @@ export class TicketStep2Component implements OnInit {
      * {id, password, participants}
      */
     public getGeneralInformationForBill(): void {
-        this.billInformationService.getBillSummary(this.billId).then((data) => {
-           this.billSummary = data;
-           this.getRestaurantInformation(data.posId);
-           this.getCurrentLoggedCustomer();
-        });
+        // this.billInformationService.getBillSummary(this.billId).then((data) => {
+        //    this.billSummary = data;
+        //    this.getRestaurantInformation(data.posId);
+        //    this.getCurrentLoggedCustomer();
+        // });
 
-        // this.billSummary = {
-        //     "id": 1,
-        //     "password": "8839",
-        //     "participants": [
-        //         {
-        //             "id": 2,
-        //             "firstName": "Georgi",
-        //             "lastName": "Vladimirov",
-        //             "totalPrice": 882
-        //         },
-        //         {
-        //             "id": 3,
-        //             "firstName": "Aleksandar",
-        //             "lastName": "Avramov",
-        //             "totalPrice": 882
-        //         }
-        //     ]
-        // };
+        this.billSummary = {
+            "id": 1,
+            "password": "8839",
+            "participants": [
+                {
+                    "id": 2,
+                    "firstName": "Georgi",
+                    "lastName": "Vladimirov",
+                    "totalPrice": 882
+                },
+                {
+                    "id": 3,
+                    "firstName": "Aleksandar",
+                    "lastName": "Avramov",
+                    "totalPrice": 882
+                }
+            ]
+        };
     }
 
     /**
      * Get current logged in user
      */
     public getCurrentLoggedCustomer(): void {
-        this.restaurantService.getCurrentUser().then((data) => {
-            this.currentUser = data;
-            this.getCurrentUserTotalBill();
-        });
+        // this.restaurantService.getCurrentUser().then((data) => {
+        //     this.currentUser = data;
+        //     this.getCurrentUserTotalBill();
+        // });
         //TODO delete
-        // this.currentUser = {
-        //     "id": 3,
-        //     "firstName": "Aleksandar",
-        //     "lastName": "Avramov",
-        //     "email": "avramov@abv.bg",
-        //     "gender": "MALE"
-        // };
+        this.currentUser = {
+            "id": 3,
+            "firstName": "Aleksandar",
+            "lastName": "Avramov",
+            "email": "avramov@abv.bg",
+            "gender": "MALE"
+        };
     }
 
     /**
