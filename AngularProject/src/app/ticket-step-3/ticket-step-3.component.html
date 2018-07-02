@@ -24,14 +24,14 @@
             </tbody>
         </table>
     </div>
-    <div class="col-2 button confirm-pay pink-button float-left pointer" [class.disabled]="!isSelectEnabled">
+    <div class="col-2 button  white-border confirm-pay pink-button float-left pointer" [class.disabled]="!isSelectEnabled">
         <span class="white-check"></span>
     </div>
-    <div class="col-8 button blue-button float-left price-image pointer" [class.disabled]="!isShareEnabled"
+    <div class="col-8 button  white-border blue-button float-left price-image pointer" [class.disabled]="!isShareEnabled"
          (click)="openBillInfoModal()">
        {{title}} {{totalBill}}
     </div>
-    <div class="col-2 button confirm-pay pink-button float-left" [class.disabled]="!isExpandEnabled">
+    <div class="col-2 button  white-border confirm-pay pink-button float-left" [class.disabled]="!isExpandEnabled">
         <span class="white-arrow-right"></span></div>
     <div class="col-12 button pay-button float-left">
         <div class="margin-left-10 float-left">Мoята сметка: {{myBill}}</div>
