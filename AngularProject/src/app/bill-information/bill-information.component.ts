@@ -365,6 +365,9 @@ export class BillInformationComponent implements OnInit {
             this.billInformationService.initNewTicket(this.currentBillId, objectToSend).then((data) => {
                 //TODO
                 console.log('SUCCESS')
+            }).catch(error => {
+                //TODO
+                console.error('FAIL')
             })
         } else {
             //TODO

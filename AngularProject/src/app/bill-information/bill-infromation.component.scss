@@ -158,6 +158,9 @@ $buttonBlue: #6bc7f0;
 
 .menu-item-title {
   font-size: 14px;
+  @media (max-width: 360px){
+    font-size: 12px;
+  }
 }
 
 .top-images-container {
@@ -184,6 +187,9 @@ $buttonBlue: #6bc7f0;
   vertical-align: bottom !important;
   font-weight: bold;
   text-align: right;
+  @media (max-width: 360px){
+    font-size: 14px;
+  }
 }
 
 .info-icon {
@@ -222,9 +228,10 @@ $buttonBlue: #6bc7f0;
   display: inline-block;
   width: 23px;
   height: 23px;
-  background-image: url("./assets/images/white-check.png");
-  background-size: cover;
+  background-image: url("./assets/images/check.png");
   vertical-align: middle;
+  background-size: 300%;
+  background-position: center;
   cursor: pointer;
 }
 
