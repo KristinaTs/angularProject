@@ -23,6 +23,7 @@
                      [class.self]="distribution.self"
                      [class.selected]="distribution.selected"
                      [class.disabled] = "!distribution.isSelectable"
+                      [class.selectable] =  "distribution.isSelectable"
                      (click)="toggleSelectedDistibutionCount(i)"
                 >
                     {{distribution.totalParts}}

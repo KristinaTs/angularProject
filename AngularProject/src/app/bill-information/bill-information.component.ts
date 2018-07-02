@@ -96,20 +96,56 @@ export class BillInformationComponent implements OnInit {
         ],
         "ticketPayableData": {
             "price": 10357,
-            "isSelectEnabled": false,
+            "isSelectEnabled": true,
             "isShareEnabled": true,
-            "isExpandEnabled": false,
-            "isDistributionSet": true,
+            "isExpandEnabled": true,
             "participantDatas": [
                 {
-                    "id": 2,
-                    "shortName": "GV",
-                    "fullName": "GeorgiVladimirov",
+                    "id": 3,
+                    "shortName": "AA",
+                    "fullName": "AleksandarAvramov",
                     "isMe": true,
-                    "isIn": true,
+                    "isIn": false,
                     "distributions": [
                         {
-                            "isSelectable": false,
+                            "isSelectable": true,
+                            "totalParts": 1,
+                            "shares": [
+                                {
+                                    "number": 0,
+                                    "price": 0,
+                                    "isCurrent": true
+                                },
+                                {
+                                    "number": 1,
+                                    "price": 10357,
+                                    "isCurrent": false
+                                }
+                            ]
+                        },
+                        {
+                            "isSelectable": true,
+                            "totalParts": 2,
+                            "shares": [
+                                {
+                                    "number": 0,
+                                    "price": 0,
+                                    "isCurrent": true
+                                },
+                                {
+                                    "number": 1,
+                                    "price": 5179,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 2,
+                                    "price": 10357,
+                                    "isCurrent": false
+                                }
+                            ]
+                        },
+                        {
+                            "isSelectable": true,
                             "totalParts": 3,
                             "shares": [
                                 {
@@ -119,33 +155,340 @@ export class BillInformationComponent implements OnInit {
                                 },
                                 {
                                     "number": 1,
-                                    "price": 3452,
+                                    "price": 3453,
                                     "isCurrent": false
                                 },
                                 {
                                     "number": 2,
-                                    "price": 6904,
+                                    "price": 6905,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 3,
+                                    "price": 10357,
                                     "isCurrent": false
                                 }
                             ]
-                        }
-                    ]
-                },
-                {
-                    "id": 3,
-                    "shortName": "AA",
-                    "fullName": "AleksandarAvramov",
-                    "isMe": false,
-                    "isIn": true,
-                    "distributions": [
+                        },
                         {
-                            "isSelectable": false,
-                            "totalParts": 3,
+                            "isSelectable": true,
+                            "totalParts": 4,
                             "shares": [
                                 {
-                                    "number": 1,
-                                    "price": 3453,
+                                    "number": 0,
+                                    "price": 0,
                                     "isCurrent": true
+                                },
+                                {
+                                    "number": 1,
+                                    "price": 2590,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 2,
+                                    "price": 5179,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 3,
+                                    "price": 7768,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 4,
+                                    "price": 10357,
+                                    "isCurrent": false
+                                }
+                            ]
+                        },
+                        {
+                            "isSelectable": true,
+                            "totalParts": 5,
+                            "shares": [
+                                {
+                                    "number": 0,
+                                    "price": 0,
+                                    "isCurrent": true
+                                },
+                                {
+                                    "number": 1,
+                                    "price": 2072,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 2,
+                                    "price": 4144,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 3,
+                                    "price": 6215,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 4,
+                                    "price": 8286,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 5,
+                                    "price": 10357,
+                                    "isCurrent": false
+                                }
+                            ]
+                        },
+                        {
+                            "isSelectable": true,
+                            "totalParts": 6,
+                            "shares": [
+                                {
+                                    "number": 0,
+                                    "price": 0,
+                                    "isCurrent": true
+                                },
+                                {
+                                    "number": 1,
+                                    "price": 1727,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 2,
+                                    "price": 3453,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 3,
+                                    "price": 5179,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 4,
+                                    "price": 6905,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 5,
+                                    "price": 8631,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 6,
+                                    "price": 10357,
+                                    "isCurrent": false
+                                }
+                            ]
+                        },
+                        {
+                            "isSelectable": true,
+                            "totalParts": 7,
+                            "shares": [
+                                {
+                                    "number": 0,
+                                    "price": 0,
+                                    "isCurrent": true
+                                },
+                                {
+                                    "number": 1,
+                                    "price": 1480,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 2,
+                                    "price": 2960,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 3,
+                                    "price": 4440,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 4,
+                                    "price": 5920,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 5,
+                                    "price": 7399,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 6,
+                                    "price": 8878,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 7,
+                                    "price": 10357,
+                                    "isCurrent": false
+                                }
+                            ]
+                        },
+                        {
+                            "isSelectable": true,
+                            "totalParts": 8,
+                            "shares": [
+                                {
+                                    "number": 0,
+                                    "price": 0,
+                                    "isCurrent": true
+                                },
+                                {
+                                    "number": 1,
+                                    "price": 1295,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 2,
+                                    "price": 2590,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 3,
+                                    "price": 3885,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 4,
+                                    "price": 5180,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 5,
+                                    "price": 6475,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 6,
+                                    "price": 7769,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 7,
+                                    "price": 9063,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 8,
+                                    "price": 10357,
+                                    "isCurrent": false
+                                }
+                            ]
+                        },
+                        {
+                            "isSelectable": true,
+                            "totalParts": 9,
+                            "shares": [
+                                {
+                                    "number": 0,
+                                    "price": 0,
+                                    "isCurrent": true
+                                },
+                                {
+                                    "number": 1,
+                                    "price": 1151,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 2,
+                                    "price": 2302,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 3,
+                                    "price": 3453,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 4,
+                                    "price": 4604,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 5,
+                                    "price": 5755,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 6,
+                                    "price": 6906,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 7,
+                                    "price": 8057,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 8,
+                                    "price": 9207,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 9,
+                                    "price": 10357,
+                                    "isCurrent": false
+                                }
+                            ]
+                        },
+                        {
+                            "isSelectable": true,
+                            "totalParts": 10,
+                            "shares": [
+                                {
+                                    "number": 0,
+                                    "price": 0,
+                                    "isCurrent": true
+                                },
+                                {
+                                    "number": 1,
+                                    "price": 1036,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 2,
+                                    "price": 2072,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 3,
+                                    "price": 3108,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 4,
+                                    "price": 4144,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 5,
+                                    "price": 5180,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 6,
+                                    "price": 6216,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 7,
+                                    "price": 7252,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 8,
+                                    "price": 8287,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 9,
+                                    "price": 9322,
+                                    "isCurrent": false
+                                },
+                                {
+                                    "number": 10,
+                                    "price": 10357,
+                                    "isCurrent": false
                                 }
                             ]
                         }
@@ -153,7 +496,7 @@ export class BillInformationComponent implements OnInit {
                 }
             ]
         }
-    };
+    }
 
     public restaurant = {
         id: 1,
@@ -335,9 +678,6 @@ export class BillInformationComponent implements OnInit {
         if (this.isExpandEnabled) {
             if (this.currentBillId) {
                 this.navigateToTicketStep2(this.currentBillId);
-            } else {
-                //TODO delete
-                // this.navigateToTicketStep2(this.billId);
             }
         } else {
             // console.error('Cannot expand bill!')

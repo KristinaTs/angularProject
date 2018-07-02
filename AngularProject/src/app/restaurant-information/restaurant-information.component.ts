@@ -94,7 +94,7 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
         this.restaurantService.getRestaurantInformation(restaurantId)
             .then((response) => {
                 console.log(response);
-                this.restaurant = response;
+               this.restaurant = response;
             }).catch((err) => {
             console.error(err);
         });
@@ -118,9 +118,9 @@ export class RestaurantInformationComponent implements OnInit, OnDestroy {
             posId: this.restaurantId
         };
 
-        setTimeout(() => {
-            this.isTicketConfirmed = true;
-        }, 5000)
+        // setTimeout(() => {
+        //     this.isTicketConfirmed = true;
+        // }, 5000)
         this.billInformationService.createNewBill(objectToSend)
             .then((data) => {
                 this.billCode = data.id;
