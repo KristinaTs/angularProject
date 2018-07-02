@@ -144,11 +144,6 @@ export class MyBillComponent implements OnInit {
     public getBillInformation(currentId): void {
         this.billInformationService.getCurrentUserBill(currentId).then((data) => {
            this.billList = data;
-            if(this.billInformation.price > 0) {
-                this.totalBill = (this.billInformation.price/100) + ' лв'
-            } else {
-                this.totalBill = '0 лв';
-            }
             console.log('billInfo', data);
         });
         let data = [
