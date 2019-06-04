@@ -1,0 +1,133 @@
+.restaurant-information-wrapper {
+  overflow: hidden;
+  background-color: white;
+  margin-right: -15px;
+  margin-left: -15px;
+  text-align: center;
+
+  .information-row {
+    height: calc(100vh - 75px);
+  }
+  .title {
+    color: $redColor;
+    font-weight: bold;
+    font-size: 15pt;
+  }
+  .image-container {
+    background-image: url("./assets/restaurant-background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 150px;
+    position: relative;
+    margin-bottom: 40px;
+    background-clip: content-box;
+    img {
+      position: absolute;
+      bottom: -23px;
+      right: 0;
+      left: 0;
+      width: 115px;
+      height: 115px;
+      margin: auto;
+      border: 1.5px solid rgba(255, 255, 255, 0.7);
+    }
+  }
+  .stat-wrapper {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .stats {
+    position: absolute;
+    left: -10px;
+    &.food {
+      left: 7px
+    }
+  }
+  .rating {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0;
+    margin-top: 20px;
+    font-size: 13px;
+    background-color: $ratingColor;
+  }
+
+  .address {
+    position: relative;
+  }
+
+  .address:after {
+    content: "";
+    position: absolute;
+    left: 20%;
+    bottom: -10px;
+    width: 60%;
+    height: 1px;
+    background: lightgray;
+  }
+  .rating-container {
+    position: relative;
+    text-align: center;
+    width: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .restaurant-description-box {
+    position: relative;
+    width: 84%;
+    height: 127px;
+    border-radius: 25px;
+    padding: 20px 150px 20px 20px;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    background-color: $redColor;
+    color: white;
+    &.bill-send {
+      background-image: url("./assets/pin-background.png");
+      background-repeat: no-repeat;
+      background-size: 700px 198px;
+      background-position-x: -10px;
+      padding: 20px 20px 20px 20px;
+      .share {
+        font-size: 21px;
+      }
+      .pin {
+        font-size: 35px;
+        font-weight: bold;
+      }
+    }
+
+    .greeting-image {
+      position: absolute;
+      right: 14px;
+      bottom: 0;
+      width: 140px;
+      height: 180px;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-image: url('./assets/images/chick.png');
+    }
+  }
+
+  .white-color {
+    color: white;
+    z-index: 1;
+  }
+
+  .description-container {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 14px;
+  }
+
+  .code {
+    font-size: 27px;
+    font-weight: bold;
+  }
+
+}

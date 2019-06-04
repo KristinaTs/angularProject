@@ -1,0 +1,147 @@
+.popup-content {
+  width: 80%;
+  background-color: #ffffff;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+$buttonBlue: #6bc7f0;
+
+.bill-info-wrapper {
+  padding: 20px;
+}
+
+.header-info-popup {
+  color: #c9c9c9;
+  display: flex;
+  justify-content: space-between;
+}
+
+.padding-bottom {
+  padding-bottom: 10px;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #c9c9c9;
+}
+
+.participants-header {
+  color: #c9c9c9;
+  font-size: 13px;
+  padding-top: 5px;
+}
+
+.shares-container,
+.participants-container {
+  display: flex;
+  color: white;
+  align-items: center;
+  justify-content: space-between;
+  .share,
+  .participant {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin: 0 5px;
+    line-height: 38px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: $buttonBlue;
+    cursor: pointer;
+    &.self {
+      background-color: #AED078!important;
+      color: white;
+    }
+    &.selected {
+      background-color: #9ED8EA;
+      color: white;
+    }
+    &.add-participant {
+      color: #c9c9c9;
+      background-color: white;
+      border: 1px dashed #c9c9c9;
+    }
+  }
+}
+
+.participant.selected:before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  right: 0;
+  left: 0;
+  margin: auto;
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #AED078;
+}
+
+.selected-user-information {
+  padding-top: 10px;
+  color: #AED078;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.widget-container {
+  padding: 20px 0 10px 0;
+  display: flex;
+  color: #838383;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.share-options-wrapper {
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+  margin: 17px auto 0 auto;
+}
+
+.share-options-wrapper div {
+  position: relative;
+  cursor: pointer;
+}
+
+.share-options-wrapper div.selected:before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 15px solid #A7C466;
+  position: absolute;
+  top: -15px;
+  left: calc(50% - 15px);
+}
+
+.test {
+  padding: 0 10%;
+}
+
+.price-image {
+  width: 85%;
+}
+
+.share-slider-container {
+  position: relative;
+  .slider {
+    height: 12px;
+    border-radius: 6px;
+    background-color: #6BC7F0;
+  }
+}
+
+.button-wrapper {
+  position: static;
+}
+
+.bill-info-popup {
+  display: flex;
+  flex-direction: column;
+}

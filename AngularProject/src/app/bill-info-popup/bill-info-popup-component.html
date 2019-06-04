@@ -1,0 +1,61 @@
+<div class="popup-content">
+    <div class="bill-info-wrapper">
+        <div class="dash-bt-border header"> {{title}} {{totalBill}}</div>
+        <div class="widget-container dash-bt-border">
+            <div class="label-share-popup">Участници:</div>
+            <div class="participants-container">
+                <div class="participant"
+                     [class.self]="participant.isMe"
+                     [class.selected]="participant.id == selectedUser.id"
+                     [ngClass]="participant.isIn ? 'participant-has-shares': 'participant-no-shares'"
+                     *ngFor="let participant of participants; let i = index"
+                     (click)="toggleSelectedParticipant(i)"
+                >
+                    {{participant.shortName}}
+                </div>
+            </div>
+        </div>
+        <div class="widget-container dash-bt-border">
+            <div class="label-share-popup">Дялове:</div>
+            <div class="shares-container">
+                <div  *ngFor="let distribution of distributions; let i = index"
+                      class="share"
+                     [class.self]="distribution.self"
+                     [class.selected]="distribution.selected"
+                     [class.disabled] = "!distribution.isSelectable"
+                      [class.selectable] =  "distribution.isSelectable"
+                     (click)="toggleSelectedDistibutionCount(i)"
+                >
+                    {{distribution.totalParts}}
+                </div>
+            </div>
+        </div>
+        <div class="header">{{selectedUser.id == currentUser.id ? 'Дялове за мен:' : 'Дялове за ' + selectedUser.fullName}}</div>
+        <div class="test">
+            <div class="share-slider-container">
+                <div class="slider"></div>
+            </div>
+        </div>
+        <div class="share-options-wrapper">
+            <div *ngFor="let shareOption of shares; let i = index"
+                 (click)="setSharesForSelf(i)"
+                 [class.selected]="shareOption.isCurrent"
+            >
+                {{shareOption.number}}
+            </div>
+        </div>
+    </div>
+
+    <div class="button-wrapper">
+        <div class="button confirm-pay pink-button float-left" (click)="initOrUpdateTicket()" [class.disabled]="!canApply">
+            <span class="white-check"></span>
+        </div>
+        <div class="button blue-button float-left price-image">
+            {{totalPriceString}}
+        </div>
+    </div>
+    <div class="col-12 button pay-button float-left">
+        <div class="margin-left-10 float-left">Мoята сметка: {{myBill}}</div>
+        <div (click)="goToPayScreen()" class="float-right margin-right-10">ПЛАТИ</div>
+    </div>
+</div>

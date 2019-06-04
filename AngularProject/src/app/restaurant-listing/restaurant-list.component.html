@@ -1,0 +1,40 @@
+<div class="bill-code row">
+  <div class="col-6">
+    <input #idInput type="text" placeholder="Код на сметка">
+  </div>
+  <div class="col-6">
+    <input #passwordInput type="text" placeholder="Парола">
+  </div>
+  <div class="confirm-button pointer" (click)="sendJoinRequest(idInput.value, passwordInput.value)"></div>
+</div>
+<ng-template [ngIf]="restaurantList">
+  <div class="restaurant-listing row">
+    <div class="col col-12 restaurant-wrapper pointer" *ngFor="let restaurant of restaurantList"
+         (click)="navigateToRestaurant(restaurant)">
+      <div class="row">
+        <div class="image-container">
+          <img class="image" [src]="restaurant.logoUrl" alt="">
+        </div>
+        <div class="restaurant-main-info">
+          <div class="title">{{restaurant.name}}</div>
+          <div class="address text-gray">{{restaurant.address}}</div>
+          <div class="row stat-wrapper">
+            <div class="col-5 rating-container rating-number">
+              <span class="text-gray stats">Рейтинг:</span>
+              <span class="rating">{{restaurant.rating.foodQuality | ratingPipe}}</span>
+            </div>
+            <ul class="col-7 rating-container description-list">
+              <li class="text-gray stats"><span>Храна:</span><span> {{restaurant.rating.foodQuality | ratingPipe}}</span></li>
+              <li class="text-gray stats"><span>Обстановка:</span><span> {{restaurant.rating.atmosphere | ratingPipe}}</span></li>
+              <li class="text-gray stats"><span>Обслужване:</span><span> {{restaurant.rating.serviceQuality | ratingPipe}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="right-arrow-wrapper">
+          <div class="right-arrow"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

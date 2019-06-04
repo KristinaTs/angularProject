@@ -1,0 +1,61 @@
+<ng-template [ngIf]="restaurant">
+    <div class="restaurant-information-wrapper">
+        <div class="row information-row">
+            <div class="col col-12 image-container">
+                <img class="image" [src]="restaurant.logoUrl" alt="">
+            </div>
+            <div class="col col-12">
+                <div class="title">{{restaurant.name}}</div>
+            </div>
+            <div class="col col-12">
+                <div class="address text-gray">{{restaurant.address}}</div>
+            </div>
+            <div class="col col-2">
+            </div>
+            <div class="col col-8">
+                <div class="stat-wrapper row">
+                    <div class="rating-container">
+                        <div class="text-gray stats food">Храна:</div>
+                        <div class="rating">{{restaurant.rating.foodQuality | ratingPipe}}</div>
+                    </div>
+                    <div class="rating-container">
+                        <div class="text-gray stats">Обстановка:</div>
+                        <div class="rating">{{restaurant.rating.atmosphere | ratingPipe}}</div>
+                    </div>
+                    <div class="rating-container">
+                        <div class="text-gray stats">Обслужване:</div>
+                        <div class="rating">{{restaurant.rating.serviceQuality | ratingPipe}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-2">
+            </div>
+            <div class="col col-12 description-container">
+                <div class="restaurant-description-box" *ngIf="!isRequestSendForBill">
+                    <div>{{greeting.welcome}}</div>
+                    <div>{{greeting.description}}</div>
+                    <div class="greeting-image"></div>
+                </div>
+                <div class="restaurant-description-box bill-send" *ngIf="isRequestSendForBill && !isTicketConfirmed">
+                    <div class="share">Сподели този код със сервитьора</div>
+                    <div class="pin">PIN: {{billCode}}</div>
+                </div>
+                <div class="restaurant-description-box bill-send" *ngIf="isRequestSendForBill && isTicketConfirmed">
+                    <div class="code">Код на сметка: {{billCode}}</div>
+                    <div class="code">Парола: {{password}}</div>
+                </div>
+                <div>
+                    <!--<div *ngIf="isRequestSendForBill && !isTicketConfirmed" class="green-button">-->
+                        <!--Сметката се създава ...-->
+                    <!--</div>-->
+                    <!--<div *ngIf="isRequestSendForBill && isTicketConfirmed" class="green-button"-->
+                         <!--(click)="goToBillInformation()">-->
+                        <!--Сметката е потвърдена.-->
+                    <!--</div>-->
+                    <loader (click)="loaderClickHandler()" initialLabel="+ Нова сметка" inProgressLabel="Сметката се създава..."
+                            loadedLabel="Сметката е създадена" (loaded)="test()" [isBillCreated]="isTicketConfirmed"></loader>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
